@@ -28,7 +28,7 @@ model User {
   // Corrected to camelCase
   firstName    String
   lastName     String
-  passwordHash String
+  password     String
   createdAt    DateTime  @default(now())
   // Corrected to camelCase and standard Prisma field
   updatedAt    DateTime  @updatedAt
