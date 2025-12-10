@@ -1,4 +1,4 @@
-import { Prisma, User } from '@prisma/client'
+import {  Prisma, User } from '@prisma/client'
 import express from 'express'
 import { prisma } from './prisma'
 import bcrypt from 'bcrypt'
@@ -12,7 +12,7 @@ router.post('/register',async(req,res)=>{
     try{
         const user =await prisma.user.create({
             data:{
-                firstName,lastName,passwordHash:hashedPassword,email
+                firstName,lastName,password:hashedPassword,email
             },
             select:{
                 id: true,
