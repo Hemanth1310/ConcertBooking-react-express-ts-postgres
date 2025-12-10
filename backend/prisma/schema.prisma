@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------- ENUM -----------------
+enum BookingStatus {
+  PENDING_PAYMENT
+  CONFIRMED
+  CANCELLED
+  FAILED
+}
+
+// ----------------- USER -----------------
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  // Corrected to camelCase
+  firstName    String
+  lastName     String
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  // Corrected to camelCase and standard Prisma field
+  updatedAt    DateTime  @updatedAt
+  isActive     Boolean   @default(true)
+
+  bookings     Booking[]
+}
+
+// ----------------- CONCERT -----------------
+// Model name corrected to singular: Concert
+model Concert {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique // Added @unique for concert name
+  artist      String
+  date        DateTime
+  venue       String
+  description String?
+
+  // Relation name corrected to follow singular model name: ticketTypes
+  ticketTypes TicketType[]
+}
+
+// ----------------- TICKET TYPE -----------------
+model TicketType {
+  id                  Int       @id @default(autoincrement())
+  concertId           Int
+  name                String
+  price               Float
+  availableQuantity   Int
+  totalQuantity       Int
+
+  // Relation now points to the singular 'Concert' model
+  concert             Concert    @relation(fields: [concertId], references: [id])
+
+  bookings            Booking[]
+}
+
+// ----------------- BOOKING -----------------
+model Booking {
+  id             Int             @id @default(autoincrement())
+  userId         String          // Foreign Key for User
+  // Corrected to camelCase: ticketTypeId
+  ticketTypeId   Int             // Foreign Key for TicketType
+  quantity       Int
+  totalPrice     Float
+
+  status         BookingStatus @default(CONFIRMED)
+
+  createdAt      DateTime      @default(now())
+
+  // Corrected relation: fields points to userId, references points to User.id
+  user           User          @relation(fields: [userId], references: [id])
+
+  // Corrected relation: fields must match the foreign key name (ticketTypeId)
+  ticketType     TicketType    @relation(fields: [ticketTypeId], references: [id])
+}
