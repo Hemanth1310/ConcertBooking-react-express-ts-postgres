@@ -1,0 +1,15 @@
+import {PrismaClient}  from '@prisma/client';
+
+// Use a global object to prevent multiple instances in development
+const globalForPrisma = global as unknown as { prisma: PrismaClient };
+
+export const prisma =
+  globalForPrisma.prisma ||
+  new PrismaClient({
+    log: ['query'], // Optional: Log all SQL queries to the console
+  });
+
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma;
+}
+
