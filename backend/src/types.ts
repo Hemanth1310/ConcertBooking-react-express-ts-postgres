@@ -6,3 +6,7 @@ export type userDetails = {
        
 }
 
+export type decodedToken = {
+    userId:string,
+    email:string,
+}

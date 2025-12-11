@@ -2,8 +2,13 @@ import {  Prisma, User } from '@prisma/client'
 import express from 'express'
 import { prisma } from './prisma'
 import bcrypt from 'bcrypt'
-import { userDetails } from './types'
+import { decodedToken, userDetails } from './types'
+import jwt from 'jsonwebtoken'
+
 const router = express.Router()
+
+const JWT_secret = process.env.JWT_secret || '123456789'
+
 
 router.use(express.json())
 
@@ -53,13 +58,25 @@ router.post('/login',async(req,res)=>{
         }
         const passwordMatch = await bcrypt.compare(password, user.password);
         if(passwordMatch)
-       { res.json({
+       { 
+            const tokenPayload :decodedToken = {
+                userId:user.id,
+                email:user.email
+            }
+
+            const token = jwt.sign(
+                tokenPayload,
+                JWT_secret,
+                {expiresIn:"1hr"}
+            )
+
+            const {password, ...userData} = user
+
+            res.json({
             message:'login successful!',
+            token:token,
             data:{
-                firstname:user.firstName,
-                lastname:user.lastName,
-                email:user.email,
-                id:user.id,
+                user:userData
             }
         })}else{
             res.status(401).json({error: 'Invalid credentials.' })
