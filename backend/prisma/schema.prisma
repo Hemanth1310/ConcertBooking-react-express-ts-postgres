@@ -39,7 +39,7 @@ model User {
 
 model Concert {
   id          Int          @id @default(autoincrement())
-  name        String       @unique // Added @unique for concert name
+  name        String       @unique 
   artist      String
   date        DateTime
   venue       String

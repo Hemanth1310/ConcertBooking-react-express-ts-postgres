@@ -34,4 +34,42 @@ router.post('/register',async(req,res)=>{
     }
 })
 
+router.post('/login',async(req,res)=>{
+    const {email,password} = req.body
+
+    try{
+        const user = await prisma.user.findUnique({
+           where:{email:email},
+           select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                password: true, 
+            }
+        })
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid credentials.' });
+        }
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if(passwordMatch)
+       { res.json({
+            message:'login successful!',
+            data:{
+                firstname:user.firstName,
+                lastname:user.lastName,
+                email:user.email,
+                id:user.id,
+            }
+        })}else{
+            res.status(401).json({error: 'Invalid credentials.' })
+        }
+    }catch(error){
+        console.error('Login error:', error);
+        return res.status(500).json({ error: 'An unexpected server error occurred.' });
+    }
+
+})
+
+
 export default router
