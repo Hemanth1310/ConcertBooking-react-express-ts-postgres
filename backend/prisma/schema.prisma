@@ -25,12 +25,10 @@ enum BookingStatus {
 model User {
   id           String    @id @default(uuid())
   email        String    @unique
-  // Corrected to camelCase
   firstName    String
   lastName     String
   password     String
   createdAt    DateTime  @default(now())
-  // Corrected to camelCase and standard Prisma field
   updatedAt    DateTime  @updatedAt
   isActive     Boolean   @default(true)
 
@@ -38,7 +36,7 @@ model User {
 }
 
 // ----------------- CONCERT -----------------
-// Model name corrected to singular: Concert
+
 model Concert {
   id          Int          @id @default(autoincrement())
   name        String       @unique // Added @unique for concert name
@@ -47,7 +45,6 @@ model Concert {
   venue       String
   description String?
 
-  // Relation name corrected to follow singular model name: ticketTypes
   ticketTypes TicketType[]
 }
 
@@ -60,7 +57,6 @@ model TicketType {
   availableQuantity   Int
   totalQuantity       Int
 
-  // Relation now points to the singular 'Concert' model
   concert             Concert    @relation(fields: [concertId], references: [id])
 
   bookings            Booking[]
@@ -70,7 +66,6 @@ model TicketType {
 model Booking {
   id             Int             @id @default(autoincrement())
   userId         String          // Foreign Key for User
-  // Corrected to camelCase: ticketTypeId
   ticketTypeId   Int             // Foreign Key for TicketType
   quantity       Int
   totalPrice     Float
@@ -79,9 +74,6 @@ model Booking {
 
   createdAt      DateTime      @default(now())
 
-  // Corrected relation: fields points to userId, references points to User.id
   user           User          @relation(fields: [userId], references: [id])
-
-  // Corrected relation: fields must match the foreign key name (ticketTypeId)
   ticketType     TicketType    @relation(fields: [ticketTypeId], references: [id])
 }
