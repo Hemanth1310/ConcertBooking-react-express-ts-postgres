@@ -12,7 +12,7 @@ type Props = {
 
 const Login = ({isModalOpen,openModal,closeModal}: Props) => {
    
-   
+    const [toggle,setToggle] = useState<boolean>(false)
     const loginInputRef = useRef<HTMLInputElement>(null)
     const passwordInputRef = useRef<HTMLInputElement>(null)
     const [messsage,setMessage] = useState<boolean>(false)
@@ -55,14 +55,23 @@ const Login = ({isModalOpen,openModal,closeModal}: Props) => {
                     <div className='w-full flex flex-col justify-center gap-5'>
                     <input type='email' ref={loginInputRef} className='border border-gray-400 text-xl p-4' placeholder='Enter Email here...'></input>
                     <input type='password' ref={passwordInputRef} className='border border-gray-400 text-xl p-4' placeholder='Enter Password here...'></input>
-                     <button 
-                        onClick={login}
-                        className="mt-4 bg-[#DF1827] text-white px-3 py-3 rounded "
-                        >
-                        Login
-                    </button>
+                     <div className='w-full flex gap-5'>
+                        <button 
+                            onClick={login}
+                            className="mt-4 bg-[#DF1827] text-white px-3 py-3 rounded flex-1 hover:bg-red-400"
+                            >
+                            Login
+                        </button>
+                        <button 
+                            onClick={login}
+                            className="mt-4 border border-gray-400 text-gray-400px-3 py-3 rounded flex-1 hover:bg-gray-200"
+                            >
+                            Register
+                        </button>
+                     </div>
+                    
                     </div>
-                    {messsage && <div className='text-md text-red-700'>"Please enter valid emailId and password to proceed"</div>}
+                    {messsage && <div className='mt-4 text-md text-red-700'>"Please enter valid emailId and password to proceed"</div>}
                 </Modal>
   )
 }
