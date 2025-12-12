@@ -4,20 +4,28 @@ import viteLogo from '/vite.svg'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import Header from './components/Header'
 import Login from './views/Login'
+import AuthConextProvider from './context/AuthContext'
+import ProtectedRoutes from './authorization/ProtectedRoutes'
+import Checkout from './views/Checkout'
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <BrowserRouter>
-        <div className='w-screen flex flex-col justify-center items-center'>
+    <AuthConextProvider>
+      <div className="min-h-screen bg-gray-50">
+        <BrowserRouter>
+          <div className='w-screen flex flex-col justify-center items-center'>
             <Header/>
-          <Routes>
-            <Route path='/' element={<Login/>}></Route>
-          </Routes>
-        </div>
-          
-      </BrowserRouter>
-    </div>
+            <Routes>
+              <Route path='/login' element={<Login/>}></Route>
+              <Route element={<ProtectedRoutes/>}>
+                  <Route path="/checkout" element={<Checkout/>}></Route>
+              </Route>
+            </Routes>
+          </div>
+            
+        </BrowserRouter>
+      </div>
+    </AuthConextProvider>
   )
 }
 
