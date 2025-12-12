@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import Header from './components/Header'
-import Login from './views/Login'
+import Login from './components/Login'
 import AuthConextProvider from './context/AuthContext'
 import ProtectedRoutes from './authorization/ProtectedRoutes'
 import Checkout from './views/Checkout'
@@ -16,7 +16,7 @@ function App() {
           <div className='w-screen flex flex-col justify-center items-center'>
             <Header/>
             <Routes>
-              <Route path='/login' element={<Login/>}></Route>
+              {/* <Route path='/login' element={<Login/>}></Route> */}
               <Route element={<ProtectedRoutes/>}>
                   <Route path="/checkout" element={<Checkout/>}></Route>
               </Route>
