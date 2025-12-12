@@ -1,9 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import Modal from './Modal'
-import api from '../utils/axiosConfig'
-import type { UserData } from '../types'
-import Login from './Login'
+
+import Authentication from './Authentication'
 
 type Props = {}
 
@@ -34,7 +32,7 @@ const Header = (props: Props) => {
                         <button className='bg-[#DF1827] h-full w-full text-white text-md font-bold rounded-2xl' onClick={openModal}>SignIn</button>
                 }
             </div>
-            <Login isModalOpen={isModalOpen} openModal={openModal} closeModal={closeModal}/>
+            <Authentication isModalOpen={isModalOpen} openModal={openModal} closeModal={closeModal}/>
         </div>
     </div>
   )

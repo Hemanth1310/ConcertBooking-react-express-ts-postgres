@@ -1,19 +1,14 @@
 import React, { useRef, useState } from 'react'
-import Modal from './Modal'
-import type { UserData } from '../types';
-import { useAuth } from '../context/AuthContext';
-import api from '../utils/axiosConfig';
+import { useAuth } from '../context/AuthContext'
+import api from '../utils/axiosConfig'
+import type { UserData } from '../types'
 
 type Props = {
-  isModalOpen:boolean,
-  openModal:()=>void,
-  closeModal:()=>void
+    closeModal:()=>void
 }
 
-const Login = ({isModalOpen,openModal,closeModal}: Props) => {
-   
-    const [toggle,setToggle] = useState<boolean>(false)
-    const loginInputRef = useRef<HTMLInputElement>(null)
+const Login = ({closeModal}: Props) => {
+        const loginInputRef = useRef<HTMLInputElement>(null)
     const passwordInputRef = useRef<HTMLInputElement>(null)
     const [messsage,setMessage] = useState<boolean>(false)
     const {handleAuth}=useAuth()
@@ -44,15 +39,8 @@ const Login = ({isModalOpen,openModal,closeModal}: Props) => {
             console.error('Failed to Fetch api' +error)
           }
         }
-
   return (
-                <Modal 
-                    isOpen={isModalOpen} 
-                    onClose={closeModal}
-                    title="Login"
-                >
-                    {/* Content passed as children */}
-                    <div className='w-full flex flex-col justify-center gap-5'>
+     <div className='w-full flex flex-col justify-center gap-5'>
                     <input type='email' ref={loginInputRef} className='border border-gray-400 text-xl p-4' placeholder='Enter Email here...'></input>
                     <input type='password' ref={passwordInputRef} className='border border-gray-400 text-xl p-4' placeholder='Enter Password here...'></input>
                      <div className='w-full flex gap-5'>
@@ -69,10 +57,8 @@ const Login = ({isModalOpen,openModal,closeModal}: Props) => {
                             Register
                         </button>
                      </div>
-                    
-                    </div>
                     {messsage && <div className='mt-4 text-md text-red-700'>"Please enter valid emailId and password to proceed"</div>}
-                </Modal>
+    </div>
   )
 }
 
