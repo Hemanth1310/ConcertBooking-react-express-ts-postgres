@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useAuth } from '../context/AuthContext'
 
 type Props = {}
 
 const Header = (props: Props) => {
+    const [searchInput, setSearchInput] = useState<string>('')
+    const {userData} = useAuth()
   return (
-    <div className='w-screen h-[60px] bg-white flex items-center justify-center fixed top-0 left-0 z-10'>
-        <div className='container mx-auto flex items-center justify-between bg-amber-200 h-full'>
-            <h1 className='text-2xl text-shadow-stone-800'>ConcertZ</h1>
-            <div className='border-gray-400 h-full w-full'></div>
-            <div>
-
+    <div className='w-screen h-[80px] bg-white flex items-center justify-center fixed top-0 left-0 z-10 shadow-md'>
+        <div className='container mx-auto flex items-center justify-between h-full gap-5 p-4'>
+            <h1 className='text-2xl text-shadow-stone-800 flex-1'>ConcertZ/Berlin</h1>
+            <div className='border px-5 border-gray-400 h-full w-full flex justify-between items-center rounded-2xl flex-7'>
+                <input className='h-full w-full text-xl focus:outline-none ' type='text' value={searchInput} onChange={(e)=>setSearchInput(e.target.value)} placeholder='Search for concerts around berlin'></input>
+                     <span className="material-symbols-outlined text-gray-400" style={{ fontSize: '32px' }}>
+                        search
+                    </span>
+            </div>
+            <div className='h-full flex items-center justify-center flex-1'>
+                {!userData?
+                        <span className="material-symbols-outlined text-shadow-stone-800 " style={{ fontSize: '36px' }}>
+                        account_circle
+                        </span>:
+                        <button className='bg-[#DF1827] h-full w-full text-white text-md font-bold rounded-2xl' >SignIn</button>
+                }
             </div>
         </div>
     </div>
