@@ -4,7 +4,7 @@ import api from "../utils/axiosConfig";
 
 type AuthContextType = {
     userData:UserData|null,
-    handleAuth: (authUserDetails:UserData)=>void
+    handleAuth: (authUserDetails:UserData|null)=>void
 }
 
 type AuthConextProviderType = {
@@ -31,7 +31,7 @@ const AuthConextProvider =({children}:AuthConextProviderType)=>{
         if(token){
             api.get('/api/userDetails')
                 .then(response=>setUserData(response.data))
-                .catch(err=>console.log(' Session Timedout'))
+                .catch(err=>console.log('Session Timedout'+err))
         }
     },[])
 
