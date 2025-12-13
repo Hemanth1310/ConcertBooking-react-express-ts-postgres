@@ -11,7 +11,7 @@ router.get('/userDetails',authenticateToken,async(req,res)=>{
         const user = await prisma.user.findUnique({
             where:{id:userId},
             select:{
-                 id: true,
+                id: true,
                 firstName: true,
                 lastName: true,
                 email: true,
@@ -20,7 +20,7 @@ router.get('/userDetails',authenticateToken,async(req,res)=>{
 
         res.json({
             message:"User details",
-            data:{user}
+            data:{...user}
         })
     }catch(error){
         res.status(404).json({error:'User not found'})

@@ -10,9 +10,7 @@ type Props = {
 }
 
 const Authentication = ({isModalOpen,openModal,closeModal}: Props) => {
-   
     const [toggle,setToggle] = useState<boolean>(false)
-
     useEffect(()=>{
         setToggle(false)
     },[openModal])

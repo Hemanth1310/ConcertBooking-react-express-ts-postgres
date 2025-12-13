@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import api from '../utils/axiosConfig'
-import type { UserData } from '../types'
 
 type Props = {
     closeModal:()=>void
@@ -34,7 +33,8 @@ const Login = ({closeModal}: Props) => {
           try{
             const response = await api.post('/auth/login',data)
             console.log('log'+JSON.stringify(response.data))
-            handleAuth(response.data.data)
+            localStorage.setItem('token',response.data.token)
+            handleAuth(response.data.payload)
             closeModal()
           }catch(error){
             console.error('Failed to Fetch api' +error)

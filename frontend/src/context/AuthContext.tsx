@@ -1,5 +1,6 @@
-import { Children, createContext, useContext, useState } from "react";
+import { Children, createContext, useContext, useEffect, useState } from "react";
 import type { UserData } from "../types";
+import api from "../utils/axiosConfig";
 
 type AuthContextType = {
     userData:UserData|null,
@@ -24,6 +25,15 @@ const AuthConextProvider =({children}:AuthConextProviderType)=>{
         console.log(authUserDetails)
         setUserData(authUserDetails)
     }
+
+    useEffect(()=>{
+        const token = localStorage.getItem('token')
+        if(token){
+            api.get('/api/userDetails')
+                .then(response=>setUserData(response.data))
+                .catch(err=>console.log(' Session Timedout'))
+        }
+    },[])
 
     return(
     <AuthContext.Provider value={{userData,handleAuth}}>
