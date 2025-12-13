@@ -29,7 +29,7 @@ const Header = (props: Props) => {
                         <span className="material-symbols-outlined text-shadow-stone-800 " style={{ fontSize: '36px' }}>
                         account_circle
                         </span>:
-                        <button className='bg-[#DF1827] h-full w-full text-white text-md font-bold rounded-2xl' onClick={openModal}>SignIn</button>
+                        <button className='bg-[#DF1827] h-full w-full text-white sm:text-xs md:text-lg font-bold rounded-2xl p-1' onClick={openModal}>SignIn</button>
                 }
             </div>
             <Authentication isModalOpen={isModalOpen} openModal={openModal} closeModal={closeModal}/>

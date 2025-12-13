@@ -1,8 +1,5 @@
-import React, { useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Modal from './Modal'
-import type { UserData } from '../types';
-import { useAuth } from '../context/AuthContext';
-import api from '../utils/axiosConfig';
 import Login from './Login';
 import Register from './Register';
 
@@ -16,7 +13,9 @@ const Authentication = ({isModalOpen,openModal,closeModal}: Props) => {
    
     const [toggle,setToggle] = useState<boolean>(false)
 
-
+    useEffect(()=>{
+        setToggle(false)
+    },[openModal])
   return (
 
                 <Modal 

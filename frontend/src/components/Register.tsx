@@ -35,10 +35,10 @@ const Register = (props: Props) => {
 
     }
 
-    const Registration = async(payload:UserRegistrationData)=>{
+    const Registration = async(userRegData:UserRegistrationData)=>{
         try{
-            const response = await api.post('/auth/register',payload)
-            console.log(response.data)
+            const response = await api.post('/auth/register',userRegData)
+            console.log(response.data.messsage)
         }catch(error){
             console.error('Failed to Fetch api' +error)
             setFormError('REgistration failed. Please try again later!!')
