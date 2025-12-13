@@ -30,7 +30,7 @@ router.post('/register',async(req,res)=>{
 
         res.json({
             message:'Profile Created',
-            data:{
+            payload:{
                 ...user
             }
         })
@@ -75,7 +75,7 @@ router.post('/login',async(req,res)=>{
             res.json({
             message:'login successful!',
             token:token,
-            data:{
+            payload:{
                 ...userData
             }
         })}else{

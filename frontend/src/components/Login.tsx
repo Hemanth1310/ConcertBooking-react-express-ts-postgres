@@ -33,7 +33,8 @@ const Login = ({closeModal}: Props) => {
             }
           try{
             const response = await api.post('/auth/login',data)
-            handleAuth(response.data)
+            console.log('log'+JSON.stringify(response.data))
+            handleAuth(response.data.data)
             closeModal()
           }catch(error){
             console.error('Failed to Fetch api' +error)
@@ -49,15 +50,6 @@ const Login = ({closeModal}: Props) => {
                             >
                             Login
                         </button>
-                     <div className='w-full flex gap-5'>
-                       
-                        <button 
-                            onClick={login}
-                            className="mt-4 border border-gray-400 text-gray-400px-3 py-3 rounded flex-1 hover:bg-gray-200"
-                            >
-                            Register
-                        </button>
-                     </div>
                     {messsage && <div className='mt-4 text-md text-red-700'>"Please enter valid emailId and password to proceed"</div>}
     </div>
   )
