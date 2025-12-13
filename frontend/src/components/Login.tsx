@@ -7,7 +7,7 @@ type Props = {
 }
 
 const Login = ({closeModal}: Props) => {
-        const loginInputRef = useRef<HTMLInputElement>(null)
+    const loginInputRef = useRef<HTMLInputElement>(null)
     const passwordInputRef = useRef<HTMLInputElement>(null)
     const [messsage,setMessage] = useState<boolean>(false)
     const {handleAuth}=useAuth()
