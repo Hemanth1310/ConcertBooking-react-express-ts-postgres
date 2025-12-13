@@ -21,6 +21,7 @@ const AuthConextProvider =({children}:AuthConextProviderType)=>{
     const [userData,setUserData] = useState<UserData|null>(null)
 
     const handleAuth = (authUserDetails:UserData)=>{
+        console.log(authUserDetails)
         setUserData(authUserDetails)
     }
 

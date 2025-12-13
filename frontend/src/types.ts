@@ -4,3 +4,10 @@ export type UserData = {
     email:string,
     id:string
 }
+
+export type UserRegistrationData={
+    firstName:string,
+    lastName:string,
+    email:string,
+    password:string,
+}

@@ -31,7 +31,7 @@ router.post('/register',async(req,res)=>{
         res.json({
             message:'Profile Created',
             data:{
-                user
+                ...user
             }
         })
     }catch(error){
@@ -76,7 +76,7 @@ router.post('/login',async(req,res)=>{
             message:'login successful!',
             token:token,
             data:{
-                user:userData
+                ...userData
             }
         })}else{
             res.status(401).json({error: 'Invalid credentials.' })

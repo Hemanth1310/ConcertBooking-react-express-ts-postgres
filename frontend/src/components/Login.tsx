@@ -33,7 +33,7 @@ const Login = ({closeModal}: Props) => {
             }
           try{
             const response = await api.post('/auth/login',data)
-            handleAuth(response.data as UserData)
+            handleAuth(response.data)
             closeModal()
           }catch(error){
             console.error('Failed to Fetch api' +error)
@@ -43,13 +43,14 @@ const Login = ({closeModal}: Props) => {
      <div className='w-full flex flex-col justify-center gap-5'>
                     <input type='email' ref={loginInputRef} className='border border-gray-400 text-xl p-4' placeholder='Enter Email here...'></input>
                     <input type='password' ref={passwordInputRef} className='border border-gray-400 text-xl p-4' placeholder='Enter Password here...'></input>
-                     <div className='w-full flex gap-5'>
-                        <button 
+                      <button 
                             onClick={login}
                             className="mt-4 bg-[#DF1827] text-white px-3 py-3 rounded flex-1 hover:bg-red-400"
                             >
                             Login
                         </button>
+                     <div className='w-full flex gap-5'>
+                       
                         <button 
                             onClick={login}
                             className="mt-4 border border-gray-400 text-gray-400px-3 py-3 rounded flex-1 hover:bg-gray-200"
