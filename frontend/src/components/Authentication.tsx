@@ -11,19 +11,24 @@ type Props = {
 
 const Authentication = ({isModalOpen,openModal,closeModal}: Props) => {
     const [toggle,setToggle] = useState<boolean>(false)
+    const FormComponent = toggle? Register:Login
+    const formKey = toggle ? 'register' : 'login';
+    const title = toggle ? 'Register' : 'Login';
     useEffect(()=>{
         setToggle(false)
-    },[openModal])
+    },[isModalOpen])
   return (
 
                 <Modal 
                     isOpen={isModalOpen} 
                     onClose={closeModal}
-                    title="Login"
+                    title={title}
                 >
                     {/* Content passed as children */}
                     <div className='w-full flex flex-col items-center gap-5'>
-                         {!toggle?<Login closeModal={closeModal}/>:<Register closeModal={closeModal}/>}
+                        <div key={formKey} className='w-full'>
+                            <FormComponent closeModal={closeModal}/>
+                         </div>
                          {toggle?<div>Already Registered? <span className='text-blue-700' onClick={()=>setToggle(!toggle)}>SignIn here</span></div>:
                          <div>Not Registered? <span className='text-blue-700' onClick={()=>setToggle(!toggle)}>SignUp here</span></div>}
                     </div>
