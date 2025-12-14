@@ -1,4 +1,4 @@
-import {  Prisma, User } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import express from 'express'
 import { prisma } from './prisma'
 import bcrypt from 'bcrypt'
