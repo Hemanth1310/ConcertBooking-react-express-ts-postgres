@@ -11,3 +11,20 @@ export type UserRegistrationData={
     email:string,
     password:string,
 }
+export type ConcertCategory = 
+    | 'EDM_DJ_EVENTS'
+    | 'GLOBAL_ARENA_STARS'
+    | 'LOCAL_REGIONAL_SHOWS'
+    | 'CLASSICAL_ORCHESTRAL'
+    | 'FESTIVALS_MULTI_DAY';
+
+export type Concert = {
+    name: string;
+    id: number;
+    artist: string;
+    date: Date;
+    venue: string;
+    description: string | null;
+    category: ConcertCategory;
+    isFeatured: boolean;
+}
