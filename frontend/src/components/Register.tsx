@@ -59,7 +59,7 @@ const Register = (props: Props) => {
                        
                         <button 
                            type='submit'
-                            className="mt-4 border border-gray-400 text-gray-400px-3 py-3 rounded flex-1 hover:bg-gray-200"
+                            className="mt-4 bg-[#DF1827] text-white px-3 py-3 rounded flex-1 hover:bg-red-400"
                         >
                             Register
                         </button>
