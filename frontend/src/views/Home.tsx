@@ -1,0 +1,22 @@
+import React from 'react'
+import { useConcerts } from '../utils/hooks/concertDataHook';
+
+type Props = {}
+
+const Home  = (props: Props) => {
+  const { data: concerts, isLoading, isError } = useConcerts();
+  if(isLoading){
+    return <div>"Page is loading . please wait"</div>
+  }
+  if(isError){
+    return <div>"Error Occured: cannot fetch data. please try again"</div>
+  }
+  const featuredList = concerts?.filter(concert=>concert.isFeatured===true)
+  return (
+    <div>
+      <div>{featuredList?.map(concert=>concert.name)}</div>
+    </div>
+  )
+}
+
+export default Home

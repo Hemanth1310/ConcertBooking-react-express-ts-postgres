@@ -3,13 +3,8 @@ import api from "../axiosConfig";
 import type { Concert } from "../../types";
 
 const fetchAllConcerts = async():Promise<Concert[]>=>{
-    try{
         const {data} = await api.get('/data/concerts')
         return data.payload.concerts
-    }catch(error){
-        console.log("Failed to fetch concerts"+error)
-        return []
-    }
     
 }
 

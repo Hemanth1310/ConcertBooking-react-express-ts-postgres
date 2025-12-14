@@ -7,6 +7,7 @@ import Login from './components/Authentication'
 import AuthConextProvider from './context/AuthContext'
 import ProtectedRoutes from './authorization/ProtectedRoutes'
 import Checkout from './views/Checkout'
+import Home from './views/Home'
 
 function App() {
   return (
@@ -15,12 +16,17 @@ function App() {
         <BrowserRouter>
           <div className='w-screen flex flex-col justify-center items-center'>
             <Header/>
-            <Routes>
-              {/* <Route path='/login' element={<Login/>}></Route> */}
-              <Route element={<ProtectedRoutes/>}>
-                  <Route path="/checkout" element={<Checkout/>}></Route>
-              </Route>
-            </Routes>
+            <div className='mt-[80px] bg-amber-200 w-full'>
+              <Routes>
+                {/* <Route path='/login' element={<Login/>}></Route> */}
+                
+                    <Route path='/' element={<Home/>}></Route>
+                    <Route element={<ProtectedRoutes/>}>
+                        <Route path="/checkout" element={<Checkout/>}></Route>
+                    </Route>
+            
+              </Routes>
+              </div>
           </div>
             
         </BrowserRouter>
