@@ -1,5 +1,6 @@
 import React from 'react'
 import { useConcerts } from '../utils/hooks/concertDataHook';
+import getImageUrl from '../utils/getImageUrl';
 
 type Props = {}
 
@@ -14,7 +15,11 @@ const Home  = (props: Props) => {
   const featuredList = concerts?.filter(concert=>concert.isFeatured===true)
   return (
     <div>
-      <div>{featuredList?.map(concert=>concert.name)}</div>
+      <div>{featuredList?.map(concert=>
+        <div>
+          <h1>{concert.name}</h1>
+          <img src={getImageUrl(concert.name)}/>
+        </div>)}</div>
     </div>
   )
 }
