@@ -8,6 +8,7 @@ import AuthConextProvider from './context/AuthContext'
 import ProtectedRoutes from './authorization/ProtectedRoutes'
 import Checkout from './views/Checkout'
 import Home from './views/Home'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             
               </Routes>
               </div>
+              <Footer/>
           </div>
             
         </BrowserRouter>

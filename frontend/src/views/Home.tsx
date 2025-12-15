@@ -22,7 +22,7 @@ const Home  = (props: Props) => {
         <div className='w-full mt-5 flex flex-col gap-10  p-5 md:p-0 '>
           {concert_types.map(concert_type=>(
             <div>
-              <h1 className='text-2xl md:text-3xl font-medium font-mono py-5'>{concert_type.replaceAll('_',' ')}</h1>
+              <h1 className='text-2xl md:text-3xl font-bold font-mono py-5'>{concert_type.replaceAll('_',' ')}</h1>
               <div className='flex gap-4'>
               {catogorisedData[concert_type].map(concert=>{
                 const dateObject = new Date(concert.date)
