@@ -28,8 +28,8 @@ const Home  = (props: Props) => {
                 const dateObject = new Date(concert.date)
                 return(
                 <div className='flex flex-col overflow-x-scroll w-80' key={concert.id}>
-                    <img className='' src={getImageUrl(concert.imagePath)}/>
-                    <div className='text-2xl font-sans'>{concert.name}</div>
+                    <img className='h-52' src={getImageUrl(concert.imagePath)}/>
+                    <div className='text-2xl font-sans mt-3'>{concert.name}</div>
                     <div>{concert.description}</div>
                     <div> {dateObject.toLocaleDateString('en-US', { 
                         weekday: 'short', 
