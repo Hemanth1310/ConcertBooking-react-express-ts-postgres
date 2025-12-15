@@ -1,6 +1,7 @@
 import React from 'react'
 import { useConcerts } from '../utils/hooks/concertDataHook';
 import getImageUrl from '../utils/getImageUrl';
+import HeroComponent from '../components/HeroComponent';
 
 type Props = {}
 
@@ -12,15 +13,15 @@ const Home  = (props: Props) => {
   if(isError){
     return <div>"Error Occured: cannot fetch data. please try again"</div>
   }
-  const featuredList = concerts?.filter(concert=>concert.isFeatured===true)
+  if(!concerts){
+    return <div>"Error Occured: cannot fetch data. please try again"</div>
+  }
+  
   return (
-    <div>
-      <div>{featuredList?.map(concert=>
-        <div>
-          <h1>{concert.name}</h1>
-          <img src={getImageUrl(concert.imagePath)}/>
-        </div>)}</div>
+    <div className='w-full flex flex-col items-center'>
+        <HeroComponent concerts={concerts}/>
     </div>
+   
   )
 }
 

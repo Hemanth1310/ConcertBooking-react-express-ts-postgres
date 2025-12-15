@@ -16,7 +16,7 @@ function App() {
         <BrowserRouter>
           <div className='w-screen flex flex-col justify-center items-center'>
             <Header/>
-            <div className='mt-[80px] bg-amber-200 w-full'>
+            <div className='container mt-[80px] bg-amber-200 w-full'>
               <Routes>
                 {/* <Route path='/login' element={<Login/>}></Route> */}
                 
