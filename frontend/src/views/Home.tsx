@@ -18,7 +18,7 @@ const Home  = (props: Props) => {
       <div>{featuredList?.map(concert=>
         <div>
           <h1>{concert.name}</h1>
-          <img src={concert.imagePath}/>
+          <img src={getImageUrl(concert.imagePath)}/>
         </div>)}</div>
     </div>
   )
