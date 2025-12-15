@@ -16,6 +16,7 @@ router.get('/concerts',async(req,res)=>{
             description: true,
             category: true, 
             isFeatured: true,
+            imagePath:true
         }
     })
     console.log(concerts)

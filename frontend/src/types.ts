@@ -27,4 +27,5 @@ export type Concert = {
     description: string | null;
     category: ConcertCategory;
     isFeatured: boolean;
+    imagePath:string;
 }

@@ -54,6 +54,7 @@ model Concert {
   description String?
   category    ConcertCategory     @default(LOCAL_REGIONAL_SHOWS)
   isFeatured  Boolean             @default(false)
+  imagePath   String              @default("")
 
   ticketTypes TicketType[]
 }
