@@ -2,12 +2,13 @@ import React, { useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 
 import Authentication from './Authentication'
+import Search from './Search'
 
 type Props = {}
 
 const Header = (props: Props) => {
-    const [searchInput, setSearchInput] = useState<string>('')
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+   
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [toggelDropDown ,setToggleDropDown] = useState<boolean>(false)
     const {handleAuth} = useAuth()
     // Handlers
@@ -30,12 +31,7 @@ const Header = (props: Props) => {
     <div className='w-screen h-20 bg-white flex items-center justify-center fixed top-0 left-0 z-100 shadow-md'>
         <div className='container relative mx-auto flex items-center justify-between h-full gap-5 p-4'>
             <h1 className='md:text-2xl text-shadow-stone-800 flex-1'>ConcertZ/Berlin</h1>
-            <div className='border px-5 border-gray-400 h-full w-full flex justify-between items-center rounded-2xl flex-7'>
-                <input className='h-full w-full md:text-xl focus:outline-none ' type='text' value={searchInput} onChange={(e)=>setSearchInput(e.target.value)} placeholder='Search for concerts around berlin'></input>
-                     <span className="material-symbols-outlined text-gray-400" style={{ fontSize: '32px' }}>
-                        search
-                    </span>
-            </div>
+            <Search/>
             <div className='h-full flex items-center justify-center flex-1'>
                 {userData?
                     <div className='flex justify-between flex-col'>
@@ -59,7 +55,7 @@ const Header = (props: Props) => {
                       
                         
                         :
-                        <button className='bg-[#DF1827] h-full w-full text-white sm:text-xs md:text-lg font-bold rounded-2xl p-1' onClick={openModal}>SignIn</button>
+                        <button className='bg-brand h-full w-full text-white text-xs md:text-lg font-bold rounded-2xl px-3 md:px-4' onClick={openModal}>SignIn</button>
                 }
             </div>
             <Authentication isModalOpen={isModalOpen} openModal={openModal} closeModal={closeModal}/>
