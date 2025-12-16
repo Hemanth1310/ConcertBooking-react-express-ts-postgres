@@ -9,10 +9,6 @@ const Search = (props: Props) => {
 
     const searchName = concertNames.filter(concertName=>concertName.toLocaleLowerCase().includes(searchInput))
 
-    useEffect(()=>{
-        console.log(searchName)
-    },[searchName])
-
   return (
     <div className='w-full h-full'>
             <div className='border px-5 border-gray-400 h-full w-full flex justify-between items-center rounded-2xl flex-7'>
