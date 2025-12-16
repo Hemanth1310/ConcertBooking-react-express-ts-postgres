@@ -6,16 +6,17 @@ import { useNavigate } from 'react-router'
 type Props = {}
 
 const Search = (props: Props) => {
-    const [searchInput, setSearchInput] = useState<string>('')
     const {concertsData,isLoading,isError} = dataProvider()
+    const [searchInput, setSearchInput] = useState<string>('')
+    const navigate = useNavigate()
     if(isLoading){
         return <div>"Page is loading . please wait"</div>
     }
     if(isError){
         return <div>"Error Occured: cannot fetch data. please try again"</div>
     }
-    const navigate = useNavigate()
-    const searchedConcertList = concertsData.filter(concert=>concert.name.toLocaleLowerCase().includes(searchInput))
+    
+    const searchedConcertList :Concert[]= concertsData.filter(concert=>concert.name.toLocaleLowerCase().includes(searchInput))
 
     const handleNavigation=(id:number,name:string)=>{
         const formattedName = name.replaceAll(" ","_")
