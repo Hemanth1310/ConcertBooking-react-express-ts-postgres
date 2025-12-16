@@ -3,7 +3,7 @@ import { useConcerts } from "./hooks/concertDataHook"
 
 
 const dataProvider = ()=>{
-    const {data:concerts,isLoading,isError} = useConcerts()
+    const {data:concerts,isLoading,isError} =  useConcerts()
 
     const catogorisedData : Record<string , Concert[]> = {}
     const featuredData : Concert[]  =[]
