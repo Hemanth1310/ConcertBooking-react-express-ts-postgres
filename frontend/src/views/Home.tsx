@@ -17,7 +17,7 @@ const Home  = (props: Props) => {
     return <div>"Error Occured: cannot fetch data. please try again"</div>
   }
 
-  const handleNavigation=(id:string,name:string)=>{
+  const handleNavigation=(id:number,name:string)=>{
         const formattedName = name.replaceAll(" ","_")
         navigate(`/concerts/${formattedName}/${id}`)
     }
@@ -35,8 +35,8 @@ const Home  = (props: Props) => {
                 const dateObject = new Date(concert.date)
                 return(
                 <div className='flex flex-col shrink-0 w-80 snap-start' key={concert.id}>
-                    <img className='h-52 w-80' src={getImageUrl(concert.imagePath)}/>
-                    <div className='text-2xl font-sans mt-3'>{concert.name}</div>
+                    <img className='h-52 w-80 cursor-pointer hover:opacity-70' onClick={()=>handleNavigation(concert.id,concert.name)} src={getImageUrl(concert.imagePath)}/>
+                    <div className='text-2xl font-sans mt-3 cursor-pointer hover:font-stretch-105% hover:underline' onClick={()=>handleNavigation(concert.id,concert.name)}>{concert.name}</div>
                     <div>{concert.description}</div>
                     <div> {dateObject.toLocaleDateString('en-US', { 
                         weekday: 'short', 
