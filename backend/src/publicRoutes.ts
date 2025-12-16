@@ -91,7 +91,7 @@ router.get('/ticketInfo/:id',async(req,res)=>{
         res.json({
             message:'Tickets Information',
             payload:{
-                ...ticketInfo
+                ticketInfo
             }
         })
         
