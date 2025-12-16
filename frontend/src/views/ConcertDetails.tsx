@@ -20,7 +20,7 @@ const ConcertDetails = (props: Props) => {
             return <div>Failed to fetch details</div>
         }
     const dateObject = new Date(concert.date)
-   
+    
 
    
   
@@ -40,27 +40,34 @@ const ConcertDetails = (props: Props) => {
                         day: 'numeric' 
                   })}</div>
                   <div className='font-bold'>@{concert.venue}</div>
+                  
             </div>
+            
         </div>
-        <div>
+       
+         <div>
             <h1 className='text-2xl md:text-3xl font-bold font-mono py-5'>Tickets Information</h1>
             {isTicketsLoading&&<div>Loading, please wait</div>}
             
-            <div className='flex'>
-                {ticketInfo?.map(ticket=>
-                <div>
-                    <div>{ticket.name}</div>
-                    <div>
+            <div className='flex gap-5'>
+                {ticketInfo?.map(ticket=>{
+                    const availabilityPercent = ticket.availableQuantity/ticket.totalQuantity
+                return(
+                <div className='flex-col gap-2 items-center shadow-md'>
+                    
+                    <div className={` p-5 text-white text-2xl rounded-tl-2xl rounded-tr-2xl flex items-center justify-center bg-gray-800`} >{ticket.name}</div>
+                    <div className={`p-5 items-center justify-center  bg-gray-100`}>
+                        <div className='text-2xl '>Availability</div>
                         <p>{ticket.availableQuantity}</p>
-                        <p>{ticket.price}</p>
+                        <div className='text-2xl '>Price</div>
+                        <p>${ticket.price}</p>
                     </div>
-                </div>)}
-
+                </div>)})}
+            
             </div>
 
             
         </div>
-        
     
     </div>
   )

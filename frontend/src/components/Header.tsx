@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext'
 
 import Authentication from './Authentication'
 import Search from './Search'
+import { useNavigate } from 'react-router'
 
 type Props = {}
 
@@ -11,6 +12,7 @@ const Header = (props: Props) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [toggelDropDown ,setToggleDropDown] = useState<boolean>(false)
     const {handleAuth} = useAuth()
+    const navigation = useNavigate()
     // Handlers
  
     const openModal = () => setIsModalOpen(true);
@@ -27,10 +29,12 @@ const Header = (props: Props) => {
         handleToggleDropdown()
         handleAuth(null)
     }
+
+    
   return (
     <div className='flex-1 w-screen h-20 bg-white flex items-center justify-center fixed top-0 left-0 z-100 shadow-md'>
         <div className='container relative mx-auto flex items-center justify-between h-full gap-5 p-4'>
-            <h1 className='md:text-2xl text-shadow-stone-800 flex-1'>ConcertZ/Berlin</h1>
+            <h1 className='md:text-2xl text-shadow-stone-800 flex-1 cursor-pointer' onClick={()=>navigation('/')}>ConcertZ/Berlin</h1>
             <Search/>
             <div className='h-full flex items-center justify-center flex-1'>
                 {userData?
