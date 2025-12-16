@@ -43,6 +43,7 @@ const Home  = (props: Props) => {
                         month: 'short', 
                         day: 'numeric' 
                   })}</div>
+                  <div className='font-bold'>@{concert.venue}</div>
                 </div>
                 )})}
                 </div>

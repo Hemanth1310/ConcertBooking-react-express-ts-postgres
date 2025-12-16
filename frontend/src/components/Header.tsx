@@ -28,7 +28,7 @@ const Header = (props: Props) => {
         handleAuth(null)
     }
   return (
-    <div className='w-screen h-20 bg-white flex items-center justify-center fixed top-0 left-0 z-100 shadow-md'>
+    <div className='flex-1 w-screen h-20 bg-white flex items-center justify-center fixed top-0 left-0 z-100 shadow-md'>
         <div className='container relative mx-auto flex items-center justify-between h-full gap-5 p-4'>
             <h1 className='md:text-2xl text-shadow-stone-800 flex-1'>ConcertZ/Berlin</h1>
             <Search/>

@@ -16,9 +16,9 @@ function App() {
     <AuthConextProvider>
       <div className="min-h-screen bg-gray-50">
         <BrowserRouter>
-          <div className='w-screen flex flex-col justify-center items-center'>
+          <div className='w-screen min-h-screen flex flex-col justify-center items-center'>
             <Header/>
-            <div className='container mt-[80px] w-full'>
+            <div className='container mt-20 w-full'>
               <Routes>
                 {/* <Route path='/login' element={<Login/>}></Route> */}
                 
