@@ -1,16 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "../axiosConfig";
-import type { Concert } from "../../types";
+import type { Concert, TicketType } from "../../types";
 
 const fetchAllConcerts = async():Promise<Concert[]>=>{
-        const {data} = await api.get('/data/concerts')
+    try{
+         const {data} = await api.get('/data/concerts')
         return data.payload.concerts
-    
+    }catch(error){
+        console.log(error)
+    }   
+    return []
 }
 
-const fetchConcertById =async(concertId:number):Promise<Concert>=>{
-    const {data} = await api.get(`/data/concerts/${concertId}`)
-    return data.payload.concert
+const fetchConcertById =async(concertId:number):Promise<Concert|undefined>=>{  
+    try{
+         const {data} = await api.get(`/data/concerts/${concertId}`)
+        return data.payload.concert
+
+    }catch(error){
+        console.log(error)
+    }   
+    return 
 }
 
 
@@ -29,8 +39,20 @@ export const useConcertDetails =(concertID:number)=>{
     })
 }
 
-// const fetchTicketTypes = (id:string) Promise<Concert[]>=>{
-//     try{
-//         const {data} = await api.get
-//     }
-// }
+const fetchTicketTypes = async (id:number): Promise<TicketType[]>=>{
+    try{
+        const {data} = await api.get(`/data/ticketInfo/${id}`)
+        return data.payload
+    }catch(error){
+        console.log(error)
+    }    
+    return []
+
+}
+
+export const useTicketInfo = (id:number)=>{
+    return useQuery({
+        queryKey:['ticketInfo',id],
+        queryFn:()=>fetchTicketTypes(id)
+    })
+}

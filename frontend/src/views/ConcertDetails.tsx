@@ -2,13 +2,14 @@ import React from 'react'
 import { useParams } from 'react-router'
 import dataProvider from '../utils/dataProvider'
 import getImageUrl from '../utils/getImageUrl'
-import { useConcertDetails } from '../utils/hooks/concertDataHook'
+import { useConcertDetails, useTicketInfo } from '../utils/hooks/concertDataHook'
 
 type Props = {}
 
 const ConcertDetails = (props: Props) => {
     const {name,id} = useParams()
     const {data:concert,isLoading,isError} = useConcertDetails(Number(id))
+    const {data:ticketInfo,isLoading:isTicketsLoading,isError:isTicketsError} = useTicketInfo(Number(id))
       if(isLoading){
     return <div>"Page is loading . please wait"</div>
   }
@@ -39,9 +40,25 @@ const ConcertDetails = (props: Props) => {
                         day: 'numeric' 
                   })}</div>
                   <div className='font-bold'>@{concert.venue}</div>
-                 
+            </div>
+        </div>
+        <div>
+            <h1 className='text-2xl md:text-3xl font-bold font-mono py-5'>Tickets Information</h1>
+            {isTicketsLoading&&<div>Loading, please wait</div>}
+            
+            <div className='flex'>
+                {ticketInfo?.map(ticket=>
+                <div>
+                    <div>{ticket.name}</div>
+                    <div>
+                        <p>{ticket.availableQuantity}</p>
+                        <p>{ticket.price}</p>
+                    </div>
+                </div>)}
 
             </div>
+
+            
         </div>
         
     

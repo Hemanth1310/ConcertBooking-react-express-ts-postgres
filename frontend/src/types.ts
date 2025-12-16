@@ -29,3 +29,12 @@ export type Concert = {
     isFeatured: boolean;
     imagePath:string;
 }
+
+export type TicketType = {
+    name: string;
+    id: number;
+    concertId: number;
+    price: number;
+    availableQuantity: number;
+    totalQuantity: number;
+}
