@@ -22,6 +22,7 @@ export const useConcerts = ()=>{
 }
 
 export const useConcertDetails =(concertID:number)=>{
+    
     return useQuery({
         queryKey:['concert',concertID],
         queryFn:()=>fetchConcertById(concertID)
