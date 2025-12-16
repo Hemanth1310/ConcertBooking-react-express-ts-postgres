@@ -3,17 +3,24 @@ import { useConcerts } from '../utils/hooks/concertDataHook';
 import getImageUrl from '../utils/getImageUrl';
 import HeroComponent from '../components/HeroComponent';
 import dataProvider from '../utils/dataProvider';
+import { useNavigate } from 'react-router';
 
 type Props = {}
 
 const Home  = (props: Props) => {
   const {catogorisedData,featuredData,isLoading,isError} = dataProvider()
+  const navigate = useNavigate()
   if(isLoading){
     return <div>"Page is loading . please wait"</div>
   }
   if(isError){
     return <div>"Error Occured: cannot fetch data. please try again"</div>
   }
+
+  const handleNavigation=(id:string,name:string)=>{
+        const formattedName = name.replaceAll(" ","_")
+        navigate(`/concerts/${formattedName}/${id}`)
+    }
 
   const concert_types = Object.keys(catogorisedData)
   return (

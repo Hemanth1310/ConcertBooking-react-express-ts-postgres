@@ -9,6 +9,8 @@ const dataProvider = ()=>{
     const featuredData : Concert[]  =[]
     const concertNames : string[] = []
     const concertCategories: ConcertCategory[] = []
+    const concertsData:Concert[] =concerts?concerts:[]
+    
 
     concerts?.forEach((concert)=>{
         if(concert.isFeatured){
@@ -29,7 +31,7 @@ const dataProvider = ()=>{
         
     })
 
-    return {catogorisedData,featuredData,isLoading,isError, concertNames,concertCategories}
+    return {catogorisedData,featuredData,isLoading,isError, concertNames,concertCategories,concertsData}
     
 }
 

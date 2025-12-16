@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import dataProvider from '../utils/dataProvider'
+import type { Concert } from '../types'
+import { useNavigate } from 'react-router'
 
 type Props = {}
 
 const Search = (props: Props) => {
     const [searchInput, setSearchInput] = useState<string>('')
-    const {concertNames} = dataProvider()
+    const {concertsData} = dataProvider()
+    const navigate = useNavigate()
+    const searchedConcertList = concertsData.filter(concert=>concert.name.toLocaleLowerCase().includes(searchInput))
 
-    const searchName = concertNames.filter(concertName=>concertName.toLocaleLowerCase().includes(searchInput))
+    const handleNavigation=(id:number,name:string)=>{
+        const formattedName = name.replaceAll(" ","_")
+        navigate(`/concerts/${formattedName}/${id}`)
+    }
 
   return (
     <div className='w-full h-full'>
@@ -19,11 +26,11 @@ const Search = (props: Props) => {
             </div>
             {searchInput.length>0 && 
                 <div className='rounded-2xl min-h-16 w-full bg-gray-100 shadow-md mt-2 p-3'>
-                    {searchName.slice(0,7).map(avaiName=><div className='flex py-5 px-3 md:px-10 gap-3 hover:bg-white hover:shadow-md rounded-2xl'>
+                    {searchedConcertList.slice(0,7).map(concert=><div className='flex py-5 px-3 md:px-10 gap-3 hover:bg-white hover:shadow-md rounded-2xl'>
                         <span className="material-symbols-outlined text-gray-400" style={{ fontSize: '32px' }}>
                                 search
                             </span>
-                            <div className='w-full text-sm md:text-xl text-gray-600' key={avaiName}>{avaiName}</div>
+                            <div className='w-full text-sm md:text-xl text-gray-600' key={concert.id} onClick={()=>handleNavigation(concert.id,concert.name)}>{concert.name}</div>
                     </div>
                     )}
                 </div>

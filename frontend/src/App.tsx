@@ -9,6 +9,7 @@ import ProtectedRoutes from './authorization/ProtectedRoutes'
 import Checkout from './views/Checkout'
 import Home from './views/Home'
 import Footer from './components/Footer'
+import ConcertDetails from './views/ConcertDetails'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 {/* <Route path='/login' element={<Login/>}></Route> */}
                 
                     <Route path='/' element={<Home/>}></Route>
+                    <Route path='/concerts/:name/:id' element={<ConcertDetails/>}></Route>
                     <Route element={<ProtectedRoutes/>}>
                         <Route path="/checkout" element={<Checkout/>}></Route>
                     </Route>
