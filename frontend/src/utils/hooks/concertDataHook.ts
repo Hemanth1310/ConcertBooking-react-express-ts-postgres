@@ -9,7 +9,7 @@ const fetchAllConcerts = async():Promise<Concert[]>=>{
 }
 
 const fetchConcertById =async(concertId:number):Promise<Concert>=>{
-    const {data} = await api.get('/data/concerts')
+    const {data} = await api.get(`/data/concerts/${concertId}`)
     return data.payload.concert
 }
 
@@ -23,7 +23,7 @@ export const useConcerts = ()=>{
 
 export const useConcertDetails =(concertID:number)=>{
     return useQuery({
-        queryKey:['concerts',concertID],
+        queryKey:['concert',concertID],
         queryFn:()=>fetchConcertById(concertID)
     })
 }
