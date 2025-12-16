@@ -1,6 +1,6 @@
 import express from 'express'
 import { prisma } from './prisma';
-import { Prisma,Concert } from '@prisma/client';
+import { Prisma,Concert, TicketType } from '@prisma/client';
 
 const router = express.Router()
 
@@ -41,7 +41,7 @@ router.get('/concerts/:id',async(req,res)=>{
     try{
         const concert :Concert|null = await prisma.concert.findUnique({
             where:{id:id},
-              select:{
+            select:{
             id:true,
             name: true,
             artist: true,
@@ -69,18 +69,35 @@ router.get('/concerts/:id',async(req,res)=>{
     }
 })
 
-
-router.get('/featured',async(req,res)=>{
+router.get('/ticketInfo/:id',async(req,res)=>{
+    const id:number = Number(req.params.id)
     try{
-        const featuredConcert :Concert[] = await prisma.concert.findMany({
-        where:{
-            isFeatured:true
+        const ticketInfo: TicketType[]= await prisma.ticketType.findMany({
+            where:{concertId:id},
+            select:{
+                id:true,
+                concertId:true,
+                name:true,
+                price:true,
+                availableQuantity:true,
+                totalQuantity :true,
+            }
+        })
+        
+        if(!ticketInfo){
+            res.status(404).send("Technical error : Please come back later.Concert data not available")
         }
-         })
+
+        res.json({
+            message:'Tickets Information',
+            payload:{
+                ...ticketInfo
+            }
+        })
+        
     }catch(error){
-        res.send(error)
+        res.status(405).send(error)
     }
-      
 })
 
 export default router
