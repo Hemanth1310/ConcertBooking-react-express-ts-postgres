@@ -6,7 +6,7 @@ import {
 } from "../utils/hooks/concertDataHook";
 import Authentication from "../components/Authentication";
 import { useAuth } from "../context/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ConcertDetails = () => {
   const { name, id } = useParams()
@@ -14,10 +14,17 @@ const ConcertDetails = () => {
   const {userData} = useAuth()
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { data: concert, isLoading, isError } = useConcertDetails(Number(id));
+  const [pendingTicketId,setPendingTicketId] = useState<number|null>(null)
   const {
     data: ticketInfo,
     isLoading: isTicketsLoading,
   } = useTicketInfo(Number(id));
+
+  useEffect(()=>{
+    if(userData && pendingTicketId && !isModalOpen){
+      navigation(`/booking/${name}/${id}/${pendingTicketId}`)
+    }
+  },[userData, pendingTicketId, isModalOpen, navigation, name, id])
 
   if (isLoading) {
     return (
@@ -44,10 +51,14 @@ const ConcertDetails = () => {
     if(userData){
       navigation(`/booking/${name}/${id}/${ticketType}`)
     }else{
+      setPendingTicketId(ticketType)
       setIsModalOpen(true)
     }
     
   }
+
+
+
 
   return (
     <div className="flex px-5 md:px-0 flex-col w-full h-full mt-5">
