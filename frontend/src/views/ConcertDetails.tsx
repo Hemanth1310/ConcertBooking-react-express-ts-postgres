@@ -11,7 +11,6 @@ const ConcertDetails = () => {
   const {
     data: ticketInfo,
     isLoading: isTicketsLoading,
-    isError: isTicketsError,
   } = useTicketInfo(Number(id));
 
   if (isLoading) {
@@ -104,7 +103,7 @@ const ConcertDetails = () => {
                     </div>
                   </div>
                   <div className={`flex p-5 items-center justify-between  `}>
-                    <div className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl">
+                    <div className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl cursor-pointer hover:opacity-70">
                       Book
                     </div>
                   </div>
