@@ -26,7 +26,7 @@ function App() {
                     <Route path='/' element={<Home/>}></Route>
                     <Route path='/concerts/:name/:id' element={<ConcertDetails/>}></Route>
                     <Route element={<ProtectedRoutes/>}>
-                        <Route path="/bookings/:name/:id" element={<Booking/>}/>
+                        <Route path="/booking/:name/:id/:ticketType" element={<Booking/>}/>
                         <Route path="/checkout" element={<Checkout/>}></Route>
                     </Route>
             
