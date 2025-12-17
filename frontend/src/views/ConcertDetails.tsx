@@ -4,10 +4,15 @@ import {
   useConcertDetails,
   useTicketInfo,
 } from "../utils/hooks/concertDataHook";
+import Authentication from "../components/Authentication";
+import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
 
 const ConcertDetails = () => {
   const { name, id } = useParams()
   const navigation = useNavigate()
+  const {userData} = useAuth()
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { data: concert, isLoading, isError } = useConcertDetails(Number(id));
   const {
     data: ticketInfo,
@@ -32,9 +37,16 @@ const ConcertDetails = () => {
     return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">Failed to fetch details</div>;
   }
   const dateObject = new Date(concert.date);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const handleNavigation = (ticketType:number)=>{
-    navigation(`/booking/${name}/${id}/${ticketType}`)
+    if(userData){
+      navigation(`/booking/${name}/${id}/${ticketType}`)
+    }else{
+      setIsModalOpen(true)
+    }
+    
   }
 
   return (
@@ -119,6 +131,7 @@ const ConcertDetails = () => {
           </div>
         )}
       </div>
+      <Authentication isModalOpen={isModalOpen} openModal={openModal} closeModal={closeModal}/>
     </div>
   );
 };
