@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import dataProvider from '../utils/dataProvider'
+import {  useState } from 'react'
 import type { Concert } from '../types'
 import { useNavigate } from 'react-router'
+import useDataProvider from '../utils/dataProvider'
 
-type Props = {}
 
-const Search = (props: Props) => {
-    const {concertsData,isLoading,isError} = dataProvider()
+const Search = ()=> {
+    const {concertsData,isLoading,isError} = useDataProvider()
     const [searchInput, setSearchInput] = useState<string>('')
     const navigate = useNavigate()
     if(isLoading){

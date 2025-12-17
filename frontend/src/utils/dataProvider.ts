@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import type { Concert, ConcertCategory } from "../types";
 import { useConcerts } from "./hooks/concertDataHook";
 
-const dataProvider = () => {
+const useDataProvider = () => {
   const { data: concerts, isLoading, isError } = useConcerts();
 
-  const prcessedData = useMemo(() => {
+  const PrcessedData = useMemo(() => {
     const catogorisedData: Record<string, Concert[]> = {};
     const featuredData: Concert[] = [];
     const concertNames: string[] = [];
@@ -38,7 +38,7 @@ const dataProvider = () => {
     };
   }, [concerts]);
 
-  return { ...prcessedData, isLoading, isError };
+  return { ...PrcessedData, isLoading, isError };
 };
 
-export default dataProvider;
+export default useDataProvider;
