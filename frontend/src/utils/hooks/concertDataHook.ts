@@ -41,7 +41,7 @@ export const useConcertDetails =(concertID:number)=>{
 
 const fetchTicketTypes = async (id:number): Promise<TicketType[]>=>{
     try{
-        const {data} = await api.get(`/data/ticketInfo/${id}`)
+        const {data} = await api.get(`/data/ticketInfos/${id}`)
         return data.payload.ticketInfo
     }catch(error){
         console.log(error)
