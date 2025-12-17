@@ -97,7 +97,7 @@ const ConcertDetails = () => {
               const availabilityPercent =
                 ticket.availableQuantity / ticket.totalQuantity;
               return (
-                <div className="flex flex-col md:flex-row gap-2 items-center rounded-2xl shadow-md justify-between">
+                <div key={ticket.id} className="flex flex-col md:flex-row gap-2 items-center rounded-2xl shadow-md justify-between">
                   <div className={`flex-1 flex flex-col px-10 py-5 items-center md:items-start  `}>
                     <div
                       className={`flex-1  text-2xl rounded-tl-2xl rounded-tr-2xl flex items-center text-gray-800`}
