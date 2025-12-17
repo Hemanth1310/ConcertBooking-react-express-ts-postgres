@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import type { Concert, ConcertCategory } from "../types"
 import { useConcerts } from "./hooks/concertDataHook"
 
@@ -5,7 +6,8 @@ import { useConcerts } from "./hooks/concertDataHook"
 const dataProvider = ()=>{
     const {data:concerts,isLoading,isError} =  useConcerts()
 
-    const catogorisedData : Record<string , Concert[]> = {}
+    const prcessedData = useMemo(()=>{
+        const catogorisedData : Record<string , Concert[]> = {}
     const featuredData : Concert[]  =[]
     const concertNames : string[] = []
     const concertCategories: ConcertCategory[] = []
@@ -31,7 +33,10 @@ const dataProvider = ()=>{
         
     })
 
-    return {catogorisedData,featuredData,isLoading,isError, concertNames,concertCategories,concertsData}
+    return {catogorisedData,featuredData,concertNames,concertCategories,concertsData}
+    },[concerts])
+
+    return {...prcessedData,isLoading,isError}
     
 }
 
