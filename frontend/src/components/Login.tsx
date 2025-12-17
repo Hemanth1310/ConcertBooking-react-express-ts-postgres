@@ -46,7 +46,7 @@ const Login = ({closeModal}: Props) => {
                     <input type='password' ref={passwordInputRef} className='border border-gray-400 text-xl p-4' placeholder='Enter Password here...'></input>
                       <button 
                             onClick={login}
-                            className="mt-4 bg-[#DF1827] text-white px-3 py-3 rounded flex-1 hover:bg-red-400"
+                            className="mt-4 bg-brand text-white px-3 py-3 rounded flex-1 hover:bg-red-400"
                             >
                             Login
                         </button>
