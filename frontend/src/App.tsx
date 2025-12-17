@@ -10,6 +10,7 @@ import Checkout from './views/Checkout'
 import Home from './views/Home'
 import Footer from './components/Footer'
 import ConcertDetails from './views/ConcertDetails'
+import Booking from './views/Booking'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                     <Route path='/' element={<Home/>}></Route>
                     <Route path='/concerts/:name/:id' element={<ConcertDetails/>}></Route>
                     <Route element={<ProtectedRoutes/>}>
+                        <Route path="/bookings/:name/:id" element={<Booking/>}/>
                         <Route path="/checkout" element={<Checkout/>}></Route>
                     </Route>
             

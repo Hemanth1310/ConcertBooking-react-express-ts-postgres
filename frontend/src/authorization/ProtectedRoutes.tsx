@@ -10,7 +10,7 @@ const ProtectedRoutes = (props: Props) => {
     if(userData){
         return <Outlet/>
     }else{
-        return <Navigate to='/login' replace/>
+        return <Navigate to='/' replace/>
     }
   
 }
