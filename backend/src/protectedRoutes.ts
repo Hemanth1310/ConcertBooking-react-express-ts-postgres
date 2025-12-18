@@ -82,4 +82,28 @@ router.post('/booking/:concertId/:ticketTypeId',async(req,res)=>{
 
 })
 
+router.get('/booking/:id',async(req,res)=>{
+    const id = Number(req.params.id)
+
+    try{
+        const bookingDetails:Booking|null = await prisma.booking.findUnique({
+            where:{id:id}
+        })
+        if(bookingDetails){
+            res.json({
+                message:"Booking Detials",
+                payload:{
+                    ...bookingDetails
+                }
+            })
+        }else{
+            res.status(404).send("Booking not found.")
+        }
+    }catch(error){
+        res.send("Connection to server failed.")
+    }
+
+
+})
+
 export default router 

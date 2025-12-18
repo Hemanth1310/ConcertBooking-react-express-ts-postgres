@@ -1,13 +1,12 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 
 import Authentication from './Authentication'
 import Search from './Search'
 import { useNavigate } from 'react-router'
 
-type Props = {}
 
-const Header = (props: Props) => {
+const Header = () => {
    
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [toggelDropDown ,setToggleDropDown] = useState<boolean>(false)

@@ -1,4 +1,4 @@
-import { Children, createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { UserData } from "../types";
 import api from "../utils/axiosConfig";
 
@@ -22,7 +22,6 @@ const AuthConextProvider =({children}:AuthConextProviderType)=>{
     const [userData,setUserData] = useState<UserData|null>(null)
 
     const handleAuth = (authUserDetails:UserData|null)=>{
-        console.log(authUserDetails)
         setUserData(authUserDetails)
     }
 
