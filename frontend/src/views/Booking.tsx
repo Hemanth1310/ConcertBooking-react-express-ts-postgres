@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router'
+import { useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
 import { useConcertDetails, useTicketInfo } from '../utils/hooks/concertDataHook'
 import getImageUrl from '../utils/getImageUrl'
+import api from '../utils/axiosConfig'
 
 const Booking = () => {
   const {name,id,ticketType} = useParams()
   const {data:concert,isLoading:isConcertLoading,isError:isConcertError} = useConcertDetails(Number(id))
   const [quantity,setQuantity]=useState(0)
+  const navigation = useNavigate()
   const {
       data: ticketInfo,
       isLoading: isTicketsLoading,
@@ -35,9 +37,12 @@ const Booking = () => {
 
   const dateObject = new Date(concert.date)
 
-  const handleNavigation=(ticketType:number)=>{
-    if(ticketType){return}
+  const handleBooking=async()=>{
+      const bookingData = await api.post(`/booking/${id}/${ticketType}?qty=${quantity}`)
+      
+      navigation(`/booking-details/${bookingData.data.id}`)
   }
+
   return (
     <div className="flex px-5 md:px-0 flex-col w-full h-full mt-5">
       <h1 className="text-2xl md:text-3xl font-bold font-mono py-5">
@@ -46,7 +51,7 @@ const Booking = () => {
       <div className='flex flex-col md:flex-row gap-10'>
         <div className="flex-2 flex flex-col gap-5">
           <div className="flex-1">
-            <img className="h-64 w-full md:h-128" src={getImageUrl(concert.imagePath)} />
+            <img className="h-64 w-auto md:h-128" src={getImageUrl(concert.imagePath)} />
           </div>
           <div className="flex-1">
             <h1 className="text-2xl md:text-3xl font-bold font-mono py-5">
@@ -129,7 +134,7 @@ const Booking = () => {
              </div>
              <div className='flex w-full gap-10 text-2xl items-center justify-center'>
                   
-                  <button disabled={quantity<1} onClick={()=>handleNavigation(TicketInfoById![0].id)} className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-20">
+                  <button disabled={quantity<1} onClick={()=>handleBooking} className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-20">
                       Book
                     </button>
              </div>

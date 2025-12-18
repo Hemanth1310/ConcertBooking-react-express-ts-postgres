@@ -56,3 +56,5 @@ export const useTicketInfo = (id:number)=>{
         queryFn:()=>fetchTicketTypes(id)
     })
 }
+
+// export const useBooking = ()

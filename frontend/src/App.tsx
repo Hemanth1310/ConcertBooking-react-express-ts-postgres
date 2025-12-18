@@ -7,6 +7,7 @@ import Home from './views/Home'
 import Footer from './components/Footer'
 import ConcertDetails from './views/ConcertDetails'
 import Booking from './views/Booking'
+import BookingDetails from './views/BookingDetails'
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
                     <Route path='/concerts/:name/:id' element={<ConcertDetails/>}></Route>
                     <Route element={<ProtectedRoutes/>}>
                         <Route path="/booking/:name/:id/:ticketType" element={<Booking/>}/>
-                        <Route path="/checkout" element={<Checkout/>}></Route>
+                        <Route path="/booking-details/:bookingID" element={<BookingDetails/>}></Route>
                     </Route>
             
               </Routes>
