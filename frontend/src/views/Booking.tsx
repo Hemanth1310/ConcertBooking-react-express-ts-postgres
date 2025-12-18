@@ -3,7 +3,6 @@ import { useParams } from 'react-router'
 import { useConcertDetails, useTicketInfo } from '../utils/hooks/concertDataHook'
 import getImageUrl from '../utils/getImageUrl'
 
-
 const Booking = () => {
   const {name,id,ticketType} = useParams()
   const {data:concert,isLoading:isConcertLoading,isError:isConcertError} = useConcertDetails(Number(id))
@@ -106,7 +105,7 @@ const Booking = () => {
              </div>
              <div className='flex gap-10 text-3xl items-center w-full justify-center px-10'>
                  <div className="font-bold hover:text-white hover:bg-black p-3 rounded-2xl cursor-pointer" onClick={()=>setQuantity(prev=>prev-1)}>-</div>
-                 <div className="border-2 border-black  text-center p-3 rounded-2xl">{quantity}</div>
+                 <div className="border-2 border-black  text-center w-16 rounded-2xl">{quantity}</div>
                  <div className="font-bold hover:text-white hover:bg-black p-3 rounded-2xl cursor-pointer" onClick={()=>setQuantity(prev=>prev+1)}>+</div>
              </div>
              <div className='flex gap-10 text-2xl items-center'>
@@ -130,9 +129,9 @@ const Booking = () => {
              </div>
              <div className='flex w-full gap-10 text-2xl items-center justify-center'>
                   
-                  <div onClick={()=>handleNavigation(TicketInfoById![0].id)} className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl cursor-pointer hover:opacity-70">
+                  <button disabled={quantity<1} onClick={()=>handleNavigation(TicketInfoById![0].id)} className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-20">
                       Book
-                    </div>
+                    </button>
              </div>
             
           </div>
