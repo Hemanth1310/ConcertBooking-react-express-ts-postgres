@@ -38,9 +38,15 @@ const Booking = () => {
   const dateObject = new Date(concert.date)
 
   const handleBooking=async()=>{
-      const bookingData = await api.post(`/booking/${id}/${ticketType}?qty=${quantity}`)
+    try{
+      const bookingData = await api.post(`/api/booking/${id}/${ticketType}?qty=${quantity}`)
+      console.log("bd"+bookingData)
+      navigation(`/booking-details/${bookingData.data.payload.id}`)
+    }catch(error){
+      console.error(error)
+    }
       
-      navigation(`/booking-details/${bookingData.data.id}`)
+      
   }
 
   return (
@@ -134,7 +140,7 @@ const Booking = () => {
              </div>
              <div className='flex w-full gap-10 text-2xl items-center justify-center'>
                   
-                  <button disabled={quantity<1} onClick={()=>handleBooking} className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-20">
+                  <button disabled={quantity<1} onClick={handleBooking} className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-20">
                       Book
                     </button>
              </div>

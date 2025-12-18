@@ -13,6 +13,11 @@ declare global {
 }
 
 const authenticateToken = async (req: Request, res: Response, next: NextFunction)=>{
+
+    if (req.method === 'OPTIONS') {
+        return next();
+    }
+    
     const authHeader = req.headers.authorization
 
     const token = authHeader?.split(" ")[1]
