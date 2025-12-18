@@ -86,21 +86,30 @@ router.get('/booking/:id',async(req,res)=>{
     const id = Number(req.params.id)
 
     try{
-        const bookingDetails:Booking|null = await prisma.booking.findUnique({
-            where:{id:id}
-        })
-        if(bookingDetails){
-            res.json({
-                message:"Booking Detials",
-                payload:{
-                    ...bookingDetails
+       const bookingDetails = await prisma.booking.findUnique({
+            where: { id },
+            include: {
+                ticketType: {
+                    include: {
+                        concert: true 
+                    }
                 }
-            })
-        }else{
-            res.status(404).send("Booking not found.")
+            }
+        })
+        if(!bookingDetails){
+            return res.status(404).send("Booking not found.")
         }
+
+        const {ticketType} = bookingDetails
+        const concert = ticketType.concert
+
+        res.json({
+            bookingDetails:bookingDetails,
+            concertDetails:concert,
+            ticketDetails:ticketType
+        })
     }catch(error){
-        res.send("Connection to server failed.")
+        res.status(500).send("Connection to server failed.")
     }
 
 

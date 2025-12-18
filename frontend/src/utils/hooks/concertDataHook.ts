@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "../axiosConfig";
-import type { Concert, TicketType } from "../../types";
+import type { Booking, Concert, TicketType } from "../../types";
 
 const fetchAllConcerts = async():Promise<Concert[]>=>{
     try{
@@ -12,7 +12,7 @@ const fetchAllConcerts = async():Promise<Concert[]>=>{
     return []
 }
 
-const fetchConcertById =async(concertId:number):Promise<Concert|undefined>=>{  
+const fetchConcertById =async(concertId:number):Promise<Concert|null>=>{  
     try{
          const {data} = await api.get(`/data/concerts/${concertId}`)
         return data.payload.concert
@@ -20,7 +20,7 @@ const fetchConcertById =async(concertId:number):Promise<Concert|undefined>=>{
     }catch(error){
         console.log(error)
     }   
-    return 
+    return null
 }
 
 
@@ -57,4 +57,19 @@ export const useTicketInfo = (id:number)=>{
     })
 }
 
-// export const useBooking = ()
+const fetchBookingByID=async(id:string):Promise<Booking|null>=>{
+    try{
+        const {data} = await api.get(`/booking/${id}`)
+        return data.payload
+    }catch(error){
+        console.log(error)
+    }
+    return null
+}
+
+export const useBooking = (bookingId:string)=>{
+    return useQuery({
+        queryKey:['booking',bookingId],
+        queryFn:()=>fetchBookingByID(bookingId)
+    })
+}
