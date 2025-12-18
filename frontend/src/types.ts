@@ -38,3 +38,15 @@ export type TicketType = {
     availableQuantity: number;
     totalQuantity: number;
 }
+
+type BookingStatus = "PENDING_PAYMENT" | "CONFIRMED" | "CANCELLED" | "FAILED"
+
+export type Booking = {
+    id: number;
+    createdAt: Date;
+    userId: string;
+    ticketTypeId: number;
+    quantity: number;
+    totalPrice: number;
+    status: BookingStatus;
+}

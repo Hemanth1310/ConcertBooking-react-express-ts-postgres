@@ -115,10 +115,11 @@ const Booking = () => {
                   <div className=""><u>Select Quantity</u></div>
              </div>
              <div className='flex gap-10 text-3xl items-center w-full justify-center px-10'>
-                 <div className="font-bold hover:text-white hover:bg-black p-3 rounded-2xl cursor-pointer" onClick={()=>setQuantity(prev=>prev-1)}>-</div>
+                 <button disabled={quantity<1} className="font-bold hover:text-white hover:bg-black p-3 rounded-2xl cursor-pointer disabled:cursor-not-allowed disabled:text-gray-400" onClick={()=>setQuantity(prev=>prev-1)}>-</button>
                  <div className="border-2 border-black  text-center w-16 rounded-2xl">{quantity}</div>
-                 <div className="font-bold hover:text-white hover:bg-black p-3 rounded-2xl cursor-pointer" onClick={()=>setQuantity(prev=>prev+1)}>+</div>
+                 <button disabled={quantity>=TicketInfoById![0].availableQuantity} className="font-bold hover:text-white hover:bg-black p-3 rounded-2xl cursor-pointer disabled:cursor-not-allowed disabled:text-gray-400" onClick={()=>setQuantity(prev=>prev+1)}>+</button>
              </div>
+             <div>{quantity>=TicketInfoById![0].availableQuantity && <div>You are trying to book all the tickets</div> }</div>
              <div className='flex gap-10 text-2xl items-center'>
                   <div className=""><u>Checkout Details</u></div>
              </div>
@@ -140,7 +141,7 @@ const Booking = () => {
              </div>
              <div className='flex w-full gap-10 text-2xl items-center justify-center'>
                   
-                  <button disabled={quantity<1} onClick={handleBooking} className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-20">
+                  <button disabled={quantity<1 || quantity>=TicketInfoById![0].availableQuantity} onClick={handleBooking} className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-20">
                       Book
                     </button>
              </div>
