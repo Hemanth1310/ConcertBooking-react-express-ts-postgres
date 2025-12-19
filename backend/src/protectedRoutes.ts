@@ -110,4 +110,30 @@ router.get('/booking/:id',async(req,res)=>{
 
 })
 
+router.get('/bookings',async(req,res)=>{
+    const user = req.user?.userId
+
+    try{
+        const userBookingHistory = await prisma.booking.findMany({
+            where:{userId:user},
+            include:{
+                ticketType:{
+                    include:{
+                        concert:true
+                    }
+                }
+            }
+        })
+
+        res.json({
+            message:"Booking details of user",
+            payload:{
+                bookingHistory:userBookingHistory
+            }
+        })
+    }catch(error){
+        res.status(404).send("Booking details not found")
+    }
+})
+
 export default router 
