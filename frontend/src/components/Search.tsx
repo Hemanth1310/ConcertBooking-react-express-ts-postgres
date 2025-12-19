@@ -41,6 +41,7 @@ const Search = ()=> {
                     {  isLoading&& <div className='min-w-1/3 flex w-full justify-center'>
                             <Spinner/>
                     </div>}
+                    {searchedConcertList.length<1 && <div className='w-full text-2xl text-gray-300'>No results found...</div>}
 
                 </div>
 
