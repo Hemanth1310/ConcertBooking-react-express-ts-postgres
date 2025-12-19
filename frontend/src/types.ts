@@ -50,3 +50,34 @@ export type Booking = {
     totalPrice: number;
     status: BookingStatus;
 }
+
+export type BookingDetails= {
+    ticketType: {
+        concert: {
+            name: string;
+            id: number;
+            artist: string;
+            date: Date;
+            venue: string;
+            description: string | null;
+            category: ConcertCategory;
+            isFeatured: boolean;
+            imagePath: string;
+        };
+    } & {
+        name: string;
+        id: number;
+        price: number;
+        availableQuantity: number;
+        totalQuantity: number;
+        concertId: number;
+    };
+} & {
+    id: number;
+    createdAt: Date;
+    userId: string;
+    ticketTypeId: number;
+    quantity: number;
+    totalPrice: number;
+    status: BookingStatus;
+} | null

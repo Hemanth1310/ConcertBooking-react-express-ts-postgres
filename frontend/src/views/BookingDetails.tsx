@@ -1,7 +1,34 @@
+import { useParams } from "react-router"
+import { useBooking} from "../utils/hooks/concertDataHook"
+import type { Concert, TicketType } from "../types"
 
 
 const BookingDetails = () => {
+   const {bookingID} = useParams()
+   const {data:bookingDetails, isLoading:isBookingDetailsLoading,isError:isBookingDetailsError } = useBooking(bookingID ?? "")
    
+   if (isBookingDetailsLoading) {
+    return (
+      <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
+        "Page is loading . please wait"
+      </div>
+    );
+  }
+  if (isBookingDetailsError) {
+    return (
+      <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
+        "Error Occured: cannot fetch data. please try again"
+      </div>
+    );
+  }
+  if (!bookingDetails) {
+    return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">Failed to fetch details</div>;
+  }
+
+   const dateObject = new Date(bookingDetails.ticketType.concert.date)
+   const concert : Concert = bookingDetails.ticketType.concert
+   const TicketInfoById: TicketType = bookingDetails.ticketType
+
   return (
     <div className="flex px-5 md:px-0 flex-col w-full h-full mt-5">
         <div className="flex w-full items-center justify-center">
@@ -37,26 +64,16 @@ const BookingDetails = () => {
                   </span>
                   <div className="font-bold">@{concert.venue}, Berlin</div>
              </div>
-            
-            {isTicketsLoading &&  <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
-              "Loading . please wait"
-            </div>}
-            {TicketInfoById? <div className='flex gap-10 text-2xl items-center'>
+            <div className='flex gap-10 text-2xl items-center'>
                   <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
                     local_activity
                   </span>
-                  <div className="">{TicketInfoById[0].name}</div>
-             </div>:<div className="w-full h-20 font-mono italic text-gray-500 text-center">
-              "Error Fetching Tickets info, Please comback later"
-            </div>}
+                  <div className="">{TicketInfoById.name}</div>
+             </div>
             <div className='flex gap-10 text-2xl items-center'>
                   <div className=""><u>Select Quantity</u></div>
              </div>
-             <div className='flex gap-10 text-3xl items-center w-full justify-center px-10'>
-                 <div className="font-bold hover:text-white hover:bg-black p-3 rounded-2xl cursor-pointer" onClick={()=>setQuantity(prev=>prev-1)}>-</div>
-                 <div className="border-2 border-black  text-center w-16 rounded-2xl">{quantity}</div>
-                 <div className="font-bold hover:text-white hover:bg-black p-3 rounded-2xl cursor-pointer" onClick={()=>setQuantity(prev=>prev+1)}>+</div>
-             </div>
+            
              <div className='flex gap-10 text-2xl items-center'>
                   <div className=""><u>Checkout Details</u></div>
              </div>
@@ -64,16 +81,16 @@ const BookingDetails = () => {
                   
                   <div className='flex w-full justify-between'>
                     <div>Number Of Tickets</div>
-                    <div>{quantity}</div>
+                    <div>{bookingDetails.quantity}</div>
                   </div>
                    <div className='flex w-full justify-between'>
                     <div>Cost per ticket</div>
-                    <div>{TicketInfoById![0].price}</div>
+                    <div>{TicketInfoById.price}</div>
                   </div>
                   <div className='w-full h-1 bg-black'></div>
                   <div className='flex w-full font-bold justify-between'>
                     <div>Total</div>
-                    <div>${quantity*TicketInfoById![0].price}</div>
+                    <div>${bookingDetails.totalPrice}</div>
                   </div>
              </div>
              <div className='flex w-full gap-10 text-2xl items-center justify-center'>
