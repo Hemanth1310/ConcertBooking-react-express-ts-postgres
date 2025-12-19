@@ -4,10 +4,11 @@ import { useAuth } from '../context/AuthContext'
 import Authentication from './Authentication'
 import Search from './Search'
 import { useNavigate } from 'react-router'
+import { useQueryClient } from '@tanstack/react-query'
 
 
 const Header = () => {
-   
+    const queryClient = useQueryClient()
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [toggelDropDown ,setToggleDropDown] = useState<boolean>(false)
     const {handleAuth} = useAuth()
@@ -26,6 +27,7 @@ const Header = () => {
     const handleLogout=()=>{
         localStorage.removeItem('token')
         handleToggleDropdown()
+        queryClient.clear()
         handleAuth(null)
     }
 
