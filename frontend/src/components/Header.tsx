@@ -29,6 +29,10 @@ const Header = () => {
         handleAuth(null)
     }
 
+    const handleBookingHistory =()=>{
+        handleToggleDropdown()
+        navigation('/booking-history')
+    }
     
   return (
     <div className='flex-1 w-screen h-20 bg-white flex items-center justify-center fixed top-0 left-0 z-100 shadow-md'>
@@ -47,6 +51,11 @@ const Header = () => {
                                     manage_accounts
                                 </span>
                                 Profile</div>
+                            <div onClick={handleBookingHistory} className='text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2'>
+                                <span className="material-symbols-outlined">
+                                    archive
+                                </span>
+                                Booking History</div>
                             <div onClick={handleLogout} className='text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2' >
                                 <span className="material-symbols-outlined">
                                     logout

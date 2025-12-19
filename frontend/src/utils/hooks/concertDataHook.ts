@@ -58,10 +58,8 @@ export const useTicketInfo = (id:number)=>{
 }
 
 const fetchBookingByID=async(id:string):Promise<BookingDetails|null>=>{
-    console.log("trying fetchbooking")
     try{
         const {data} = await api.get(`/api/booking/${id}`)
-        console.log("booking"+data)
         return data.payload
     }catch(error){
         console.log(error)
@@ -70,9 +68,26 @@ const fetchBookingByID=async(id:string):Promise<BookingDetails|null>=>{
 }
 
 export const useBooking  = (bookingId:string)=>{
-    console.log("trying usebooking")
     return useQuery({
         queryKey:['booking',bookingId],
         queryFn:()=>fetchBookingByID(bookingId)
+    })
+}
+
+
+const fetchBookingsByUser = async()=>{
+    try{
+        const {data} =await api.get('/bookings')
+        return data.payload.bookingHistory
+    }catch(error){
+        console.log(error)
+    }
+}
+
+export const useBookingHistory=(userID:number)=>{
+    return useQuery({
+        queryKey:['bookingHistory',userID],
+        queryFn:()=>fetchBookingsByUser(),
+        enabled:!!userID,
     })
 }
