@@ -60,7 +60,7 @@ export const useTicketInfo = (id:number)=>{
 const fetchBookingByID=async(id:string):Promise<BookingDetails|null>=>{
     console.log("trying fetchbooking")
     try{
-        const {data} = await api.get(`/booking/${id}`)
+        const {data} = await api.get(`/api/booking/${id}`)
         console.log("booking"+data)
         return data.payload
     }catch(error){
