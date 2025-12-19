@@ -84,7 +84,6 @@ router.post('/booking/:concertId/:ticketTypeId',async(req,res)=>{
 
 router.get('/booking/:id',async(req,res)=>{
     const id = Number(req.params.id)
-    console.log("Booking hit")
     try{
        const bookingDetails = await prisma.booking.findUnique({
             where: { id },
@@ -99,10 +98,6 @@ router.get('/booking/:id',async(req,res)=>{
         if(!bookingDetails){
             return res.status(404).send("Booking not found.")
         }
-
-        const {ticketType} = bookingDetails
-        const concert = ticketType.concert
-        console.log(bookingDetails)
 
         res.json({
             message:"Booking details Success",
