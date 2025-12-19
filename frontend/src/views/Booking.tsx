@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router'
 import { useConcertDetails, useTicketInfo } from '../utils/hooks/concertDataHook'
 import getImageUrl from '../utils/getImageUrl'
 import api from '../utils/axiosConfig'
+import Spinner from '../components/Spinner'
 
 const Booking = () => {
   const {name,id,ticketType} = useParams()
@@ -17,7 +18,7 @@ const Booking = () => {
   if (isConcertLoading) {
     return (
       <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
-        "Page is loading . please wait"
+       <Spinner/>
       </div>
     );
   }

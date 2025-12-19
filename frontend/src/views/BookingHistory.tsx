@@ -2,6 +2,7 @@ import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useBookingHistory } from '../utils/hooks/concertDataHook'
 import Order from '../components/Order'
+import Spinner from '../components/Spinner'
 
 
 const BookingHistory = () => {
@@ -12,7 +13,7 @@ const BookingHistory = () => {
     if (isLoading) {
     return (
       <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
-        "Page is loading . please wait"
+        <Spinner/>
       </div>
     );
   }

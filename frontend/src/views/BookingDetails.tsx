@@ -1,6 +1,7 @@
 import { useParams } from "react-router"
 import { useBooking} from "../utils/hooks/concertDataHook"
 import type { Concert, TicketType } from "../types"
+import Spinner from "../components/Spinner"
 
 
 const BookingDetails = () => {
@@ -10,7 +11,7 @@ const BookingDetails = () => {
    if (isBookingDetailsLoading) {
     return (
       <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
-        "Page is loading . please wait"
+       <Spinner/>
       </div>
     );
   }
