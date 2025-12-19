@@ -23,7 +23,6 @@ const BookingHistory = () => {
     );
   }
   if (!bookingHistory) {
-    console.log(userId)
     return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">Failed to fetch details</div>;
   }
     

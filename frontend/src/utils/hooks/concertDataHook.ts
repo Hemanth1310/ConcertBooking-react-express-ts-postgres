@@ -76,7 +76,6 @@ export const useBooking  = (bookingId:string)=>{
 
 
 const fetchBookingsByUser = async() : Promise<BookingDetails[]|null>=>{
-    console.log("is fetch booking flag")
     try{
         const {data} =await api.get('/api/bookings')
         return data.payload.bookingHistory
@@ -87,7 +86,6 @@ const fetchBookingsByUser = async() : Promise<BookingDetails[]|null>=>{
 }
 
 export const useBookingHistory=(userID:string)=>{
-    console.log("is booking flag")
     return useQuery({
         queryKey:['bookingHistory',userID],
         queryFn:()=>fetchBookingsByUser(),

@@ -40,7 +40,6 @@ const Booking = () => {
   const handleBooking=async()=>{
     try{
       const bookingData = await api.post(`/api/booking/${id}/${ticketType}?qty=${quantity}`)
-      console.log("bd"+bookingData)
       navigation(`/booking-details/${bookingData.data.payload.id}`)
     }catch(error){
       console.error(error)

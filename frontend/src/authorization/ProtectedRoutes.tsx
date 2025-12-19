@@ -9,7 +9,6 @@ const ProtectedRoutes = () => {
       </div>
     }
     if(userData){
-        console.log(JSON.stringify(userData))
         return <Outlet/>
     }else{
         return <Navigate to='/' replace/>
