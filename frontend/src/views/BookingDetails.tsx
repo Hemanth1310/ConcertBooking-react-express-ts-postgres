@@ -32,8 +32,20 @@ const BookingDetails = () => {
   return (
     <div className="flex px-5 md:px-0 flex-col w-full h-full mt-5">
         <div className="flex w-full items-center justify-center">
-            
+          
           <div className='w-full h-full border-gray-400 border-2 rounded-2xl p-10 flex flex-col gap-4'>
+             <div className='flex gap-10 text-2xl items-center'>
+                  <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
+                    celebration
+                  </span>
+                  <div className="font-bold">{concert.venue}</div>
+           </div>
+            <div className='flex gap-10 text-2xl items-center'>
+                  <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
+                    star_shine
+                  </span>
+                  <div className="font-bold">{concert.artist}</div>
+           </div>
             <div className='flex gap-10 text-2xl items-center '>
               <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
                 calendar_month
