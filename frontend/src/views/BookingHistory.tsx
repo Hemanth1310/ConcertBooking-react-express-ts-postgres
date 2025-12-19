@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useBookingHistory } from '../utils/hooks/concertDataHook'
+import Order from '../components/Order'
 
 
 const BookingHistory = () => {
@@ -31,8 +32,10 @@ const BookingHistory = () => {
       <h1 className="text-2xl md:text-3xl font-bold font-mono py-5">
         Your previous bookings
       </h1>
-      <div className="flex flex-col md:flex-row gap-5">
-
+      <div className="flex flex-col gap-5">
+        {bookingHistory.map(bookingDetails=>(
+            <Order bookingDetails={bookingDetails}/>
+        ))}
       </div>
     </div>
   )
