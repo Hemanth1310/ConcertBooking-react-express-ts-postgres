@@ -34,7 +34,7 @@ const BookingHistory = () => {
       </h1>
       <div className="flex flex-col gap-5">
         {bookingHistory.map(bookingDetails=>(
-            <Order bookingDetails={bookingDetails}/>
+            <Order bookingDetails={bookingDetails} key={bookingDetails?.id}/>
         ))}
       </div>
     </div>
