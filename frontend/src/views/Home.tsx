@@ -2,13 +2,16 @@ import getImageUrl from "../utils/getImageUrl";
 import HeroComponent from "../components/HeroComponent";
 import { useNavigate } from "react-router";
 import useDataProvider from "../utils/dataProvider";
+import Spinner from "../components/Spinner";
 
 
 const Home = () => {
   const { catogorisedData, featuredData, isLoading, isError } = useDataProvider();
   const navigate = useNavigate();
   if (isLoading) {
-    return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">"Page is loading . please wait"</div>;
+    return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
+      <Spinner/>
+    </div>;
   }
   if (isError) {
     return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">"Error Occured: cannot fetch data. please try again"</div>;

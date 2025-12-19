@@ -2,6 +2,7 @@ import {  useState } from 'react'
 import type { Concert } from '../types'
 import { useNavigate } from 'react-router'
 import useDataProvider from '../utils/dataProvider'
+import Spinner from './Spinner'
 
 
 const Search = ()=> {
@@ -9,7 +10,9 @@ const Search = ()=> {
     const [searchInput, setSearchInput] = useState<string>('')
     const navigate = useNavigate()
     if(isLoading){
-        return <div>"Page is loading . please wait"</div>
+        return <div className='min-w-1/3 flex w-full justify-center'>
+            <Spinner/>
+            </div>
     }
     if(isError){
         return <div>"Error Occured: cannot fetch data. please try again"</div>
