@@ -34,7 +34,10 @@ const AuthConextProvider =({children}:AuthConextProviderType)=>{
         if(token){
             api.get('/api/userDetails')
                 .then(response=>handleAuth(response.data))
-                .catch(err=>console.log('Session Timedout'+err))
+                .catch(err=>{
+                    setIsAuthLoading(false);
+                    console.log('Session Timedout'+err)
+                })
         }
     },[])
 
