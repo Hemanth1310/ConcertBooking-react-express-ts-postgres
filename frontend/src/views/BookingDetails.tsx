@@ -70,15 +70,10 @@ const BookingDetails = () => {
                   </span>
                   <div className="">{TicketInfoById.name}</div>
              </div>
-            <div className='flex gap-10 text-2xl items-center'>
-                  <div className=""><u>Select Quantity</u></div>
-             </div>
-            
              <div className='flex gap-10 text-2xl items-center'>
                   <div className=""><u>Checkout Details</u></div>
              </div>
-            <div className='flex flex-col items-center px-10 gap-3'>
-                  
+            <div className='flex flex-col items-center px-10 gap-3'>       
                   <div className='flex w-full justify-between'>
                     <div>Number Of Tickets</div>
                     <div>{bookingDetails.quantity}</div>
