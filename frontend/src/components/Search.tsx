@@ -9,11 +9,7 @@ const Search = ()=> {
     const {concertsData,isLoading,isError} = useDataProvider()
     const [searchInput, setSearchInput] = useState<string>('')
     const navigate = useNavigate()
-    if(isLoading){
-        return <div className='min-w-1/3 flex w-full justify-center'>
-            <Spinner/>
-            </div>
-    }
+
     if(isError){
         return <div>"Error Occured: cannot fetch data. please try again"</div>
     }
@@ -42,6 +38,10 @@ const Search = ()=> {
                             <div className='w-full text-sm md:text-xl text-gray-600' key={concert.id} onClick={()=>handleNavigation(concert.id,concert.name)}>{concert.name}</div>
                     </div>
                     )}
+                    {  isLoading&& <div className='min-w-1/3 flex w-full justify-center'>
+                            <Spinner/>
+                    </div>}
+
                 </div>
 
             }
