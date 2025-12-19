@@ -122,7 +122,8 @@ router.get('/bookings',async(req,res)=>{
                         concert:true
                     }
                 }
-            }
+            },
+            orderBy:{createdAt:'desc'}
         })
 
         res.json({
