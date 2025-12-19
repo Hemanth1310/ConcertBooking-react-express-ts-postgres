@@ -21,7 +21,7 @@ router.get('/userDetails',async(req,res)=>{
 
         res.json({
             message:"User details",
-            data:{...user}
+            payload:{...user}
         })
     }catch(error){
         res.status(404).json({error:'User not found'})

@@ -25,15 +25,15 @@ const AuthConextProvider =({children}:AuthConextProviderType)=>{
     const [isAuthLoading,setIsAuthLoading] = useState<boolean>(true)
 
     const handleAuth = (authUserDetails:UserData|null)=>{
-        setIsAuthLoading(false)
         setUserData(authUserDetails)
+         setIsAuthLoading(false)
     }
 
     useEffect(()=>{
         const token = localStorage.getItem('token')
         if(token){
             api.get('/api/userDetails')
-                .then(response=>handleAuth(response.data))
+                .then(response=>handleAuth(response.data.payload))
                 .catch(err=>{
                     setIsAuthLoading(false);
                     console.log('Session Timedout'+err)

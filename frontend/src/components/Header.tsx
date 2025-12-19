@@ -11,14 +11,12 @@ const Header = () => {
     const queryClient = useQueryClient()
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [toggelDropDown ,setToggleDropDown] = useState<boolean>(false)
-    const {handleAuth} = useAuth()
+    const {userData,handleAuth} = useAuth()
     const navigation = useNavigate()
     // Handlers
  
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
-
-    const {userData} = useAuth()
 
     const handleToggleDropdown = ()=>{
         setToggleDropDown(prev=>!prev)
