@@ -67,7 +67,7 @@ const Header = () => {
                       
                         
                         :
-                        <button className='bg-brand h-full w-full text-white text-xs md:text-lg font-bold rounded-2xl px-3 md:px-4' onClick={openModal}>SignIn</button>
+                        <button className='bg-brand h-full w-full text-white text-xs md:text-lg font-bold rounded-2xl px-3 md:px-4 hover:opacity-85' onClick={openModal}>SignIn</button>
                 }
             </div>
             <Authentication isModalOpen={isModalOpen} openModal={openModal} closeModal={closeModal}/>
