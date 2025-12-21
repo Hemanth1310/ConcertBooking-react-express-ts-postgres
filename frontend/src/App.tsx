@@ -8,6 +8,7 @@ import ConcertDetails from './views/ConcertDetails'
 import Booking from './views/Booking'
 import BookingDetails from './views/BookingDetails'
 import BookingHistory from './views/BookingHistory'
+import Profile from './views/Profile'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                         <Route path="/booking/:name/:id/:ticketType" element={<Booking/>}/>
                         <Route path="/booking-details/:bookingID" element={<BookingDetails/>}></Route>
                         <Route path="/booking-history" element={<BookingHistory/>}></Route>
+                        <Route path="/profile" element={<Profile/>}></Route>
                     </Route>
             
               </Routes>

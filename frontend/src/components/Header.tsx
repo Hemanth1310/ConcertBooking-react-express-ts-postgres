@@ -33,6 +33,11 @@ const Header = () => {
         handleToggleDropdown()
         navigation('/booking-history')
     }
+
+    const handleProfileView =()=>{
+        handleToggleDropdown()
+        navigation('/profile')
+    }
     
   return (
     <div className='flex-1 w-screen h-20 bg-white flex items-center justify-center fixed top-0 left-0 z-100 shadow-md'>
@@ -46,7 +51,7 @@ const Header = () => {
                             account_circle
                         </span>
                         {toggelDropDown && <div className='absolute top-20 right-0 bg-gray-100 sm:min-h-screen md:min-h-10 w-full md:w-80 flex flex-col gap-4 shadow-md'>
-                            <div className='text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2'>
+                            <div onClick={handleProfileView} className='text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2'>
                                 <span className="material-symbols-outlined">
                                     manage_accounts
                                 </span>
