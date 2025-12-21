@@ -1,8 +1,7 @@
 import React, { useState} from 'react'
 import type { UserRegistrationData } from '../types'
 import api from '../utils/axiosConfig'
-
-
+import { registerSchema } from '../utils/TypeChecker'
 
 const Register = () => {
     const [flag,setflag] = useState<boolean>(false)
@@ -14,25 +13,19 @@ const Register = () => {
         const formData = new FormData(e.target as HTMLFormElement)
         const payload  = Object.fromEntries(formData)
 
-        for(const value of Object.values(payload) ){
-            if(!value){
-                setflag(true)
-                setFormError('One or more fields empty. Please fill before continuing!!')
-            }
-            console.log(value)
+        const result = registerSchema.safeParse(payload)
+
+        if(!result.success){
+            setflag(true);
+            setFormError(result.error.issues[0].message);
+            return;
         }
 
-        if(payload.password===payload.repassword){
-           const rest = Object.fromEntries(
+        const rest = Object.fromEntries(
                 Object.entries(payload).filter(([key]) => key !== 'repassword')
                 ) as UserRegistrationData;
-            Registration(rest)
-            
-        }else{
-            setflag(true)
-            setFormError('Paswords mismatch: make sure both the passwords are same')
-        }
-
+        
+        Registration(rest)    
     }
 
     const Registration = async(userRegData:UserRegistrationData)=>{
@@ -64,7 +57,7 @@ const Register = () => {
                             Register
                         </button>
                      </div>
-                    {flag && <div className='mt-4 text-md text-red-700'>{formError}</div>}
+                    {flag && <div className='mt-4 text-lg text-red-700 text-center'>{formError}</div>}
     </form>
   )
 }
