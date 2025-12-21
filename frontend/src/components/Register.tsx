@@ -23,8 +23,10 @@ const Register = () => {
         }
 
         if(payload.password===payload.repassword){
-            const {repassword,...rest} =payload
-            Registration(rest as UserRegistrationData)
+           const rest = Object.fromEntries(
+                Object.entries(payload).filter(([key]) => key !== 'repassword')
+                ) as UserRegistrationData;
+            Registration(rest)
             
         }else{
             setflag(true)
