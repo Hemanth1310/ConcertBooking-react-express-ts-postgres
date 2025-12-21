@@ -2,11 +2,9 @@ import React, { useState} from 'react'
 import type { UserRegistrationData } from '../types'
 import api from '../utils/axiosConfig'
 
-type Props = {
-    closeModal:()=>void
-}
 
-const Register = (props: Props) => {
+
+const Register = () => {
     const [flag,setflag] = useState<boolean>(false)
     const [formError,setFormError] = useState<string>('')
 
@@ -16,7 +14,7 @@ const Register = (props: Props) => {
         const formData = new FormData(e.target as HTMLFormElement)
         const payload  = Object.fromEntries(formData)
 
-        for(let value of Object.values(payload) ){
+        for(const value of Object.values(payload) ){
             if(!value){
                 setflag(true)
                 setFormError('One or more fields empty. Please fill before continuing!!')

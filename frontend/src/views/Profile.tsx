@@ -7,7 +7,10 @@ const Profile = () => {
       <h1 className="text-2xl md:text-3xl font-bold font-mono py-5">
         User Details
       </h1>
-      
+      <div>
+        
+      </div>
+
       </div>
   )
 }
