@@ -7,7 +7,7 @@ import Spinner from '../components/Spinner'
 
 const Booking = () => {
   const {name,id,ticketType} = useParams()
-  const {data:concert,isLoading:isConcertLoading,isError:isConcertError} = useConcertDetails(Number(id))
+  const {data:concert,isLoading:isConcertLoading,isError:isConcertError, refetch} = useConcertDetails(Number(id))
   const [quantity,setQuantity]=useState(0)
   const navigation = useNavigate()
   const {
@@ -26,6 +26,7 @@ const Booking = () => {
     return (
       <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
         "Error Occured: cannot fetch data. please try again"
+        <button onClick={() => refetch()}>Try Again</button>
       </div>
     );
   }
