@@ -20,6 +20,10 @@ const Home = () => {
       </div>;
   }
 
+  if(!catogorisedData || !featuredData){
+    return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">Failed to fetch details</div>;
+  }
+
   const handleNavigation = (id: number, name: string) => {
     const formattedName = name.replaceAll(" ", "_");
     navigate(`/concerts/${formattedName}/${id}`);
