@@ -8,7 +8,7 @@ import Spinner from '../components/Spinner'
 const BookingHistory = () => {
     const {userData} = useAuth()
     const userId= userData?.id
-    const {data:bookingHistory,isLoading,isError} = useBookingHistory(userId ?? '')
+    const {data:bookingHistory,isLoading,isError,refetch} = useBookingHistory(userId ?? '')
     
     if (isLoading) {
     return (
@@ -21,6 +21,7 @@ const BookingHistory = () => {
     return (
       <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
         "Error Occured: cannot fetch data. please try again"
+        <button onClick={() => refetch()}>Try Again</button>
       </div>
     );
   }
