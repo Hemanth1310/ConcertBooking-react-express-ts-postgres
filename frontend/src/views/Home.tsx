@@ -6,7 +6,7 @@ import Spinner from "../components/Spinner";
 
 
 const Home = () => {
-  const { catogorisedData, featuredData, isLoading, isError } = useDataProvider();
+  const { catogorisedData, featuredData, isLoading, isError , refetch} = useDataProvider();
   const navigate = useNavigate();
   if (isLoading) {
     return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
@@ -14,7 +14,10 @@ const Home = () => {
     </div>;
   }
   if (isError) {
-    return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">"Error Occured: cannot fetch data. please try again"</div>;
+    return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
+      "Error Occured: cannot fetch data. please try again"
+      <button onClick={() => refetch()}>Try Again</button>
+      </div>;
   }
 
   const handleNavigation = (id: number, name: string) => {

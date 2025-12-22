@@ -3,7 +3,7 @@ import type { Concert, ConcertCategory } from "../types";
 import { useConcerts } from "./hooks/concertDataHook";
 
 const useDataProvider = () => {
-  const { data: concerts, isLoading, isError } = useConcerts();
+  const { data: concerts, isLoading, isError , refetch } = useConcerts();
 
   const PrcessedData = useMemo(() => {
     const catogorisedData: Record<string, Concert[]> = {};
@@ -38,7 +38,7 @@ const useDataProvider = () => {
     };
   }, [concerts]);
 
-  return { ...PrcessedData, isLoading, isError };
+  return { ...PrcessedData, isLoading, isError , refetch};
 };
 
 export default useDataProvider;
