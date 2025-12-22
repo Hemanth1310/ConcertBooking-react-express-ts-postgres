@@ -3,24 +3,13 @@ import api from "../axiosConfig";
 import type { BookingDetails, Concert, TicketType } from "../../types";
 
 const fetchAllConcerts = async():Promise<Concert[]>=>{
-    try{
-         const {data} = await api.get('/data/concerts')
-        return data.payload.concerts
-    }catch(error){
-        console.log(error)
-    }   
-    return []
+    const {data} = await api.get('/data/concerts')
+    return data.payload.concerts
 }
 
-const fetchConcertById =async(concertId:number):Promise<Concert|null>=>{  
-    try{
-         const {data} = await api.get(`/data/concerts/${concertId}`)
-        return data.payload.concert
-
-    }catch(error){
-        console.log(error)
-    }   
-    return null
+const fetchConcertById =async(concertId:number):Promise<Concert>=>{  
+    const {data} = await api.get(`/data/concerts/${concertId}`)
+    return data.payload.concert
 }
 
 
@@ -40,14 +29,8 @@ export const useConcertDetails =(concertID:number)=>{
 }
 
 const fetchTicketTypes = async (id:number): Promise<TicketType[]>=>{
-    try{
         const {data} = await api.get(`/data/ticketInfo/${id}`)
         return data.payload.ticketInfo
-    }catch(error){
-        console.log(error)
-    }    
-    return []
-
 }
 
 export const useTicketInfo = (id:number)=>{
@@ -58,13 +41,8 @@ export const useTicketInfo = (id:number)=>{
 }
 
 const fetchBookingByID=async(id:string):Promise<BookingDetails|null>=>{
-    try{
-        const {data} = await api.get(`/api/booking/${id}`)
-        return data.payload
-    }catch(error){
-        console.log(error)
-    }
-    return null
+    const {data} = await api.get(`/api/booking/${id}`)
+    return data.payload
 }
 
 export const useBooking  = (bookingId:string)=>{
@@ -76,13 +54,8 @@ export const useBooking  = (bookingId:string)=>{
 
 
 const fetchBookingsByUser = async() : Promise<BookingDetails[]|null>=>{
-    try{
         const {data} =await api.get('/api/bookings')
         return data.payload.bookingHistory
-    }catch(error){
-        console.log(error)
-    }
-    return null
 }
 
 export const useBookingHistory=(userID:string)=>{
