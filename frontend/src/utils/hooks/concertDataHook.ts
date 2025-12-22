@@ -40,7 +40,7 @@ export const useTicketInfo = (id:number)=>{
     })
 }
 
-const fetchBookingByID=async(id:string):Promise<BookingDetails|null>=>{
+const fetchBookingByID=async(id:string):Promise<BookingDetails>=>{
     const {data} = await api.get(`/api/booking/${id}`)
     return data.payload
 }
@@ -53,7 +53,7 @@ export const useBooking  = (bookingId:string)=>{
 }
 
 
-const fetchBookingsByUser = async() : Promise<BookingDetails[]|null>=>{
+const fetchBookingsByUser = async() : Promise<BookingDetails[]>=>{
         const {data} =await api.get('/api/bookings')
         return data.payload.bookingHistory
 }
