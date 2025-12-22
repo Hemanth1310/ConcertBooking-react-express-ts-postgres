@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import Spinner from '../components/Spinner'
+import getImageUrl from '../utils/getImageUrl'
 
 
 const Profile = () => {
@@ -17,8 +18,13 @@ const Profile = () => {
              <h1 className="text-2xl md:text-3xl font-bold font-mono py-5">
                 Account Details
             </h1>
-            <div>
+            <div className='flex'>
+                <div>
+                    {/* <img src={getImageUrl(userData?.firstName)} */}
+                </div>
+                <div>
 
+                </div>
             </div>
         </div>
      
