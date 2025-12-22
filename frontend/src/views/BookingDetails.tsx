@@ -6,7 +6,7 @@ import Spinner from "../components/Spinner"
 
 const BookingDetails = () => {
    const {bookingID} = useParams()
-   const {data:bookingDetails, isLoading:isBookingDetailsLoading,isError:isBookingDetailsError } = useBooking(bookingID ?? "")
+   const {data:bookingDetails, isLoading:isBookingDetailsLoading,isError:isBookingDetailsError , refetch} = useBooking(bookingID ?? "")
    
    if (isBookingDetailsLoading) {
     return (
@@ -19,6 +19,7 @@ const BookingDetails = () => {
     return (
       <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
         "Error Occured: cannot fetch data. please try again"
+        <button onClick={() => refetch()}>Try Again</button>
       </div>
     );
   }
