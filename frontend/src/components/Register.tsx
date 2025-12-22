@@ -47,7 +47,7 @@ const Register = () => {
         <input type='email' name='email' className='border border-gray-400 text-xl p-4' placeholder='Enter Email here...'></input>
         <input type='password'name='password' className='border border-gray-400 text-xl p-4' placeholder='Enter Password here...'></input>
         <input type='password'name='repassword' className='border border-gray-400 text-xl p-4' placeholder='Enter Password here...'></input>
-                     
+                      {flag && <div className='mt-4 text-lg text-red-700 text-center'>{formError}</div>}
                      <div className='w-full flex gap-5'>
                        
                         <button 
@@ -57,7 +57,7 @@ const Register = () => {
                             Register
                         </button>
                      </div>
-                    {flag && <div className='mt-4 text-lg text-red-700 text-center'>{formError}</div>}
+                   
     </form>
   )
 }
