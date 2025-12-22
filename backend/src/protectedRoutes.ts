@@ -16,6 +16,7 @@ router.get('/userDetails',async(req,res)=>{
                 firstName: true,
                 lastName: true,
                 email: true,
+                imagePath:true,
             }
         })
 
