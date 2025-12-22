@@ -1,8 +1,9 @@
 export type UserData = {
-    firstName:string,
-    lastName:string,
-    email:string,
-    id:string
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    imagePath: string;
 }
 
 export type UserRegistrationData={
