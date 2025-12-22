@@ -14,7 +14,7 @@ const ConcertDetails = () => {
   const navigation = useNavigate()
   const {userData} = useAuth()
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const { data: concert, isLoading, isError } = useConcertDetails(Number(id));
+  const { data: concert, isLoading, isError, refetch } = useConcertDetails(Number(id));
   const [pendingTicketId,setPendingTicketId] = useState<number|null>(null)
   const {
     data: ticketInfo,
@@ -37,7 +37,8 @@ const ConcertDetails = () => {
   if (isError) {
     return (
       <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
-        "Error Occured: cannot fetch data. please try again"
+        "Error Occured: cannot fetch data. please"
+        <button onClick={() => refetch()}>Try Again</button>
       </div>
     );
   }
