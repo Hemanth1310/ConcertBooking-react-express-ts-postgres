@@ -2,9 +2,11 @@ import express from 'express'
 import authenticateToken from './middleware/auth'
 import { prisma } from './prisma'
 import { Booking, Prisma } from '@prisma/client'
+import { updateProfileSchema } from './utils/TypeChecker'
 
 const router = express.Router()
 router.use(authenticateToken)
+router.use(express.json())
 router.get('/userDetails',async(req,res)=>{
     const userId = req.user?.userId
 
@@ -27,6 +29,36 @@ router.get('/userDetails',async(req,res)=>{
     }catch(error){
         res.status(404).json({error:'User not found'})
     }
+})
+
+router.patch('/updateProfile',async(req,res)=>{
+    const newData = req.body
+
+    const result = updateProfileSchema.safeParse(newData)
+
+    if(!result.success){
+        res.status(400).send("Invalid update values")
+    }
+    const userData = await prisma.user.update({
+        where:{id:req.user?.userId},
+        data:{
+            ...result.data
+        },
+        select:{
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+                imagePath:true,
+        }
+    })
+
+    res.json({
+        message:"User profile updated",
+        payload:{
+            ...userData
+        }
+    })
 })
 
 router.post('/booking/:concertId/:ticketTypeId',async(req,res)=>{
