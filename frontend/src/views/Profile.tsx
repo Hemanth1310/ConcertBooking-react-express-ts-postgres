@@ -8,6 +8,7 @@ import api from '../utils/axiosConfig'
 
 const Profile = () => {
     const {userData,handleAuth} = useAuth()
+     const [formError,setFormError] = useState<string>('')
     const [modifiedUserData,setModifiedUserData] =useState<UpdatedProfileInput>({
         firstName:userData?.firstName,
         lastName:userData?.lastName,
@@ -38,6 +39,7 @@ const Profile = () => {
         const result = updateProfileSchema.safeParse(changerFields)
 
         if(!result.success){
+            setFormError(result.error.issues[0].message)
             return
         }
 
@@ -84,7 +86,8 @@ const Profile = () => {
                                 <span className='text-xl px-2'>Email</span>
                                 <input value={modifiedUserData.email} onChange={handleDetails} name='email' className='border-2 rounded-2xl border-gray-400 text-xl p-4' placeholder={userData.email}></input>
                             </div>
-                        <button onClick={dataUpdateHandler} className='bg-brand w-50 text-white text-xl p-3 rounded-2xl'>Save Changes</button>
+                        <button onClick={dataUpdateHandler} className='bg-brand w-50 text-white text-xl p-3 rounded-2xl hover:opacity-75'>Save Changes</button>
+                        {formError&&<div className='mt-4 text-lg text-red-700 text-center'>{formError}</div>}
                 </div>
             </div>
         </div>
