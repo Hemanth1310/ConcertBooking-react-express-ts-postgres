@@ -33,6 +33,7 @@ const Profile = () => {
         const changerFields = Object.fromEntries(Object.entries(rawPayload).filter(([key,value])=>(userData[key as keyof UserData]!==value)))
 
         if(Object.values(changerFields).length<1){
+            setFormError('No changes made.')
             return
         }
 
@@ -86,8 +87,9 @@ const Profile = () => {
                                 <span className='text-xl px-2'>Email</span>
                                 <input value={modifiedUserData.email} onChange={handleDetails} name='email' className='border-2 rounded-2xl border-gray-400 text-xl p-4' placeholder={userData.email}></input>
                             </div>
-                        <button onClick={dataUpdateHandler} className='bg-brand w-50 text-white text-xl p-3 rounded-2xl hover:opacity-75'>Save Changes</button>
-                        {formError&&<div className='mt-4 text-lg text-red-700 text-center'>{formError}</div>}
+                             {formError&&<div className='mt-4 text-lg text-red-700 px-5'>{formError}</div>}
+                                <button onClick={dataUpdateHandler} className='bg-brand w-50 text-white text-xl p-3 rounded-2xl hover:opacity-75'>Save Changes</button>
+                        
                 </div>
             </div>
         </div>
