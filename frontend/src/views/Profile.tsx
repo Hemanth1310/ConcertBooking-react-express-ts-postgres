@@ -47,6 +47,7 @@ const Profile = () => {
         try{
             const {data} = await api.patch('/api/updateProfile',result.data)
             alert('User Updated')
+            setFormError('')
             handleAuth(data.payload)
         }catch(error){
             console.log(error)
