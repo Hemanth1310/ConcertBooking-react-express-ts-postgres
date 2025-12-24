@@ -6,11 +6,14 @@ import type { UserData } from '../types'
 import api from '../utils/axiosConfig'
 import { useRecentBookings } from '../utils/hooks/concertDataHook'
 import Spinner from '../components/Spinner'
+import Order from '../components/Order'
+import { useNavigate } from 'react-router'
 
 
 const Profile = () => {
     const {userData,handleAuth} = useAuth()
-    const {data:recentBooking, isLoading,isError,refetch} = useRecentBookings()
+    const navigation = useNavigate()
+    const {data:recentBookings, isLoading,isError,refetch} = useRecentBookings()
     const [formError,setFormError] = useState<string>('')
     const [modifiedUserData,setModifiedUserData] =useState<UpdatedProfileInput>({
         firstName:userData?.firstName,
@@ -36,7 +39,7 @@ const Profile = () => {
             </div>
             );
         }
-        if (!recentBooking) {
+        if (!recentBookings) {
             return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">Nothing to display.</div>;
   }
     const handleDetails = (e:ChangeEvent<HTMLInputElement>)=>{
@@ -74,6 +77,10 @@ const Profile = () => {
             console.log(error)
         }
         
+    }
+
+    const handleBookingHistory =()=>{
+        navigation('/booking-history')
     }
 
   return (
@@ -119,6 +126,13 @@ const Profile = () => {
             <h1 className="text-2xl md:text-3xl font-bold font-mono py-5">
                 Recent Bookings
             </h1>
+            <div className="flex flex-col gap-5">
+                {recentBookings.map(bookingDetails=>(
+                    <Order bookingDetails={bookingDetails} key={bookingDetails?.id}/>
+                ))}
+            </div>
+            <button className='text-lg font-bold font-mono py-5 text-blue-700 cursor-pointer hover:font-stretch-105% hover:underline' onClick={handleBookingHistory}>View all bookings...</button>
+
 
         </div>
     

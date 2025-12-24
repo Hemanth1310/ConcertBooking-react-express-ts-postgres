@@ -66,7 +66,7 @@ export const useBookingHistory=()=>{
 }
 
 
-const fetchRecentBookings = async()=>{
+const fetchRecentBookings = async():Promise<BookingDetails[]>=>{
     const {data} =await api.get('/api/recentBookings')
     return data.payload.recentBookings
 }
