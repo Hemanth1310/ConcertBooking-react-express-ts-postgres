@@ -1,5 +1,3 @@
-import React from 'react'
-import { useAuth } from '../context/AuthContext'
 import { useBookingHistory } from '../utils/hooks/concertDataHook'
 import Order from '../components/Order'
 import Spinner from '../components/Spinner'
