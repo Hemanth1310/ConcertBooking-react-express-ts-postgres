@@ -170,4 +170,32 @@ router.get('/bookings',async(req,res)=>{
     }
 })
 
+router.get('/recentBookings',async(req,res)=>{
+    const userId = req.user?.userId
+    try{
+        const recentBookings = await prisma.booking.findMany({
+            where:{userId},
+            take:3,
+            include:{
+                ticketType:{
+                    include:{
+                        concert:true
+                    }
+                }
+            },
+            orderBy:{createdAt:'desc'}
+        })
+
+        res.json({
+            message:"Recent Bookings",
+            payload:{
+                recentBookings
+            }
+        })
+    }catch(error){
+        res.send(error)
+    }
+})
+
+
 export default router 
