@@ -30,15 +30,25 @@ const AuthConextProvider =({children}:AuthConextProviderType)=>{
     }
 
     useEffect(()=>{
-        const token = localStorage.getItem('token')
-        if(token){
-            api.get('/api/userDetails')
-                .then(response=>handleAuth(response.data.payload))
-                .catch(err=>{
-                    setIsAuthLoading(false);
-                    console.log('Session Timedout'+err)
-                })
+        const checkAuth = async () => {
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+            setIsAuthLoading(false);
+            return;
         }
+
+        try {
+            const response = await api.get('/api/userDetails');
+            handleAuth(response.data.payload);
+        } catch (err) {
+            console.error('Session verification failed:', err);  
+            localStorage.removeItem('token');
+            handleAuth(null); 
+        }
+    };
+
+    checkAuth();
     },[])
 
     return(
