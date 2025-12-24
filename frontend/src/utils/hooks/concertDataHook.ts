@@ -58,10 +58,22 @@ const fetchBookingsByUser = async() : Promise<BookingDetails[]>=>{
         return data.payload.bookingHistory
 }
 
-export const useBookingHistory=(userID:string)=>{
+export const useBookingHistory=()=>{
     return useQuery({
-        queryKey:['bookingHistory',userID],
+        queryKey:['bookingHistory'],
         queryFn:()=>fetchBookingsByUser(),
-        enabled:!!userID,
+    })
+}
+
+
+const fetchRecentBookings = async()=>{
+    const {data} =await api.get('/api/recentBookings')
+    return data.payload.recentBookings
+}
+
+export const useRecentBookings=()=>{
+    return useQuery({
+        queryKey:['recentBookings'],
+        queryFn:()=>fetchRecentBookings()
     })
 }
