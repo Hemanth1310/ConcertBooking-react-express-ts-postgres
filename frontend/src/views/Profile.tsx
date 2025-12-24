@@ -4,11 +4,14 @@ import getImageUrl from '../utils/getImageUrl'
 import { updateProfileSchema, type UpdatedProfileInput } from '../utils/TypeChecker'
 import type { UserData } from '../types'
 import api from '../utils/axiosConfig'
+import { useRecentBookings } from '../utils/hooks/concertDataHook'
+import Spinner from '../components/Spinner'
 
 
 const Profile = () => {
     const {userData,handleAuth} = useAuth()
-     const [formError,setFormError] = useState<string>('')
+    const {data:recentBooking, isLoading,isError,refetch} = useRecentBookings()
+    const [formError,setFormError] = useState<string>('')
     const [modifiedUserData,setModifiedUserData] =useState<UpdatedProfileInput>({
         firstName:userData?.firstName,
         lastName:userData?.lastName,
@@ -18,6 +21,24 @@ const Profile = () => {
     return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">Failed to fetch details</div>;
     }
 
+        if (isLoading) {
+            return (
+            <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
+                <Spinner/>
+            </div>
+            );
+        }
+        if (isError) {
+            return (
+            <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
+                "Error Occured: cannot fetch data. please try again"
+                <button onClick={() => refetch()}>Try Again</button>
+            </div>
+            );
+        }
+        if (!recentBooking) {
+            return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">Nothing to display.</div>;
+  }
     const handleDetails = (e:ChangeEvent<HTMLInputElement>)=>{
         const {name,value} = e.target
         setModifiedUserData(prev=>({...prev,[name]:value}))
@@ -94,7 +115,13 @@ const Profile = () => {
                 </div>
             </div>
         </div>
-     
+        <div>
+            <h1 className="text-2xl md:text-3xl font-bold font-mono py-5">
+                Recent Bookings
+            </h1>
+
+        </div>
+    
 
       </div>
   )
