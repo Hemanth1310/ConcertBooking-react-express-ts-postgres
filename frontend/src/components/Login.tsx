@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import api from '../utils/axiosConfig'
+import { useNavigate } from 'react-router'
 
 type Props = {
     closeModal:()=>void
@@ -11,7 +12,7 @@ const Login = ({closeModal}: Props) => {
     const passwordInputRef = useRef<HTMLInputElement>(null)
     const [messsage,setMessage] = useState<boolean>(false)
     const {handleAuth}=useAuth()
-    
+    const navigation = useNavigate()
 
         const login=()=>{
             if(loginInputRef.current && passwordInputRef.current){
@@ -40,10 +41,17 @@ const Login = ({closeModal}: Props) => {
             console.error('Failed to Fetch api' +error)
           }
         }
+
+        const handleForgetPassword=()=>{
+            closeModal()
+            navigation('/forgot-password')
+        }
+        
   return (
      <div className='w-full flex flex-col justify-center gap-5'>
                     <input type='email' ref={loginInputRef} className='border border-gray-400 text-xl p-4' placeholder='Enter Email here...'></input>
                     <input type='password' ref={passwordInputRef} className='border border-gray-400 text-xl p-4' placeholder='Enter Password here...'></input>
+                     <div className='w-full flex justify-end' onClick={handleForgetPassword}><span className='text-blue-700' >Forgot password?</span></div>
                       <button 
                             onClick={login}
                             className="mt-4 bg-brand text-white px-3 py-3 rounded flex-1 hover:bg-red-400"
