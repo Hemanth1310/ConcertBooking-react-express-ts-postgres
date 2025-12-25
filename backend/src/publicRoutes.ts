@@ -100,4 +100,29 @@ router.get('/ticketInfo/:id',async(req,res)=>{
     }
 })
 
+router.get('/validate',async(req,res)=>{
+    const {email} = req.query
+    const emailId=email?.toString()
+    try{
+        const userData = await prisma.user.findUniqueOrThrow({
+            where:{email:emailId},
+            select:{
+                email:true
+            }
+        })
+        if(userData?.email){
+            res.json({
+                isValid:true
+            })
+        }else{
+            res.send({
+                isValid:false
+            })
+        }
+    }catch(error){
+            res.send(error)
+        }
+})
+
+
 export default router
