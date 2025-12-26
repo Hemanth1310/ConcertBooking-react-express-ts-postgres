@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import api from '../utils/axiosConfig'
 import z from 'zod'
+import axios from 'axios'
 
 const PasswordReset = () => {
     const [isValidated,setValidated] = useState(false)
@@ -18,14 +19,26 @@ const PasswordReset = () => {
     }
 
     try {
-        const { data } = await api.get(`/data/validate?email=${email}`);
+        const { data } = await api.post(`/data/validate-email`,{email:email});
         if (data.isValid) {
             setValidated(true);
-        }else{
-            setMessage("Entered email id is not valid.")
+            setMessage('')
         }
     } catch (error) {
-        console.log(error);
+        if (axios.isAxiosError(error)) {
+            const status = error.response?.status;
+            const message = error.response?.data?.message || "An error occurred";
+            
+            if (status === 404) {
+                setMessage("No account found with this email.");
+            } else {
+                setMessage(message);
+            }
+        } else if (error instanceof Error) {
+            setMessage(error.message);
+        } else {
+            setMessage("An unexpected error occurred.");
+        }
     }
 };
   return (

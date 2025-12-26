@@ -104,23 +104,21 @@ router.get('/validate',async(req,res)=>{
     const {email} = req.query
     const emailId=email?.toString()
     try{
-        const userData = await prisma.user.findUniqueOrThrow({
-            where:{email:emailId},
+        const userData = await prisma.user.findUnique({
+            where:{email:emailId?.toLocaleLowerCase()},
             select:{
-                email:true
+                id:true
             }
         })
-        if(userData?.email){
+        if(userData){
             res.json({
                 isValid:true
             })
-        }else{
-            res.send({
-                isValid:false
-            })
         }
+        return res.status(404).json({ exists: false, message: "User not found" });
     }catch(error){
-            res.send(error)
+            console.error(error);
+            res.status(500).json({ message: "Internal server error" });
         }
 })
 
