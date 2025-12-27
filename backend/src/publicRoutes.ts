@@ -100,27 +100,7 @@ router.get('/ticketInfo/:id',async(req,res)=>{
     }
 })
 
-router.get('/validate',async(req,res)=>{
-    const {email} = req.query
-    const emailId=email?.toString()
-    try{
-        const userData = await prisma.user.findUnique({
-            where:{email:emailId?.toLocaleLowerCase()},
-            select:{
-                id:true
-            }
-        })
-        if(userData){
-            res.json({
-                isValid:true
-            })
-        }
-        return res.status(404).json({ exists: false, message: "User not found" });
-    }catch(error){
-            console.error(error);
-            res.status(500).json({ message: "Internal server error" });
-        }
-})
+
 
 
 export default router

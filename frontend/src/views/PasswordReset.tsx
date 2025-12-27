@@ -19,7 +19,7 @@ const PasswordReset = () => {
     }
 
     try {
-        const { data } = await api.post(`/data/validate-email`,{email:email});
+        const { data } = await api.post(`/auth/validate-email`,{email:email});
         if (data.isValid) {
             setValidated(true);
             setMessage('')
