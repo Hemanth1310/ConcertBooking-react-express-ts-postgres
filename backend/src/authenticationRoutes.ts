@@ -110,4 +110,26 @@ router.get('/validate',async(req,res)=>{
         }
 })
 
+router.patch('/password-update',async(req,res)=>{
+    const {email,newPassword} = req.body
+    const hashedPassword = await bcrypt.hash(newPassword,10)
+
+    try{
+        const updatedUser = await prisma.user.update({
+            where:{email},
+            data:{password:hashedPassword}
+        })
+         if(updatedUser){
+            res.json({
+                isPasswordUpdated:true
+            })
+        }
+        return res.status(405).json({ exists: false, message: "Currently unable to update" });
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+
+})
+
 export default router
