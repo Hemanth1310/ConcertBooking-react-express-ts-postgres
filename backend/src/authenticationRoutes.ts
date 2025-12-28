@@ -88,8 +88,8 @@ router.post('/login',async(req,res)=>{
 
 })
 
-router.get('/validate',async(req,res)=>{
-    const {email} = req.query
+router.post('/validate-email',async(req,res)=>{
+    const {email} = req.body
     const emailId=email?.toString()
     try{
         const userData = await prisma.user.findUnique({
@@ -99,14 +99,14 @@ router.get('/validate',async(req,res)=>{
             }
         })
         if(userData){
-            res.json({
+            return res.json({
                 isValid:true
             })
         }
         return res.status(404).json({ exists: false, message: "User not found" });
     }catch(error){
             console.error(error);
-            res.status(500).json({ message: "Internal server error" });
+            return res.status(500).json({ message: "Internal server error" });
         }
 })
 
