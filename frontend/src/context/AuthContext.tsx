@@ -26,27 +26,27 @@ const AuthConextProvider =({children}:AuthConextProviderType)=>{
 
     const handleAuth = (authUserDetails:UserData|null)=>{
         setUserData(authUserDetails)
-         setIsAuthLoading(false)
+        setIsAuthLoading(false)
     }
 
     useEffect(()=>{
         const checkAuth = async () => {
         const token = localStorage.getItem('token');
         
-        if (!token) {
-            setIsAuthLoading(false);
-            return;
-        }
+            if (!token) {
+                setIsAuthLoading(false);
+                return;
+            }
 
-        try {
-            const response = await api.get('/api/userDetails');
-            handleAuth(response.data.payload);
-        } catch (err) {
-            console.error('Session verification failed:', err);  
-            localStorage.removeItem('token');
-            handleAuth(null); 
-        }
-    };
+            try {
+                const response = await api.get('/api/userDetails');
+                handleAuth(response.data.payload);
+            } catch (err) {
+                console.error('Session verification failed:', err);  
+                localStorage.removeItem('token');
+                handleAuth(null); 
+            }
+        };
 
     checkAuth();
     },[])

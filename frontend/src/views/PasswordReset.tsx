@@ -40,7 +40,10 @@ const PasswordReset = () => {
             setMessage("An unexpected error occurred.");
         }
     }
-};
+}
+
+    
+
   return (
      <div className="flex px-5 md:px-0 flex-col w-full h-full mt-5 items-center justify-center">
         <div className='w-full md:w-1/2 py-10 border-2 px-5 flex flex-col items-center gap-5'>
