@@ -49,8 +49,8 @@ const PasswordReset = () => {
     try {
       const { data } = await api.post(`/auth/validate-email`, { email: email });
       if (data.isValid) {
-        setValidated(true);
         setVerifiedEmail(email);
+        setValidated(true);
         setFormError("");
       }
     } catch (error) {
@@ -100,7 +100,7 @@ const PasswordReset = () => {
           Password Reset
         </h1>
         {!isValidated ? (
-          <div className="w-full flex flex-col md:flex-row  gap-5">
+          <div key="step-email" className="w-full flex flex-col md:flex-row  gap-5">
             <div className="flex flex-col gap-5 flex-1">
               <span className="text-xl px-2 font-bold">Email:</span>
               <input
@@ -120,7 +120,7 @@ const PasswordReset = () => {
             </div>
           </div>
         ) : (
-          <div className="w-full flex flex-col md:flex-row  gap-5">
+          <div key="step-password" className="w-full flex flex-col md:flex-row  gap-5">
             <div className="flex flex-col gap-2 flex-1">
               <span className="text-xl px-2">New Password</span>
               <input
