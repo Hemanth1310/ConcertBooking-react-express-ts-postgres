@@ -1,91 +1,116 @@
-import { useState } from 'react'
-import { useAuth } from '../context/AuthContext'
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
-import Authentication from './Authentication'
-import Search from './Search'
-import { useNavigate } from 'react-router'
-import { useQueryClient } from '@tanstack/react-query'
-
+import Authentication from "./Authentication";
+import Search from "./Search";
+import { useNavigate } from "react-router";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Header = () => {
-    const queryClient = useQueryClient()
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [toggelDropDown ,setToggleDropDown] = useState<boolean>(false)
-    const {userData,handleAuth} = useAuth()
-    const navigation = useNavigate()
-    // Handlers
- 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+  const queryClient = useQueryClient();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [toggelDropDown, setToggleDropDown] = useState<boolean>(false);
+  const { userData, handleAuth } = useAuth();
+  const navigation = useNavigate();
 
-    const handleToggleDropdown = ()=>{
-        setToggleDropDown(prev=>!prev)
-    }
+  //Modal Handlers
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
-    const handleLogout=()=>{
-        localStorage.removeItem('token')
-        handleToggleDropdown()
-        queryClient.clear()
-        handleAuth(null)
-    }
+  const handleToggleDropdown = () => {
+    setToggleDropDown((prev) => !prev);
+  };
 
-    const handleBookingHistory =()=>{
-        handleToggleDropdown()
-        navigation('/booking-history')
-    }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    handleToggleDropdown();
+    queryClient.clear();
+    handleAuth(null);
+  };
 
-    const handleProfileView =()=>{
-        handleToggleDropdown()
-        navigation('/profile')
-    }
-    
+  const handleBookingHistory = () => {
+    handleToggleDropdown();
+    navigation("/booking-history");
+  };
+
+  const handleProfileView = () => {
+    handleToggleDropdown();
+    navigation("/profile");
+  };
+
   return (
-    <div className='flex-1 w-screen h-20 bg-white flex items-center justify-center fixed top-0 left-0 z-100 shadow-md'>
-        <div className='container relative mx-auto flex items-center justify-between h-full gap-5 p-4'>
-            <h1 className='md:text-2xl text-shadow-stone-800 flex-1 cursor-pointer' onClick={()=>navigation('/')}>ConcertZ/Berlin</h1>
-            <Search/>
-            <div className='h-full flex items-center justify-center flex-1'>
-                {userData?
-                    <div className='flex flex-col justify-between items-center hover:cursor-pointer' onClick={handleToggleDropdown}>
-                       
-                        <span className="material-symbols-outlined text-shadow-stone-800 hover:cursor-pointer" style={{ fontSize: '30px' }} >
-                            account_circle
-                        </span>
-                        <div className='flex w-full justify-center'>
-                            Me 
-                            <span className="material-symbols-outlined">
-                                arrow_drop_down
-                            </span>
-                        </div>
-                        {toggelDropDown && <div className='absolute top-20 right-0 bg-gray-100 sm:min-h-screen md:min-h-10 w-full md:w-80 flex flex-col gap-4 shadow-md'>
-                            <div onClick={handleProfileView} className='text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2 hover:cursor-pointer'>
-                                <span className="material-symbols-outlined">
-                                    manage_accounts
-                                </span>
-                                Profile</div>
-                            <div onClick={handleBookingHistory} className='text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2 hover:cursor-pointer'>
-                                <span className="material-symbols-outlined">
-                                    archive
-                                </span>
-                                Booking History</div>
-                            <div onClick={handleLogout} className='text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2 hover:cursor-pointer' >
-                                <span className="material-symbols-outlined">
-                                    logout
-                                </span>
-                                Logout</div>
-                        </div>}
-                       
-                    </div>
-                      
-                        
-                        :
-                        <button className='bg-brand h-full w-full text-white text-xs md:text-lg font-bold rounded-2xl px-3 md:px-4 hover:opacity-85' onClick={openModal}>SignIn</button>
-                }
+    <div className="flex-1 w-screen h-20 bg-white flex items-center justify-center fixed top-0 left-0 z-100 shadow-md">
+      <div className="container relative mx-auto flex items-center justify-between h-full gap-5 p-4">
+        <h1
+          className="md:text-2xl text-shadow-stone-800 flex-1 cursor-pointer"
+          onClick={() => navigation("/")}
+        >
+          ConcertZ/Berlin
+        </h1>
+        <Search />
+        <div className="h-full flex items-center justify-center flex-1">
+          {userData ? (
+            <div
+              className="flex flex-col justify-between items-center hover:cursor-pointer"
+              onClick={handleToggleDropdown}
+            >
+              <span
+                className="material-symbols-outlined text-shadow-stone-800 hover:cursor-pointer"
+                style={{ fontSize: "30px" }}
+              >
+                account_circle
+              </span>
+              <div className="flex w-full justify-center">
+                Me
+                <span className="material-symbols-outlined">
+                  arrow_drop_down
+                </span>
+              </div>
+              {toggelDropDown && (
+                <div className="absolute top-20 right-0 bg-gray-100 sm:min-h-screen md:min-h-10 w-full md:w-80 flex flex-col gap-4 shadow-md">
+                  <div
+                    onClick={handleProfileView}
+                    className="text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2 hover:cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined">
+                      manage_accounts
+                    </span>
+                    Profile
+                  </div>
+                  <div
+                    onClick={handleBookingHistory}
+                    className="text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2 hover:cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined">archive</span>
+                    Booking History
+                  </div>
+                  <div
+                    onClick={handleLogout}
+                    className="text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2 hover:cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined">logout</span>
+                    Logout
+                  </div>
+                </div>
+              )}
             </div>
-            <Authentication isModalOpen={isModalOpen} openModal={openModal} closeModal={closeModal}/>
+          ) : (
+            <button
+              className="bg-brand h-full w-full text-white text-xs md:text-lg font-bold rounded-2xl px-3 md:px-4 hover:opacity-85"
+              onClick={openModal}
+            >
+              SignIn
+            </button>
+          )}
         </div>
+        <Authentication
+          isModalOpen={isModalOpen}
+          openModal={openModal}
+          closeModal={closeModal}
+        />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
