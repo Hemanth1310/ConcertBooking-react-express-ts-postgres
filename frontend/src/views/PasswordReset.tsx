@@ -11,7 +11,7 @@ import { useNavigate } from "react-router";
 const PasswordReset = () => {
   const navigation = useNavigate();
   const [isValidated, setValidated] = useState(false);
-  const [isLoading,setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState<string>("");
   const [formData, setFormData] = useState<ResetPasswordInput>({
     password: "",
@@ -44,7 +44,7 @@ const PasswordReset = () => {
       return;
     }
     setIsLoading(true);
-    setFormError('');
+    setFormError("");
 
     try {
       const { data } = await api.post(`/auth/validate-email`, { email: email });
@@ -55,8 +55,8 @@ const PasswordReset = () => {
       }
     } catch (error) {
       handleError(error);
-    }finally {
-            setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -74,7 +74,7 @@ const PasswordReset = () => {
       return;
     }
     setIsLoading(true);
-    setFormError('');
+    setFormError("");
 
     try {
       const { data } = await api.patch("/auth/password-update", {
@@ -88,8 +88,8 @@ const PasswordReset = () => {
       }
     } catch (error) {
       handleError(error);
-    }finally {
-            setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -100,7 +100,10 @@ const PasswordReset = () => {
           Password Reset
         </h1>
         {!isValidated ? (
-          <div key="step-email" className="w-full flex flex-col md:flex-row  gap-5">
+          <div
+            key="step-email"
+            className="w-full flex flex-col md:flex-row  gap-5"
+          >
             <div className="flex flex-col gap-5 flex-1">
               <span className="text-xl px-2 font-bold">Email:</span>
               <input
@@ -115,12 +118,15 @@ const PasswordReset = () => {
                 onClick={handleValidation}
                 className="bg-brand w-50 text-white text-xl p-3 rounded-2xl hover:opacity-75"
               >
-                {isLoading?'Checking':'Validate'}
+                {isLoading ? "Checking" : "Validate"}
               </button>
             </div>
           </div>
         ) : (
-          <div key="step-password" className="w-full flex flex-col md:flex-row  gap-5">
+          <div
+            key="step-password"
+            className="w-full flex flex-col md:flex-row  gap-5"
+          >
             <div className="flex flex-col gap-2 flex-1">
               <span className="text-xl px-2">New Password</span>
               <input
@@ -140,11 +146,11 @@ const PasswordReset = () => {
               ></input>
             </div>
             <button
-            disabled={isLoading}
+              disabled={isLoading}
               onClick={handlePasswordUpdate}
               className="bg-brand w-50 text-white text-xl p-3 rounded-2xl hover:opacity-75"
             >
-              {isLoading?'Checking':'Update'}
+              {isLoading ? "Checking" : "Update"}
             </button>
           </div>
         )}
