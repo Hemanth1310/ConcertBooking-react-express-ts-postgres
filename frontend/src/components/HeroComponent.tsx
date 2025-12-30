@@ -4,13 +4,13 @@ import getImageUrl from "../utils/getImageUrl";
 import { useNavigate } from "react-router";
 
 type Props = {
-  concerts: Concert[];
+  featuredList: Concert[];
 };
 
-const HeroComponent = ({ concerts }: Props) => {
-  const featuredList = concerts?.filter(
-    (concert) => concert.isFeatured === true
-  );
+const HeroComponent = ({ featuredList }: Props) => {
+  // const featuredList = concerts?.filter(
+  //   (concert) => concert.isFeatured === true
+  // );
   const [currentSLide, setCurrentSlide] = useState(0);
   const navigation = useNavigate();
   const totalSlides = featuredList.length;

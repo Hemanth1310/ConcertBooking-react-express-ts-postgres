@@ -32,7 +32,7 @@ const Home = () => {
   const concert_types = Object.keys(catogorisedData);
   return (
     <div className="w-full flex flex-col items-center">
-      <HeroComponent concerts={featuredData} />
+      <HeroComponent featuredList={featuredData} />
       <div className="w-full mt-5 flex flex-col gap-10  p-5 md:p-0 ">
         {concert_types.map((concert_type) => (
           <div key={concert_type}>
