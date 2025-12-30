@@ -67,7 +67,8 @@ const Header = () => {
                 </span>
               </div>
               {toggelDropDown && (
-                <div className="absolute top-20 right-0 bg-gray-100 sm:min-h-screen md:min-h-10 w-full md:w-80 flex flex-col gap-4 shadow-md">
+                <div className="absolute top-20 right-0 bg-gray-100 sm:min-h-screen md:min-h-10 w-full md:w-80 flex flex-col gap-4 shadow-md"
+                onClick={(e) => e.stopPropagation()}>
                   <div
                     onClick={handleProfileView}
                     className="text-xl w-full hover:bg-gray-300 p-4 flex items-center gap-2 hover:cursor-pointer"
