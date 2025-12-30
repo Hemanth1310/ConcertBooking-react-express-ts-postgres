@@ -26,6 +26,7 @@ const AuthConextProvider = ({ children }: AuthConextProviderType) => {
 
   const handleAuth = (authUserDetails: UserData | null) => {
     setUserData(authUserDetails);
+    setIsAuthLoading(false)
   };
 
   useEffect(() => {
