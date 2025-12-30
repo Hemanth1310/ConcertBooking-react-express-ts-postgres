@@ -2,22 +2,24 @@ import { useQuery } from "@tanstack/react-query";
 import api from "../axiosConfig";
 import type { BookingDetails, Concert, TicketType } from "../../types";
 
+
+//Fetching query for all Concerts
 const fetchAllConcerts = async():Promise<Concert[]>=>{
     const {data} = await api.get('/data/concerts')
     return data.payload.concerts
 }
-
-const fetchConcertById =async(concertId:number):Promise<Concert>=>{  
-    const {data} = await api.get(`/data/concerts/${concertId}`)
-    return data.payload.concert
-}
-
 
 export const useConcerts = ()=>{
     return useQuery({
         queryKey:['concerts'],
         queryFn:fetchAllConcerts,
     })
+}
+
+//Fetching query for Concert based on ID
+const fetchConcertById =async(concertId:number):Promise<Concert>=>{  
+    const {data} = await api.get(`/data/concerts/${concertId}`)
+    return data.payload.concert
 }
 
 export const useConcertDetails =(concertID:number)=>{
