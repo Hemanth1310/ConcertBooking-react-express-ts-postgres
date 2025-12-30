@@ -1,4 +1,4 @@
-import React, { useState, type ChangeEvent } from 'react'
+import { useState, type ChangeEvent } from 'react'
 import { useAuth } from '../context/AuthContext'
 import getImageUrl from '../utils/getImageUrl'
 import { updateProfileSchema, type UpdatedProfileInput } from '../utils/TypeChecker'

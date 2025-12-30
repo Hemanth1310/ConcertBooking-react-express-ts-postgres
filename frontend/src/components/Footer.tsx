@@ -1,12 +1,9 @@
-import React from 'react'
-
-
 const Footer = () => {
   return (
-    <div className=' flex-1 w-full min-h-48 flex items-center justify-center bg-gray-200 mt-10'>
-        <div>Copyright @ Hemanth Kumar Halaharavi</div>
+    <div className=" flex-1 w-full min-h-48 flex items-center justify-center bg-gray-200 mt-10">
+      <div>Copyright @ Hemanth Kumar Halaharavi</div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

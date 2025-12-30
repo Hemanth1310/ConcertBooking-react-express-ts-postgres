@@ -1,4 +1,3 @@
-import React from 'react'
 import type { BookingDetails } from '../types'
 import getImageUrl from '../utils/getImageUrl'
 
