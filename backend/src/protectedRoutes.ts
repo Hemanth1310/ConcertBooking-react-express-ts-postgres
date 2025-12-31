@@ -1,201 +1,192 @@
-import express from 'express'
-import authenticateToken from './middleware/auth'
-import { prisma } from './prisma'
-import { Booking, Prisma } from '@prisma/client'
-import { updateProfileSchema } from './utils/TypeChecker'
+import express from "express";
+import authenticateToken from "./middleware/auth";
+import { prisma } from "./prisma";
+import { Booking, Prisma } from "@prisma/client";
+import { updateProfileSchema } from "./utils/TypeChecker";
 
-const router = express.Router()
-router.use(authenticateToken)
-router.use(express.json())
-router.get('/userDetails',async(req,res)=>{
-    const userId = req.user?.userId
+const router = express.Router();
+router.use(authenticateToken);
+router.use(express.json());
+router.get("/userDetails", async (req, res) => {
+  const userId = req.user?.userId;
 
-    try{
-        const user = await prisma.user.findUnique({
-            where:{id:userId},
-            select:{
-                id: true,
-                firstName: true,
-                lastName: true,
-                email: true,
-                imagePath:true,
-            }
-        })
-
-        res.json({
-            message:"User details",
-            payload:{...user}
-        })
-    }catch(error){
-        res.status(404).json({error:'User not found'})
-    }
-})
-
-router.patch('/updateProfile',async(req,res)=>{
-    const newData = req.body
-
-    const result = updateProfileSchema.safeParse(newData)
-
-    if(!result.success){
-        res.status(400).send("Invalid update values")
-    }
-    const userData = await prisma.user.update({
-        where:{id:req.user?.userId},
-        data:{
-            ...result.data
-        },
-        select:{
-                id: true,
-                firstName: true,
-                lastName: true,
-                email: true,
-                imagePath:true,
-        }
-    })
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        imagePath: true,
+      },
+    });
 
     res.json({
-        message:"User profile updated",
-        payload:{
-            ...userData
-        }
-    })
-})
+      message: "User details",
+      payload: { ...user },
+    });
+  } catch (error) {
+    res.status(404).json({ error: "User not found" });
+  }
+});
 
-router.post('/booking/:concertId/:ticketTypeId',async(req,res)=>{
-    const {concertId,ticketTypeId} = req.params;
-    const userId=req.user?.userId
-    const {qty} = req.query
-    const quantity = Number(qty)
-    const formatedTicketTypeId = Number(ticketTypeId)
-  
+router.patch("/updateProfile", async (req, res) => {
+  const newData = req.body;
 
-    try{
+  const result = updateProfileSchema.safeParse(newData);
 
-        const currentTicketInfo = await prisma.ticketType.findUnique({
-            where:{id:formatedTicketTypeId},
-        })
-        if(currentTicketInfo && userId){
-            
-            const newAvailableQuantity = currentTicketInfo.availableQuantity - quantity
-            const totalPrice= currentTicketInfo.price * quantity
-            const newBooking :Booking=await prisma.booking.create({
-                data:{
-                    quantity:newAvailableQuantity,
-                    totalPrice:totalPrice,
-                    user: {
-                        connect: { id: userId } 
-                    },
-                    ticketType: {
-                        connect: { id: formatedTicketTypeId }
-                    },
-                }
-            })
-            await prisma.ticketType.update({
-                data:{
-                    availableQuantity:newAvailableQuantity
-                },
-                where:{id:formatedTicketTypeId}
-            }) 
+  if (!result.success) {
+    res.status(400).send("Invalid update values");
+  }
+  const userData = await prisma.user.update({
+    where: { id: req.user?.userId },
+    data: {
+      ...result.data,
+    },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+      imagePath: true,
+    },
+  });
 
-            res.json({
-                message:"Booking Successful",
-                payload:{
-                    ...newBooking
-                }
-            })
-            
-        }else{
-            res.status(400).send("Requested ticket not available")
-        }
-        
+  res.json({
+    message: "User profile updated",
+    payload: {
+      ...userData,
+    },
+  });
+});
 
-    }catch(error){
-        res.status(405).send(error)
+router.post("/booking/:concertId/:ticketTypeId", async (req, res) => {
+  const { concertId, ticketTypeId } = req.params;
+  const userId = req.user?.userId;
+  const { qty } = req.query;
+  const quantity = Number(qty);
+  const formatedTicketTypeId = Number(ticketTypeId);
+
+  try {
+    const currentTicketInfo = await prisma.ticketType.findUnique({
+      where: { id: formatedTicketTypeId },
+    });
+    if (currentTicketInfo && userId) {
+      const newAvailableQuantity =
+        currentTicketInfo.availableQuantity - quantity;
+      const totalPrice = currentTicketInfo.price * quantity;
+      const newBooking: Booking = await prisma.booking.create({
+        data: {
+          quantity: newAvailableQuantity,
+          totalPrice: totalPrice,
+          user: {
+            connect: { id: userId },
+          },
+          ticketType: {
+            connect: { id: formatedTicketTypeId },
+          },
+        },
+      });
+      await prisma.ticketType.update({
+        data: {
+          availableQuantity: newAvailableQuantity,
+        },
+        where: { id: formatedTicketTypeId },
+      });
+
+      res.json({
+        message: "Booking Successful",
+        payload: {
+          ...newBooking,
+        },
+      });
+    } else {
+      res.status(400).send("Requested ticket not available");
+    }
+  } catch (error) {
+    res.status(405).send(error);
+  }
+});
+
+router.get("/booking/:id", async (req, res) => {
+  const id = Number(req.params.id);
+  try {
+    const bookingDetails = await prisma.booking.findUnique({
+      where: { id },
+      include: {
+        ticketType: {
+          include: {
+            concert: true,
+          },
+        },
+      },
+    });
+    if (!bookingDetails) {
+      return res.status(404).send("Booking not found.");
     }
 
-})
+    res.json({
+      message: "Booking details Success",
+      payload: { ...bookingDetails },
+    });
+  } catch (error) {
+    res.status(500).send("Connection to server failed.");
+  }
+});
 
-router.get('/booking/:id',async(req,res)=>{
-    const id = Number(req.params.id)
-    try{
-       const bookingDetails = await prisma.booking.findUnique({
-            where: { id },
-            include: {
-                ticketType: {
-                    include: {
-                        concert: true 
-                    }
-                }
-            }
-        })
-        if(!bookingDetails){
-            return res.status(404).send("Booking not found.")
-        }
+router.get("/bookings", async (req, res) => {
+  const user = req.user?.userId;
 
-        res.json({
-            message:"Booking details Success",
-            payload:{...bookingDetails},
-        })
-    }catch(error){
-        res.status(500).send("Connection to server failed.")
-    }
+  try {
+    const userBookingHistory = await prisma.booking.findMany({
+      where: { userId: user },
+      include: {
+        ticketType: {
+          include: {
+            concert: true,
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
 
+    res.json({
+      message: "Booking details of user",
+      payload: {
+        bookingHistory: userBookingHistory,
+      },
+    });
+  } catch (error) {
+    res.status(404).send("Booking details not found");
+  }
+});
 
-})
+router.get("/recentBookings", async (req, res) => {
+  const userId = req.user?.userId;
+  try {
+    const recentBookings = await prisma.booking.findMany({
+      where: { userId },
+      take: 3,
+      include: {
+        ticketType: {
+          include: {
+            concert: true,
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
 
-router.get('/bookings',async(req,res)=>{
-    const user = req.user?.userId
+    res.json({
+      message: "Recent Bookings",
+      payload: {
+        recentBookings,
+      },
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
 
-    try{
-        const userBookingHistory = await prisma.booking.findMany({
-            where:{userId:user},
-            include:{
-                ticketType:{
-                    include:{
-                        concert:true
-                    }
-                }
-            },
-            orderBy:{createdAt:'desc'}
-        })
-
-        res.json({
-            message:"Booking details of user",
-            payload:{
-                bookingHistory:userBookingHistory
-            }
-        })
-    }catch(error){
-        res.status(404).send("Booking details not found")
-    }
-})
-
-router.get('/recentBookings',async(req,res)=>{
-    const userId = req.user?.userId
-    try{
-        const recentBookings = await prisma.booking.findMany({
-            where:{userId},
-            take:3,
-            include:{
-                ticketType:{
-                    include:{
-                        concert:true
-                    }
-                }
-            },
-            orderBy:{createdAt:'desc'}
-        })
-
-        res.json({
-            message:"Recent Bookings",
-            payload:{
-                recentBookings
-            }
-        })
-    }catch(error){
-        res.send(error)
-    }
-})
-
-
-export default router 
+export default router;
