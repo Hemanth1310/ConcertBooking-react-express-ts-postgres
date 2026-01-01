@@ -7,6 +7,7 @@ import {
 import getImageUrl from "../utils/getImageUrl";
 import api from "../utils/axiosConfig";
 import Spinner from "../components/Spinner";
+import ErrorFallback from "../components/ui/ErrorFallback";
 
 const Booking = () => {
   const { name, id, ticketType } = useParams();
@@ -31,10 +32,7 @@ const Booking = () => {
   }
   if (isConcertError) {
     return (
-      <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
-        "Error Occured: cannot fetch data. please try again"
-        <button onClick={() => refetch()}>Try Again</button>
-      </div>
+      <ErrorFallback refetch={refetch}/>
     );
   }
   if (!concert) {
