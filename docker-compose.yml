@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: concert_db
+    ports:
+      - "5433:5432" # Use 5433 on your laptop to avoid local conflicts
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    ports:
+      - "3008:3008"
+    environment:
+      # Use 'db' (the service name) and 5432 (the internal port)
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/concert_db"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
