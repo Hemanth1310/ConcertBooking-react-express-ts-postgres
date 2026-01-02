@@ -8,6 +8,7 @@ import Authentication from "../components/Authentication";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
+import ErrorFallback from "../components/ui/ErrorFallback";
 
 const ConcertDetails = () => {
   const { name, id } = useParams();
@@ -40,10 +41,7 @@ const ConcertDetails = () => {
   }
   if (isError) {
     return (
-      <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
-        "Error Occured: cannot fetch data. please"
-        <button onClick={() => refetch()}>Try Again</button>
-      </div>
+     <ErrorFallback onRetry={refetch}/>
     );
   }
   if (!concert) {

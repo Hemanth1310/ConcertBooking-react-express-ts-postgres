@@ -32,7 +32,7 @@ const Booking = () => {
   }
   if (isConcertError) {
     return (
-      <ErrorFallback refetch={refetch}/>
+      <ErrorFallback onRetry={refetch}/>
     );
   }
   if (!concert) {

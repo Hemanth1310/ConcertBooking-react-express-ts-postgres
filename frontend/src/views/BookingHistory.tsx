@@ -1,6 +1,7 @@
 import { useBookingHistory } from "../utils/hooks/concertDataHook";
 import Order from "../components/Order";
 import Spinner from "../components/Spinner";
+import ErrorFallback from "../components/ui/ErrorFallback";
 
 const BookingHistory = () => {
   const {
@@ -19,10 +20,7 @@ const BookingHistory = () => {
   }
   if (isError) {
     return (
-      <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
-        "Error Occured: cannot fetch data. please try again"
-        <button onClick={() => refetch()}>Try Again</button>
-      </div>
+     <ErrorFallback onRetry={refetch}/>
     );
   }
   if (!bookingHistory) {

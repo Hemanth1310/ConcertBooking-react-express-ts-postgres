@@ -3,6 +3,7 @@ import HeroComponent from "../components/HeroComponent";
 import { useNavigate } from "react-router";
 import useDataProvider from "../utils/dataProvider";
 import Spinner from "../components/Spinner";
+import ErrorFallback from "../components/ui/ErrorFallback";
 
 
 const Home = () => {
@@ -14,10 +15,7 @@ const Home = () => {
     </div>;
   }
   if (isError) {
-    return <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
-      "Error Occured: cannot fetch data. please try again"
-      <button onClick={() => refetch()}>Try Again</button>
-      </div>;
+    return <ErrorFallback onRetry={refetch}/>
   }
 
   if(!catogorisedData || !featuredData){

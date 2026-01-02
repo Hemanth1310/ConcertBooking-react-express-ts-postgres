@@ -11,6 +11,7 @@ import { useRecentBookings } from "../utils/hooks/concertDataHook";
 import Spinner from "../components/Spinner";
 import Order from "../components/Order";
 import { useNavigate } from "react-router";
+import ErrorFallback from "../components/ui/ErrorFallback";
 
 const Profile = () => {
   const { userData, handleAuth } = useAuth();
@@ -45,11 +46,8 @@ const Profile = () => {
     );
   }
   if (isError) {
-    return (
-      <div className="w-full h-screen flex font-mono italic text-gray-500 items-center justify-center text-3xl">
-        "Error Occured: cannot fetch data. please try again"
-        <button onClick={() => refetch()}>Try Again</button>
-      </div>
+   return (
+     <ErrorFallback onRetry={refetch}/>
     );
   }
   if (!recentBookings) {
