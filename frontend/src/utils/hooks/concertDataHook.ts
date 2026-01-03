@@ -38,7 +38,9 @@ const fetchTicketTypes = async (id:number): Promise<TicketType[]>=>{
 export const useTicketInfo = (id:number)=>{
     return useQuery({
         queryKey:['ticketInfo',id],
-        queryFn:()=>fetchTicketTypes(id)
+        queryFn:()=>fetchTicketTypes(id),
+        refetchInterval: 5000,
+        refetchIntervalInBackground: true,
     })
 }
 
