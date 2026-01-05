@@ -10,21 +10,39 @@ import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
 import ErrorFallback from "../components/ui/ErrorFallback";
 
+/**
+ * ConcertDetails Page Component
+ * * Responsibilities:
+ * - Displays comprehensive data for a single concert.
+ * - Manages ticket selection and availability status (Scarcity/Fast Filling/Available).
+ * - Implements an "Auth-to-Action" flow: if a guest tries to book, it opens the login modal
+ * and redirects them to the booking page automatically upon successful login.
+ */
+
+
 const ConcertDetails = () => {
   const { name, id } = useParams();
   const navigation = useNavigate();
   const { userData } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [pendingTicketId, setPendingTicketId] = useState<number | null>(null);
+  //Concert Data from useQuery: based on ConcertID
   const {
     data: concert,
     isLoading,
     isError,
     refetch,
   } = useConcertDetails(Number(id));
-  const [pendingTicketId, setPendingTicketId] = useState<number | null>(null);
+  //Ticket Info Data from useQuery: based on ConcertID
   const { data: ticketInfo, isLoading: isTicketsLoading } = useTicketInfo(
     Number(id)
   );
+
+  /**
+   * Post-Login Sync:
+   * Monitors for when a guest successfully logs in while having a 'pending' ticket.
+   * Automatically triggers the navigation once the Auth context updates.
+   */
 
   useEffect(() => {
     if (userData && pendingTicketId && !isModalOpen) {
@@ -56,6 +74,12 @@ const ConcertDetails = () => {
   //Modal Handlers
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  /**
+   * Captures the user's intent to book.
+   * If logged in: Redirects directly to booking.
+   * If guest: Saves the ticket ID in 'pendingTicketId' and opens Auth modal.
+   */
 
   const handleNavigation = (ticketType: number) => {
     if (userData) {

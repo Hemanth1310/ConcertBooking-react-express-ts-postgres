@@ -16,7 +16,7 @@ export const useConcerts = ()=>{
     })
 }
 
-//Fetching query for Concert based on ID
+//Fetching query for Concert based on concertID
 const fetchConcertById =async(concertId:number):Promise<Concert>=>{  
     const {data} = await api.get(`/data/concerts/${concertId}`)
     return data.payload.concert
@@ -30,6 +30,7 @@ export const useConcertDetails =(concertID:number)=>{
     })
 }
 
+//Fetching query for ticket types based on concertID
 const fetchTicketTypes = async (id:number): Promise<TicketType[]>=>{
         const {data} = await api.get(`/data/ticketInfo/${id}`)
         return data.payload.ticketInfo
@@ -44,8 +45,10 @@ export const useTicketInfo = (id:number)=>{
     })
 }
 
+//Fetching query for ticket types based on BookingID
 const fetchBookingByID=async(id:string):Promise<BookingDetails>=>{
     const {data} = await api.get(`/api/booking/${id}`)
+    //data includes booking and associated concert and tickettype info
     return data.payload
 }
 

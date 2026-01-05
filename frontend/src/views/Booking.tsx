@@ -8,17 +8,28 @@ import getImageUrl from "../utils/getImageUrl";
 import api from "../utils/axiosConfig";
 import Spinner from "../components/Spinner";
 import ErrorFallback from "../components/ui/ErrorFallback";
+import { ToastContainer, toast } from 'react-toastify';
+/**
+ * Booking Page Component
+ * * Responsibilities:
+ * - Acts as the checkout interface for a specific ticket type.
+ * - Manages 'quantity' state with validation against available inventory.
+ * - Calculates real-time total costs.
+ * - Submits booking requests to the backend API and redirects to confirmation.
+ */
 
 const Booking = () => {
   const { name, id, ticketType } = useParams();
+  const [quantity, setQuantity] = useState(0);
+  const navigation = useNavigate();
+  //Concert Data from useQuery: based on ConcertID/cached during concertDetails
   const {
     data: concert,
     isLoading: isConcertLoading,
     isError: isConcertError,
     refetch,
   } = useConcertDetails(Number(id));
-  const [quantity, setQuantity] = useState(0);
-  const navigation = useNavigate();
+  //Ticket Info Data from useQuery: based on ConcertID/cached during concertDetails
   const { data: ticketInfo, isLoading: isTicketsLoading } = useTicketInfo(
     Number(id)
   );
@@ -43,11 +54,24 @@ const Booking = () => {
     );
   }
 
+  /**
+   * Data Extraction:
+   * Finds the specific ticket type details (price, name, availability) 
+   * from the list of all tickets for this concert.
+   */
+
   const TicketInfoById = ticketInfo?.filter(
     (ticket) => ticket.id === Number(ticketType)
   );
 
   const dateObject = new Date(concert.date);
+
+  /**
+   * Finalizes the transaction.
+   * Sends the ticket quantity to the server via POST.
+   * On success: Navigates to a dynamic Booking Details/Receipt page.
+   * On failure: Logs error.
+   */
 
   const handleBooking = async () => {
     try {
@@ -56,12 +80,14 @@ const Booking = () => {
       );
       navigation(`/booking-details/${bookingData.data.payload.id}`);
     } catch (error) {
-      console.error(error);
+      console.error(error)
+      toast("Something went wrong")
     }
   };
 
   return (
     <div className="flex px-5 md:px-0 flex-col w-full h-full mt-5">
+       <ToastContainer />
       <h1 className="text-2xl md:text-3xl font-bold font-mono py-5">
         Concert Details
       </h1>
@@ -123,6 +149,8 @@ const Booking = () => {
                 "Loading . please wait"
               </div>
             )}
+            {/*  Note: We use TicketInfoById[0] in the UI because filter returns an array,
+               even though we only expect one match */}
             {TicketInfoById ? (
               <div className="flex flex-col gap-3">
                 <div className="flex gap-10 text-2xl items-center">

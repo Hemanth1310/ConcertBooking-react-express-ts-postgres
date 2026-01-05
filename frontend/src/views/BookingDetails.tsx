@@ -4,9 +4,15 @@ import type { Concert, TicketType } from "../types"
 import Spinner from "../components/Spinner"
 import ErrorFallback from "../components/ui/ErrorFallback"
 
+/**
+ * Booking Details Page Component
+ * * Responsibilities:
+ * - Displays Booking summary post checkout
+ */
 
 const BookingDetails = () => {
    const {bookingID} = useParams()
+   //BookDetails with Concerts and tickets info is fetched with useQuery based on booking-ID 
    const {data:bookingDetails, isLoading:isBookingDetailsLoading,isError:isBookingDetailsError , refetch} = useBooking(bookingID ?? "")
    
    if (isBookingDetailsLoading) {
