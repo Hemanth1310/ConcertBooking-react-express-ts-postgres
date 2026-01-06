@@ -12,6 +12,15 @@ import Spinner from "../components/Spinner";
 import Order from "../components/Order";
 import { useNavigate } from "react-router";
 import ErrorFallback from "../components/ui/ErrorFallback";
+import { ToastContainer, toast } from 'react-toastify';
+
+/**
+ * Profile Page Component
+ * * Responsibilities:
+ * - View Poofile (eg, userdetails, previous bookings)
+ * - Update user details
+ * - Navigate to previous booking history 
+ */
 
 const Profile = () => {
   const { userData, handleAuth } = useAuth();
@@ -62,6 +71,14 @@ const Profile = () => {
     setModifiedUserData((prev) => ({ ...prev, [name]: value }));
   };
 
+  /**
+   * user data update handler:
+   * - check for fields changed
+   * - Validate with zod: changed fields with update profile schema
+   * - if valid proceed to update user details
+   * - else throw error
+   */
+
   const dataUpdateHandler = async () => {
     const rawPayload = {
       firstName: modifiedUserData.firstName,
@@ -93,7 +110,8 @@ const Profile = () => {
       setFormError("");
       handleAuth(data.payload);
     } catch (error) {
-      console.log(error);
+       console.error(error)
+      toast("Something went wrong")
     }
   };
 
@@ -103,6 +121,7 @@ const Profile = () => {
 
   return (
     <div className="flex px-5 md:px-0 flex-col w-full h-full mt-5">
+       <ToastContainer />
       <div>
         <h1 className="text-2xl md:text-3xl font-bold font-mono py-5">
           Account Details

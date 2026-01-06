@@ -6,6 +6,14 @@ import {
   resetPasswordSchema,
   type ResetPasswordInput,
 } from "../utils/TypeChecker";
+
+/**
+ * Password reset Page Component
+ * * Responsibilities:
+ * - Change password or rest password on forgot password.
+ */
+
+
 import { useNavigate } from "react-router";
 
 const PasswordReset = () => {
@@ -37,6 +45,13 @@ const PasswordReset = () => {
     }
   };
 
+   /**
+   * Password update:
+   * Parse Email with Zod: resetPasswordschema(check email for validity)
+   * Verify email from the user database
+   * if Available proceed to update password
+   * if not available throw error
+   */
   const handleValidation = async () => {
     const email = emailRef.current?.value || "";
     if (!z.string().email().safeParse(email).success) {
@@ -65,6 +80,12 @@ const PasswordReset = () => {
 
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  /**
+   * Password update:
+   * Parse password with Zod: resetPasswordschema(check password and repassword for validity and equality)
+   * Update password on sucessful validation to the serverwith patch request
+   */
 
   const handlePasswordUpdate = async () => {
     const result = resetPasswordSchema.safeParse(formData);

@@ -3,7 +3,14 @@ import Order from "../components/Order";
 import Spinner from "../components/Spinner";
 import ErrorFallback from "../components/ui/ErrorFallback";
 
+/**
+ * Booking History Page Component
+ * * Responsibilities:
+ * - Displays previous bookings done by the user.
+ */
+
 const BookingHistory = () => {
+  //Booking History data form use Query : fetch history based on user details
   const {
     data: bookingHistory,
     isLoading,
