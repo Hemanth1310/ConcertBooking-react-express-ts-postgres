@@ -2,6 +2,14 @@ import { useMemo } from "react";
 import type { Concert, ConcertCategory } from "../types";
 import { useConcerts } from "./hooks/concertDataHook";
 
+/**
+ * DataProvider Utility
+ * * Responsibilities:
+ * - Convert concerts data into different categories
+ * - Memoised processing for avoiding refiltering on rerenders
+ * - Filter featured data into a new array
+ */
+
 const useDataProvider = () => {
   const { data: concerts, isLoading, isError , refetch } = useConcerts();
 

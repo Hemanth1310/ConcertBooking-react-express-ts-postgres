@@ -7,6 +7,7 @@ const api = axios.create({
     }
 })
 
+//Add Auth Bearer token if it exists
 api.interceptors.request.use(
     (config)=>{
         const token = localStorage.getItem('token')
