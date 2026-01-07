@@ -4,6 +4,15 @@ import { useNavigate } from "react-router";
 import useDataProvider from "../utils/dataProvider";
 import Spinner from "./Spinner";
 
+/**
+ * Search Bar component
+ * * Responsibilities:
+ * - Gets formatted data from dataProvider utility function. 
+ * - triggers dataProvider to fetch data
+ * - Filter data based on serach inputs
+ * - Display results
+ */
+
 const Search = () => {
   const { concertsData, isLoading, isError } = useDataProvider();
   const [searchInput, setSearchInput] = useState<string>("");
