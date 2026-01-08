@@ -7,6 +7,13 @@ type Props = {
   title: string;
 };
 
+/**
+ * Modal component
+ * * Responsibilities:
+ * - Modal view
+ */
+
+
 const Modal = ({ isOpen, onClose, children, title }: Props) => {
   if (!isOpen) {
     return null;

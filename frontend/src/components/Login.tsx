@@ -7,12 +7,22 @@ type Props = {
   closeModal: () => void;
 };
 
+/**
+ * Login component
+ * * Responsibilities:
+ * - Provide users options to login with email and password
+ * - Validate user details 
+ * - If user is valid then update context with user datails
+ */
+
+
 const Login = ({ closeModal }: Props) => {
   const loginInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const [messsage, setMessage] = useState<boolean>(false);
   const { handleAuth } = useAuth();
   const navigation = useNavigate();
+
 
   const login = () => {
     if (loginInputRef.current && passwordInputRef.current) {
@@ -26,6 +36,12 @@ const Login = ({ closeModal }: Props) => {
     }
   };
 
+
+  /**
+   * Validate function:
+   * Validate user Details with backend.
+   * If valid update context with user details
+   */
   const validate = async (email: string, password: string) => {
     const data = {
       email: email,

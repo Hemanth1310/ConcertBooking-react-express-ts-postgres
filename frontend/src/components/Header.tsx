@@ -6,6 +6,14 @@ import Search from "./Search";
 import { useNavigate } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
 
+/**
+ * Header component
+ * * Responsibilities:
+ * - Provides Search option
+ * - Provides Signin Button for user to signin
+ * - Once Signed In provides drop with user profile options
+ */
+
 const Header = () => {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -21,6 +29,11 @@ const Header = () => {
     setToggleDropDown((prev) => !prev);
   };
 
+  /**
+   * Handle Logout:
+   * Logs Out user and navigates to home page
+   * Clears useQuery cache
+   */
   const handleLogout = () => {
     localStorage.removeItem("token");
     handleToggleDropdown();
@@ -28,11 +41,19 @@ const Header = () => {
     handleAuth(null);
   };
 
+   /**
+   * Handle Show booking history:
+   * Navigates to user boking history page
+   */
   const handleBookingHistory = () => {
     handleToggleDropdown();
     navigation("/booking-history");
   };
 
+  /**
+   * Handle Show User Provile:
+   * Navigate to user Profile page
+   */
   const handleProfileView = () => {
     handleToggleDropdown();
     navigation("/profile");

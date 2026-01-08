@@ -9,6 +9,14 @@ type Props = {
   closeModal: () => void;
 };
 
+/**
+ * Authntication component
+ * * Responsibilities:
+ * - Open Modal with login option 
+ * - If not a user option is selected provide registeration form
+ * - Login user with right credentials or with form submission
+ */
+
 const Authentication = ({ isModalOpen, closeModal }: Props) => {
   const [toggle, setToggle] = useState<boolean>(false);
 

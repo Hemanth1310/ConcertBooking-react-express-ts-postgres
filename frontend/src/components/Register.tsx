@@ -3,9 +3,26 @@ import type { UserRegistrationData } from "../types";
 import api from "../utils/axiosConfig";
 import { registerSchema } from "../utils/TypeChecker";
 
+
+/**
+ * Registration component
+ * * Responsibilities:
+ * - Provides form for user to enter details for registration
+ * - On submission validates the form against defined zod schema
+ * - If Validated makes a post req for the data
+ * - If failed to validate then pops error message
+ */
+
+
 const Register = () => {
   const [flag, setflag] = useState<boolean>(false);
   const [formError, setFormError] = useState<string>("");
+
+  /**
+   * Handle Form Input:
+   * Read from input for userregistraation details
+   * Parse the details with Zod: user details schema
+   */
 
   const handleFormInput = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,6 +45,10 @@ const Register = () => {
     Registration(rest);
   };
 
+  /**
+   * Registration function:
+   * Make a post request for new user details 
+   */
   const Registration = async (userRegData: UserRegistrationData) => {
     try {
       const response = await api.post("/auth/register", userRegData);
