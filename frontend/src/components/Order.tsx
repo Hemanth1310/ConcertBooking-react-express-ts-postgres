@@ -5,6 +5,12 @@ type Props = {
   bookingDetails: BookingDetails;
 };
 
+/**
+ * Order component
+ * * Responsibilities:
+ * - Display Order detials on checkout
+ */
+
 const Order = ({ bookingDetails }: Props) => {
   if (!bookingDetails) {
     return (
