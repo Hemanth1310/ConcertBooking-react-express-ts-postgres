@@ -11,6 +11,15 @@ const JWT_secret = process.env.JWT_secret || "123456789";
 
 router.use(express.json());
 
+/**
+ * Register Route
+ * * Responsibilities:
+ * - Reads user registration details
+ * - encrypts the passwod using bcrypt
+ * - updates user modal with new enrty
+ */
+
+
 router.post("/register", async (req, res) => {
   const { firstName, lastName, password, email } =
     req.body as Prisma.UserCreateInput;
@@ -41,6 +50,15 @@ router.post("/register", async (req, res) => {
     res.send(error);
   }
 });
+
+/**
+ * Login Route
+ * * Responsibilities:
+ * - Reads user details
+ * - validates then against the users table
+ * - If user is valid returns user Data with JWT token
+ */
+
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -88,6 +106,13 @@ router.post("/login", async (req, res) => {
   }
 });
 
+/**
+ * Validate Email Route
+ * * Responsibilities:
+ * - validates user Email for password resent
+ */
+
+
 router.post("/validate-email", async (req, res) => {
   const { email } = req.body;
   const emailId = email?.toString();
@@ -109,6 +134,14 @@ router.post("/validate-email", async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 });
+
+/**
+ * Register Route
+ * * Responsibilities:
+ * - Gets Email and new password
+ * - updates user entry with new password
+ */
+
 
 router.patch("/password-update", async (req, res) => {
   const { email, newPassword } = req.body;
