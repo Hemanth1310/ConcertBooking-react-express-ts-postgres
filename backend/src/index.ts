@@ -5,6 +5,11 @@ import publicRoutes from "./publicRoutes";
 import cors from "cors";
 import path from "path";
 const app = express();
+/**
+ * Cors Setup
+ * * Responsibilities:
+ * - Allow all urls for all the CURD operations
+ */
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -24,6 +29,13 @@ app.use("/api", protectedRoutes);
 app.use("/data", publicRoutes);
 
 const publicPath = path.join(__dirname, "..", "public");
+
+/**
+ * Public Route
+ * * Responsibilities:
+ * - Send the requested image for a concert as a response
+ */
+
 
 app.get("/images/:filename", (req, res) => {
   const filename = req.params.filename;
