@@ -7,6 +7,14 @@ import { updateProfileSchema } from "./utils/TypeChecker";
 const router = express.Router();
 router.use(authenticateToken);
 router.use(express.json());
+
+/**
+ * userDetails Route
+ * * Responsibilities:
+ * - Gets userID with JWT token 
+ * - Returns the user details
+ */
+
 router.get("/userDetails", async (req, res) => {
   const userId = req.user?.userId;
 
@@ -30,6 +38,15 @@ router.get("/userDetails", async (req, res) => {
     res.status(404).json({ error: "User not found" });
   }
 });
+
+/**
+ *  Update Profile Route
+ * * Responsibilities:
+ * - Gets user Details 
+ * - Pareses Data with Zod schema for new user
+ * - updates user entry with new data
+ */
+
 
 router.patch("/updateProfile", async (req, res) => {
   const newData = req.body;
@@ -60,6 +77,15 @@ router.patch("/updateProfile", async (req, res) => {
     },
   });
 });
+
+/**
+ * Book ticket Route
+ * * Responsibilities:
+ * - Gets user deatils, ticket details and quantity
+ * - Create a new record for the booking 
+ * - update Available quantity for given ticket ID
+ */
+
 
 router.post("/booking/:concertId/:ticketTypeId", async (req, res) => {
   const { concertId, ticketTypeId } = req.params;
@@ -109,6 +135,13 @@ router.post("/booking/:concertId/:ticketTypeId", async (req, res) => {
   }
 });
 
+/**
+ * Register Route
+ * * Responsibilities:
+ * - Gets Booking ID
+ * - Return booking details for the id
+ */
+
 router.get("/booking/:id", async (req, res) => {
   const id = Number(req.params.id);
   try {
@@ -134,6 +167,14 @@ router.get("/booking/:id", async (req, res) => {
     res.status(500).send("Connection to server failed.");
   }
 });
+
+/**
+ * Register Route
+ * * Responsibilities:
+ * - Gets User details
+ * - return all the bookings done by the user 
+ */
+
 
 router.get("/bookings", async (req, res) => {
   const user = req.user?.userId;
@@ -161,6 +202,14 @@ router.get("/bookings", async (req, res) => {
     res.status(404).send("Booking details not found");
   }
 });
+
+/**
+ * Register Route
+ * * Responsibilities:
+ * - Gets user ID
+ * - REturn 3 recent bookings done by the user
+ */
+
 
 router.get("/recentBookings", async (req, res) => {
   const userId = req.user?.userId;
