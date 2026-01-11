@@ -4,6 +4,13 @@ import { Prisma, Concert, TicketType } from "@prisma/client";
 
 const router = express.Router();
 
+/**
+ * Concerts Route
+ * * Responsibilities:
+ * - Return all concerts list with their details
+ */
+
+
 router.get("/concerts", async (req, res) => {
   try {
     const concerts: Concert[] = await prisma.concert.findMany({
@@ -33,6 +40,12 @@ router.get("/concerts", async (req, res) => {
       .json({ error: "An unexpected server error occurred." });
   }
 });
+
+/**
+ * Concert by id Route
+ * * Responsibilities:
+ * - Return concert details based on a perticular ID
+ */
 
 router.get("/concerts/:id", async (req, res) => {
   const id = Number(req.params.id);
@@ -67,6 +80,12 @@ router.get("/concerts/:id", async (req, res) => {
     res.send(error);
   }
 });
+
+/**
+ * Ticket Info route Route
+ * * Responsibilities:
+ * - Return ticket categoreis and thier availabilities for a perticular concert
+ */
 
 router.get("/ticketInfo/:id", async (req, res) => {
   const id: number = Number(req.params.id);
