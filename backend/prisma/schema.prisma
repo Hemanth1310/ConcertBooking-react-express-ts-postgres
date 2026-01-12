@@ -40,7 +40,8 @@ model User {
   updatedAt    DateTime  @updatedAt
   isActive     Boolean   @default(true)
   imagePath    String   @default("")
-
+  isVerified  Boolean  @default(false)
+  
   bookings     Booking[]
 }
 
