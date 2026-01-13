@@ -15,6 +15,8 @@ services:
     build: ./backend
     ports:
       - "3008:3008"
+    env_file:
+    - ./backend/.env
     environment:
       # Use 'db' (the service name) and 5432 (the internal port)
       DATABASE_URL: "postgresql://postgres:postgres@db:5432/concert_db"
