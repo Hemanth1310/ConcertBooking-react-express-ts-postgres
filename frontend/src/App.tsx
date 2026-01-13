@@ -10,6 +10,7 @@ import BookingDetails from "./views/BookingDetails";
 import BookingHistory from "./views/BookingHistory";
 import Profile from "./views/Profile";
 import PasswordReset from "./views/PasswordReset";
+import VerifyEmail from "./views/VerifyEmail";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                   element={<ConcertDetails />}
                 />
                 <Route path="/forgot-password" element={<PasswordReset />} />
+                <Route path="/verify-email" element={<VerifyEmail />} />
                 <Route element={<ProtectedRoutes />}>
                   <Route
                     path="/booking/:name/:id/:ticketType"
