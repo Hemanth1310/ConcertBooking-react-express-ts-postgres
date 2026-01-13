@@ -4,6 +4,7 @@ import { prisma } from "./prisma";
 import bcrypt from "bcrypt";
 import { decodedToken, userDetails } from "./types";
 import jwt from "jsonwebtoken";
+import { sendVerificationEmail } from "./services/mailerService";
 
 const router = express.Router();
 
@@ -39,6 +40,7 @@ router.post("/register", async (req, res) => {
         email: true,
       },
     });
+    await sendVerificationEmail(user.email, user.id);
 
     res.json({
       message: "Profile Created",
@@ -50,6 +52,38 @@ router.post("/register", async (req, res) => {
     res.send(error);
   }
 });
+
+/**
+ * Verify Email Route
+ * * Responsibilities:
+ * - Read JWT token for email verification
+ * - If valid then update user isVarified to tru
+ */
+
+router.get('/verify-email', async (req,res)=>{
+      const {token} = req.query
+
+      try{
+        const decoded = jwt.verify(token as string, process.env.JWT_VERIFICATION_SECRET!) as { userId: string };
+
+        const user = await prisma.user.update({
+          where:{id:decoded.userId},
+          data:{ isVerified:true}
+        })
+
+        res.json({
+          message: "User Verified",
+          payload: {
+            ...user,
+          },
+        })
+      }catch(error){
+        res.status(403).json({
+          message:"User token has expired or is not valid"
+        })
+      }
+});
+
 
 /**
  * Login Route
