@@ -17,7 +17,7 @@ const VerifyEmail = () => {
         return;
       }
       try {
-        await axios.get(`http://localhost:3008/api/auth/verify?token=${token}`);
+        await axios.get(`http://localhost:3008/auth/verify-email?token=${token}`);
         setIsVerifying(false);
         setIsVerified(true);
         setTimeout(() => {

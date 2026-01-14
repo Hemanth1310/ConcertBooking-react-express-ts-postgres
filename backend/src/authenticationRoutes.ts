@@ -40,6 +40,7 @@ router.post("/register", async (req, res) => {
         email: true,
       },
     });
+    console.log("New User registered")
     await sendVerificationEmail(user.email, user.id);
 
     res.json({
