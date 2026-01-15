@@ -34,8 +34,8 @@ router.get("/userDetails", async (req, res) => {
       message: "User details",
       payload: { ...user },
     });
-  } catch (error) {
-    res.status(404).json({ error: "User not found" });
+  } catch (error: any) {
+    res.status(500).json({ error: "User not found" });
   }
 });
 
@@ -56,26 +56,32 @@ router.patch("/updateProfile", async (req, res) => {
   if (!result.success) {
     res.status(400).send("Invalid update values");
   }
-  const userData = await prisma.user.update({
-    where: { id: req.user?.userId },
-    data: {
-      ...result.data,
-    },
-    select: {
-      id: true,
-      firstName: true,
-      lastName: true,
-      email: true,
-      imagePath: true,
-    },
-  });
 
-  res.json({
-    message: "User profile updated",
-    payload: {
-      ...userData,
-    },
-  });
+  try{
+      const userData = await prisma.user.update({
+        where: { id: req.user?.userId },
+        data: {
+          ...result.data,
+        },
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+          imagePath: true,
+        },
+      });
+
+      res.json({
+        message: "User profile updated",
+        payload: {
+          ...userData,
+        },
+      });
+  }catch(error){
+     res.status(404).json({ error: "User not found" });
+  }
+  
 });
 
 /**
@@ -104,7 +110,7 @@ router.post("/booking/:concertId/:ticketTypeId", async (req, res) => {
       const totalPrice = currentTicketInfo.price * quantity;
       const newBooking: Booking = await prisma.booking.create({
         data: {
-          quantity: newAvailableQuantity,
+          quantity: quantity,
           totalPrice: totalPrice,
           user: {
             connect: { id: userId },
@@ -131,7 +137,7 @@ router.post("/booking/:concertId/:ticketTypeId", async (req, res) => {
       res.status(400).send("Requested ticket not available");
     }
   } catch (error) {
-    res.status(405).send(error);
+    res.status(405).json(error);
   }
 });
 
@@ -234,7 +240,7 @@ router.get("/recentBookings", async (req, res) => {
       },
     });
   } catch (error) {
-    res.send(error);
+    res.status(404).send("User not found");
   }
 });
 

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { UserData } from "../types";
 import api from "../utils/axiosConfig";
+import axios from "axios";
 
 type AuthContextType = {
   userData: UserData | null;
@@ -42,7 +43,11 @@ const AuthConextProvider = ({ children }: AuthConextProviderType) => {
         const response = await api.get("/api/userDetails");
         handleAuth(response.data.payload);
       } catch (err) {
-        console.error("Session verification failed:", err);
+        if(axios.isAxiosError(err)){
+          console.error(err.response?.data?.error)
+        }else{
+            console.error("Unexpected Error: Session verification failed");
+        }
         localStorage.removeItem("token");
         handleAuth(null);
       }
