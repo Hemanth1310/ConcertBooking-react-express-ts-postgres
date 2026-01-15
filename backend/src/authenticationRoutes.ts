@@ -66,9 +66,16 @@ router.get('/verify-email', async (req,res)=>{
           data:{ isVerified:true}
         })
 
-        res.json({
-          message: "User is Verified. Please Login to continue",
+        if(user){
+          res.status(201).json({
+            status:true
         })
+        }else{
+          res.status(404).json({
+            status:false
+          })
+        }
+        
       }catch(error){
         res.status(403).json({
           message:"User token has expired or is not valid"
