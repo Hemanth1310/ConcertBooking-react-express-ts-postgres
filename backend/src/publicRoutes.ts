@@ -77,7 +77,7 @@ router.get("/concerts/:id", async (req, res) => {
       },
     });
   } catch (error) {
-    res.send(error);
+    res.status(500).send(error);
   }
 });
 
