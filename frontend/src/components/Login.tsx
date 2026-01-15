@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../utils/axiosConfig";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 type Props = {
   closeModal: () => void;
@@ -19,14 +20,14 @@ type Props = {
 const Login = ({ closeModal, toggleHandler }: Props) => {
   const loginInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
-  const [messsage, setMessage] = useState<boolean>(false);
+  const [messsage, setMessage] = useState("");
   const { handleAuth } = useAuth();
   const navigation = useNavigate();
 
   const login = () => {
     if (loginInputRef.current && passwordInputRef.current) {
       if (!loginInputRef.current.value || !passwordInputRef.current.value) {
-        setMessage(true);
+        setMessage("Please enter valid emailId and password to proceed");
       } else {
         validate(loginInputRef.current.value, passwordInputRef.current.value);
       }
@@ -51,7 +52,14 @@ const Login = ({ closeModal, toggleHandler }: Props) => {
       handleAuth(response.data.payload);
       closeModal();
     } catch (error) {
-      console.error("Failed to Fetch api" + error);
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || "Login failed";
+        console.error(errorMessage);
+        setMessage(errorMessage);
+      } else {
+        console.error(error);
+        setMessage("An unexpected error occurred");
+      }
     }
   };
 
@@ -85,7 +93,7 @@ const Login = ({ closeModal, toggleHandler }: Props) => {
       </button>
       {messsage && (
         <div className="mt-4 text-md text-red-700">
-          "Please enter valid emailId and password to proceed"
+         {messsage}
         </div>
       )}
       <div className="w-full flex justify-center items-center">
