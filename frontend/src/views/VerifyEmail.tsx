@@ -27,7 +27,6 @@ const VerifyEmail = () => {
             navigate("/");
           }, 3000);
         } else {
-          setIsVerifying(false);
           throw new Error("Unable to validate user.");
         }
       } catch (error) {
