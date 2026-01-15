@@ -77,7 +77,7 @@ router.get("/concerts/:id", async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ error: "An unexpected server error occurred." });
   }
 });
 
@@ -117,7 +117,7 @@ router.get("/ticketInfo/:id", async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(405).send(error);
+    res.status(500).json({ error: "An unexpected server error occurred." });
   }
 });
 
