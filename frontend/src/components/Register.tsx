@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import type { UserRegistrationData } from "../types";
 import api from "../utils/axiosConfig";
 import { registerSchema } from "../utils/TypeChecker";
+import { useNavigate } from "react-router";
+import Spinner from "./Spinner";
 
 
 /**
@@ -17,7 +19,8 @@ import { registerSchema } from "../utils/TypeChecker";
 const Register = () => {
   const [flag, setflag] = useState<boolean>(false);
   const [formError, setFormError] = useState<string>("");
-
+  const [isProgress, setIsProgress] = useState(false)
+  const navigate = useNavigate()
   /**
    * Handle Form Input:
    * Read from input for userregistraation details
@@ -27,6 +30,7 @@ const Register = () => {
   const handleFormInput = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setflag(false);
+    setIsProgress(true)
     const formData = new FormData(e.target as HTMLFormElement);
     const payload = Object.fromEntries(formData);
 
@@ -53,9 +57,12 @@ const Register = () => {
     try {
       const response = await api.post("/auth/register", userRegData);
       console.log(response.data.messsage);
+      setIsProgress(false)
+      navigate('/')
+
     } catch (error) {
-      console.error("Failed to Fetch api" + error);
-      setFormError("REgistration failed. Please try again later!!");
+      console.error("Connection Failed" + error);
+      setFormError("Registration failed. Please try again later!!");
     }
   };
 
@@ -98,11 +105,13 @@ const Register = () => {
         <div className="mt-4 text-lg text-red-700 text-center">{formError}</div>
       )}
       <div className="w-full flex gap-5">
+        
         <button
           type="submit"
+          disabled={isProgress}
           className="mt-4 bg-brand text-white px-3 py-3 rounded flex-1 hover:bg-red-400"
         >
-          Register
+          Register {isProgress&&<Spinner/>}
         </button>
       </div>
     </form>
