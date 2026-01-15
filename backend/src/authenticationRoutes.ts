@@ -67,10 +67,7 @@ router.get('/verify-email', async (req,res)=>{
         })
 
         res.json({
-          message: "User Verified",
-          payload: {
-            ...user,
-          },
+          message: "User is Verified. Please Login to continue",
         })
       }catch(error){
         res.status(403).json({
