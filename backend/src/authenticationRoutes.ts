@@ -43,7 +43,7 @@ router.post("/register", async (req, res) => {
     await sendVerificationEmail(user.email, user.id);
     res.status(201).json({ message: "Check your email to verify account!" });
   } catch (error) {
-    res.send(error);
+    res.status(500).send("Internal server Error.")
   }
 });
 
