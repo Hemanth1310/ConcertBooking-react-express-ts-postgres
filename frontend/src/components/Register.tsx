@@ -4,7 +4,6 @@ import api from "../utils/axiosConfig";
 import { registerSchema } from "../utils/TypeChecker";
 import { useNavigate } from "react-router";
 
-
 /**
  * Registration component
  * * Responsibilities:
@@ -14,13 +13,17 @@ import { useNavigate } from "react-router";
  * - If failed to validate then pops error message
  */
 
+type Props = {
+  closeModal: () => void;
+  toggleHandler: () => void;
+};
 
-const Register = () => {
+const Register = ({ closeModal, toggleHandler }: Props) => {
   const [formError, setFormError] = useState<string>("");
-  const [isProgress, setIsProgress] = useState(false)
-  const [isComplete,setIsComplete] = useState(false)
-  const [message, setMessage] = useState("")
-  const navigate = useNavigate()
+  const [isProgress, setIsProgress] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
   /**
    * Handle Form Input:
    * Read from input for userregistraation details
@@ -29,8 +32,8 @@ const Register = () => {
 
   const handleFormInput = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormError("")
-    setIsProgress(true)
+    setFormError("");
+    setIsProgress(true);
     const formData = new FormData(e.target as HTMLFormElement);
     const payload = Object.fromEntries(formData);
 
@@ -50,29 +53,34 @@ const Register = () => {
 
   /**
    * Registration function:
-   * Make a post request for new user details 
+   * Make a post request for new user details
    */
   const Registration = async (userRegData: UserRegistrationData) => {
     try {
       const response = await api.post("/auth/register", userRegData);
       console.log(response.data.messsage);
-      setIsProgress(false)
-      setIsComplete(true)
-      setMessage(response.data.messsage)
-      setTimeout(()=>{ navigate('/')})
+      setIsProgress(false);
+      setIsComplete(true);
+      setMessage(response.data.messsage);
+      setTimeout(() => {
+        navigate("/");
+        closeModal();
+      });
     } catch (error) {
       console.error("Connection Failed" + error);
       setFormError("Registration failed. Please try again later!!");
     }
   };
 
-  if(isComplete){
-    return(
-    <div className="w-full flex flex-col justify-center gap-5">
-      <h1 className="text-xl font-bold">Your registeration is completed. {message}</h1>
-      <p>You'll automatically be redirected to homepage</p>
-    </div>
-    )
+  if (isComplete) {
+    return (
+      <div className="w-full flex flex-col justify-center gap-5">
+        <h1 className="text-xl font-bold">
+          Your registeration is completed. {message}
+        </h1>
+        <p>You'll automatically be redirected to homepage</p>
+      </div>
+    );
   }
 
   return (
@@ -114,15 +122,19 @@ const Register = () => {
         <div className="mt-4 text-lg text-red-700 text-center">{formError}</div>
       )}
       <div className="w-full flex gap-5">
-        
         <button
           type="submit"
           disabled={isProgress}
           className="mt-4 bg-brand text-white px-3 py-3 rounded flex-1 hover:bg-red-400 disabled:bg-gray-500"
         >
-          {isProgress? <div>In progress...</div>:<div>Register</div>}
-          
+          {isProgress ? <div>In progress...</div> : <div>Register</div>}
         </button>
+      </div>
+      <div className="w-full flex justify-center items-center">
+        Already Registered?
+        <span className="text-blue-700 ml-1" onClick={toggleHandler}>
+          {" "}SignIn here
+        </span>
       </div>
     </form>
   );

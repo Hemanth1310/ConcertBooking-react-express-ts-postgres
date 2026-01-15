@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 
 type Props = {
   closeModal: () => void;
+  toggleHandler :()=>void;
 };
 
 /**
@@ -16,7 +17,7 @@ type Props = {
  */
 
 
-const Login = ({ closeModal }: Props) => {
+const Login = ({ closeModal, toggleHandler }: Props) => {
   const loginInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const [messsage, setMessage] = useState<boolean>(false);
@@ -90,6 +91,12 @@ const Login = ({ closeModal }: Props) => {
           "Please enter valid emailId and password to proceed"
         </div>
       )}
+       <div className="w-full flex justify-center items-center">
+                  Not Registered?
+                  <span className="text-blue-700 ml-1" onClick={toggleHandler}>
+                    SignUp here
+                  </span>
+                </div>
     </div>
   );
 };
