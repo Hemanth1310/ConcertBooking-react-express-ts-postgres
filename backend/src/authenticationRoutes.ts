@@ -78,7 +78,6 @@ router.get("/verify-email", async (req, res) => {
     // 2. Handle JWT Specific Errors (Expired or Invalid)
     if (error.name === "TokenExpiredError" || error.name === "JsonWebTokenError") {
       return res.status(403).json({
-        status: false,
         message: "User token has expired or is not valid",
       });
     }
@@ -136,7 +135,6 @@ router.post("/login", async (req, res) => {
       res.status(401).json({ error: "Invalid credentials." });
     }
   } catch (error) {
-    console.error("Login error:", error);
     return res
       .status(500)
       .json({ error: "An unexpected server error occurred." });
