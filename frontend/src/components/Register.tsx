@@ -22,6 +22,7 @@ const Register = ({ closeModal, toggleHandler }: Props) => {
   const [formError, setFormError] = useState<string>("");
   const [isProgress, setIsProgress] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [isFailed, setIsFailed] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   /**
@@ -41,6 +42,7 @@ const Register = ({ closeModal, toggleHandler }: Props) => {
 
     if (!result.success) {
       setFormError(result.error.issues[0].message);
+      setIsProgress(false)
       return;
     }
 
@@ -66,9 +68,12 @@ const Register = ({ closeModal, toggleHandler }: Props) => {
         navigate("/");
         closeModal();
       },3000);
-    } catch (error) {
-      console.error("Connection Failed" + error);
-      setFormError("Registration failed. Please try again later!!");
+    } catch{
+      setIsFailed(true)
+      setTimeout(() => {
+        navigate("/");
+        closeModal();
+      },3000);
     }
   };
 
@@ -77,6 +82,17 @@ const Register = ({ closeModal, toggleHandler }: Props) => {
       <div className="w-full flex flex-col justify-center gap-5">
         <h1 className="text-xl font-bold">
           Your registeration is completed. {message}
+        </h1>
+        <p>You'll automatically be redirected to homepage</p>
+      </div>
+    );
+  }
+
+  if(isFailed){
+     return (
+      <div className="w-full flex flex-col justify-center gap-5">
+        <h1 className="text-xl font-bold">
+          Your registeration has failed. Please try again later.
         </h1>
         <p>You'll automatically be redirected to homepage</p>
       </div>
