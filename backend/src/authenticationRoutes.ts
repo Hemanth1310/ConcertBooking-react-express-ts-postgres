@@ -42,13 +42,7 @@ router.post("/register", async (req, res) => {
     });
     console.log("New User registered")
     await sendVerificationEmail(user.email, user.id);
-
-    res.json({
-      message: "Profile Created",
-      payload: {
-        ...user,
-      },
-    });
+    res.status(201).json({ message: "Check your email to verify account!" });
   } catch (error) {
     res.send(error);
   }
