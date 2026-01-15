@@ -26,6 +26,10 @@ router.get("/concerts", async (req, res) => {
         imagePath: true,
       },
     });
+
+    if(concerts.length<=0){
+      res.status(404).json({error:"Request Not found"});
+    }
     console.log(concerts);
     res.json({
       message: "List of Concerts",
@@ -67,7 +71,7 @@ router.get("/concerts/:id", async (req, res) => {
     });
 
     if (!concert) {
-      res.status(404).send("Requested not found");
+      res.status(404).json({error:"Request Not found"});
     }
 
     res.json({
@@ -103,11 +107,7 @@ router.get("/ticketInfo/:id", async (req, res) => {
     });
 
     if (!ticketInfo) {
-      res
-        .status(404)
-        .send(
-          "Technical error : Please come back later.Concert data not available"
-        );
+      res.status(404).json({error:"Request Not found"});
     }
 
     res.json({
