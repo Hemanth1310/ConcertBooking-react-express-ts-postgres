@@ -65,7 +65,7 @@ const Register = ({ closeModal, toggleHandler }: Props) => {
       setTimeout(() => {
         navigate("/");
         closeModal();
-      });
+      },3000);
     } catch (error) {
       console.error("Connection Failed" + error);
       setFormError("Registration failed. Please try again later!!");
