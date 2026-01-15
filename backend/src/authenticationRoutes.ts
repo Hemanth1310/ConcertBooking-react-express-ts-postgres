@@ -20,7 +20,6 @@ router.use(express.json());
  * - updates user modal with new enrty
  */
 
-
 router.post("/register", async (req, res) => {
   const { firstName, lastName, password, email } =
     req.body as Prisma.UserCreateInput;
@@ -40,7 +39,7 @@ router.post("/register", async (req, res) => {
         email: true,
       },
     });
-    console.log("New User registered")
+    console.log("New User registered");
     await sendVerificationEmail(user.email, user.id);
     res.status(201).json({ message: "Check your email to verify account!" });
   } catch (error) {
@@ -55,35 +54,40 @@ router.post("/register", async (req, res) => {
  * - If valid then update user isVarified to tru
  */
 
-router.get('/verify-email', async (req,res)=>{
-      const {token} = req.query
+router.get("/verify-email", async (req, res) => {
+  const { token } = req.query;
 
-      try{
-        const decoded = jwt.verify(token as string, process.env.JWT_VERIFICATION_SECRET!) as { userId: string };
+  try {
+    const decoded = jwt.verify(
+      token as string,
+      process.env.JWT_VERIFICATION_SECRET!
+    ) as { userId: string };
 
-        const user = await prisma.user.update({
-          where:{id:decoded.userId},
-          data:{ isVerified:true}
-        })
+    await prisma.user.update({
+      where: { id: decoded.userId },
+      data: { isVerified: true },
+    });
+    res.status(201).json({
+      status: true,
+    });
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return res.status(404).json({ message: "User not found. Verification failed." });
+    }
 
-        if(user){
-          res.status(201).json({
-            status:true
-        })
-        }else{
-          res.status(404).json({
-            status:false
-          })
-        }
-        
-      }catch(error){
-        res.status(403).json({
-          status:false,
-          message:"User token has expired or is not valid"
-        })
-      }
+    // 2. Handle JWT Specific Errors (Expired or Invalid)
+    if (error.name === "TokenExpiredError" || error.name === "JsonWebTokenError") {
+      return res.status(403).json({
+        status: false,
+        message: "User token has expired or is not valid",
+      });
+    }
+
+    // 3. Fallback for everything else (e.g., Database is down)
+    console.error("Unexpected Error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 });
-
 
 /**
  * Login Route
@@ -92,7 +96,6 @@ router.get('/verify-email', async (req,res)=>{
  * - validates then against the users table
  * - If user is valid returns user Data with JWT token
  */
-
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -146,7 +149,6 @@ router.post("/login", async (req, res) => {
  * - validates user Email for password resent
  */
 
-
 router.post("/validate-email", async (req, res) => {
   const { email } = req.body;
   const emailId = email?.toString();
@@ -175,7 +177,6 @@ router.post("/validate-email", async (req, res) => {
  * - Gets Email and new password
  * - updates user entry with new password
  */
-
 
 router.patch("/password-update", async (req, res) => {
   const { email, newPassword } = req.body;
