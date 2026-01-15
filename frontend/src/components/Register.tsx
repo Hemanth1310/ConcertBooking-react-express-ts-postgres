@@ -3,7 +3,6 @@ import type { UserRegistrationData } from "../types";
 import api from "../utils/axiosConfig";
 import { registerSchema } from "../utils/TypeChecker";
 import { useNavigate } from "react-router";
-import Spinner from "./Spinner";
 
 
 /**
