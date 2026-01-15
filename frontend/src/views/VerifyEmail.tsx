@@ -17,18 +17,14 @@ const VerifyEmail = () => {
         return;
       }
       try {
-        const { data } = await axios.get(
+        await axios.get(
           `http://localhost:3008/auth/verify-email?token=${token}`
         );
-        if (data.status) {
           setIsVerifying(false);
           setIsVerified(true);
           setTimeout(() => {
             navigate("/");
           }, 3000);
-        } else {
-          throw new Error("Unable to validate user.");
-        }
       } catch (error) {
         setIsVerifying(false);
         console.log(error);
