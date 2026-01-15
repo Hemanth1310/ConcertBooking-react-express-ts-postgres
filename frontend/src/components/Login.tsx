@@ -5,17 +5,16 @@ import { useNavigate } from "react-router";
 
 type Props = {
   closeModal: () => void;
-  toggleHandler :()=>void;
+  toggleHandler: () => void;
 };
 
 /**
  * Login component
  * * Responsibilities:
  * - Provide users options to login with email and password
- * - Validate user details 
+ * - Validate user details
  * - If user is valid then update context with user datails
  */
-
 
 const Login = ({ closeModal, toggleHandler }: Props) => {
   const loginInputRef = useRef<HTMLInputElement>(null);
@@ -23,7 +22,6 @@ const Login = ({ closeModal, toggleHandler }: Props) => {
   const [messsage, setMessage] = useState<boolean>(false);
   const { handleAuth } = useAuth();
   const navigation = useNavigate();
-
 
   const login = () => {
     if (loginInputRef.current && passwordInputRef.current) {
@@ -36,7 +34,6 @@ const Login = ({ closeModal, toggleHandler }: Props) => {
       console.error("Failed to read inputs");
     }
   };
-
 
   /**
    * Validate function:
@@ -91,12 +88,12 @@ const Login = ({ closeModal, toggleHandler }: Props) => {
           "Please enter valid emailId and password to proceed"
         </div>
       )}
-       <div className="w-full flex justify-center items-center">
-                  Not Registered?
-                  <span className="text-blue-700 ml-1" onClick={toggleHandler}>
-                    SignUp here
-                  </span>
-                </div>
+      <div className="w-full flex justify-center items-center">
+        Not Registered?
+        <span className="text-blue-700 ml-1" onClick={toggleHandler}>
+          SignUp here
+        </span>
+      </div>
     </div>
   );
 };

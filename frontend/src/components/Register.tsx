@@ -133,7 +133,7 @@ const Register = ({ closeModal, toggleHandler }: Props) => {
       <div className="w-full flex justify-center items-center">
         Already Registered?
         <span className="text-blue-700 ml-1" onClick={toggleHandler}>
-          {" "}SignIn here
+          SignIn here
         </span>
       </div>
     </form>
