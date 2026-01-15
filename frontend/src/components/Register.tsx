@@ -119,9 +119,10 @@ const Register = () => {
         <button
           type="submit"
           disabled={isProgress}
-          className="mt-4 bg-brand text-white px-3 py-3 rounded flex-1 hover:bg-red-400"
+          className="mt-4 bg-brand text-white px-3 py-3 rounded flex-1 hover:bg-red-400 disabled:bg-gray-500"
         >
-          Register {isProgress&&<Spinner/>}
+          {isProgress? <div>In progress...</div>:<div>Register</div>}
+          
         </button>
       </div>
     </form>
