@@ -17,9 +17,10 @@ import Spinner from "./Spinner";
 
 
 const Register = () => {
-  const [flag, setflag] = useState<boolean>(false);
   const [formError, setFormError] = useState<string>("");
   const [isProgress, setIsProgress] = useState(false)
+  const [isComplete,setIsComplete] = useState(false)
+  const [message, setMessage] = useState("")
   const navigate = useNavigate()
   /**
    * Handle Form Input:
@@ -29,7 +30,7 @@ const Register = () => {
 
   const handleFormInput = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setflag(false);
+    setFormError("")
     setIsProgress(true)
     const formData = new FormData(e.target as HTMLFormElement);
     const payload = Object.fromEntries(formData);
@@ -37,7 +38,6 @@ const Register = () => {
     const result = registerSchema.safeParse(payload);
 
     if (!result.success) {
-      setflag(true);
       setFormError(result.error.issues[0].message);
       return;
     }
@@ -58,13 +58,23 @@ const Register = () => {
       const response = await api.post("/auth/register", userRegData);
       console.log(response.data.messsage);
       setIsProgress(false)
-      navigate('/')
-
+      setIsComplete(true)
+      setMessage(response.data.messsage)
+      setTimeout(()=>{ navigate('/')})
     } catch (error) {
       console.error("Connection Failed" + error);
       setFormError("Registration failed. Please try again later!!");
     }
   };
+
+  if(isComplete){
+    return(
+    <div className="w-full flex flex-col justify-center gap-5">
+      <h1 className="text-xl font-bold">Your registeration is completed. {message}</h1>
+      <p>You'll automatically be redirected to homepage</p>
+    </div>
+    )
+  }
 
   return (
     <form
@@ -101,7 +111,7 @@ const Register = () => {
         className="border border-gray-400 text-xl p-4"
         placeholder="Enter Password here..."
       ></input>
-      {flag && (
+      {formError && (
         <div className="mt-4 text-lg text-red-700 text-center">{formError}</div>
       )}
       <div className="w-full flex gap-5">
