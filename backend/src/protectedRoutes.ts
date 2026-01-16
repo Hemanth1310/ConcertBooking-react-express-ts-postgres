@@ -30,12 +30,16 @@ router.get("/userDetails", async (req, res) => {
       },
     });
 
+    if(!user){
+      res.status(404).json({ error: "User not found" });
+    }
+
     res.json({
       message: "User details",
       payload: { ...user },
     });
   } catch (error: any) {
-    res.status(500).json({ error: "User not found" });
+    res.status(500).json({ error: "An unexpected server error occurred." });
   }
 });
 
@@ -54,7 +58,7 @@ router.patch("/updateProfile", async (req, res) => {
   const result = updateProfileSchema.safeParse(newData);
 
   if (!result.success) {
-    res.status(400).send("Invalid update values");
+    res.status(401).json({error:"Invalid Update values"});
   }
 
   try{
@@ -78,8 +82,13 @@ router.patch("/updateProfile", async (req, res) => {
           ...userData,
         },
       });
-  }catch(error){
-     res.status(404).json({ error: "User not found" });
+
+  }catch(error:any){
+    if (error.code === "P2025") {
+       return res.status(404).json({ error: "User not found" });
+    }
+
+   res.status(500).json({ error: "An unexpected server error occurred." });
   }
   
 });
@@ -94,50 +103,49 @@ router.patch("/updateProfile", async (req, res) => {
 
 
 router.post("/booking/:concertId/:ticketTypeId", async (req, res) => {
-  const { concertId, ticketTypeId } = req.params;
-  const userId = req.user?.userId;
-  const { qty } = req.query;
-  const quantity = Number(qty);
-  const formatedTicketTypeId = Number(ticketTypeId);
+  const {  ticketTypeId } = req.params;
+  const userId = req.user!.userId;
+  const quantity = Number(req.query.qty);
+  const ticketId = Number(ticketTypeId);
 
-  try {
-    const currentTicketInfo = await prisma.ticketType.findUnique({
-      where: { id: formatedTicketTypeId },
-    });
-    if (currentTicketInfo && userId) {
-      const newAvailableQuantity =
-        currentTicketInfo.availableQuantity - quantity;
-      const totalPrice = currentTicketInfo.price * quantity;
-      const newBooking: Booking = await prisma.booking.create({
-        data: {
+  try{
+    const results = await prisma.$transaction(async (tx)=>{
+      const updatedTickets = await tx.ticketType.update({
+        where:{id:ticketId},
+        data:{
+          availableQuantity:{
+            decrement:quantity
+          }
+        }
+      })
+
+      if(updatedTickets.availableQuantity<0){
+        throw new Error("SOLD OUT")
+      }
+
+      const totalPrice = updatedTickets.price * quantity
+
+      const newBooking = await tx.booking.create({
+        data:{
           quantity: quantity,
           totalPrice: totalPrice,
-          user: {
-            connect: { id: userId },
-          },
-          ticketType: {
-            connect: { id: formatedTicketTypeId },
-          },
-        },
-      });
-      await prisma.ticketType.update({
-        data: {
-          availableQuantity: newAvailableQuantity,
-        },
-        where: { id: formatedTicketTypeId },
-      });
+          userId: userId,
+          ticketTypeId: ticketId,
+        }
+      })
 
-      res.json({
-        message: "Booking Successful",
-        payload: {
-          ...newBooking,
-        },
-      });
-    } else {
-      res.status(400).send("Requested ticket not available");
+      return newBooking
+    })
+
+    res.status(201).json({ message: "Booking Successful", payload: results });
+
+  }catch(error:any){
+    if(error.message==="SOLD OUT"){
+      return res.status(400).json({error:"Not enough tickets available"})
     }
-  } catch (error) {
-    res.status(405).json(error);
+
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
