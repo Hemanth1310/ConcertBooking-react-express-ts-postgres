@@ -28,10 +28,10 @@ router.get("/concerts", async (req, res) => {
     });
 
     if(concerts.length<=0){
-      res.status(404).json({error:"Request Not found"});
+      return res.status(404).json({error:"Request Not found"});
     }
     console.log(concerts);
-    res.json({
+    return res.json({
       message: "List of Concerts",
       payload: {
         concerts: concerts,
@@ -74,14 +74,14 @@ router.get("/concerts/:id", async (req, res) => {
       res.status(404).json({error:"Request Not found"});
     }
 
-    res.json({
+    return res.json({
       message: `Concert Details for ${id}`,
       payload: {
         concert,
       },
     });
   } catch (error) {
-    res.status(500).json({ error: "An unexpected server error occurred." });
+    return res.status(500).json({ error: "An unexpected server error occurred." });
   }
 });
 
@@ -110,14 +110,14 @@ router.get("/ticketInfo/:id", async (req, res) => {
       res.status(404).json({error:"Request Not found"});
     }
 
-    res.json({
+    return res.json({
       message: "Tickets Information",
       payload: {
         ticketInfo,
       },
     });
   } catch (error) {
-    res.status(500).json({ error: "An unexpected server error occurred." });
+    return res.status(500).json({ error: "An unexpected server error occurred." });
   }
 });
 
