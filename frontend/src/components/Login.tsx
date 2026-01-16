@@ -53,7 +53,7 @@ const Login = ({ closeModal, toggleHandler }: Props) => {
       closeModal();
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorMessage = error.response?.data?.message || "Login failed";
+        const errorMessage = error.response?.data?.error || "Login failed";
         console.error(errorMessage);
         setMessage(errorMessage);
       } else {
