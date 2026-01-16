@@ -41,9 +41,9 @@ router.post("/register", async (req, res) => {
     });
     console.log("New User registered");
     await sendVerificationEmail(user.email, user.id);
-    res.status(201).json({ message: "Check your email to verify account!" });
+    return res.status(201).json({ message: "Check your email to verify account!" });
   } catch (error) {
-    res.status(500).send("Internal server Error.")
+    return res.status(500).send("Internal server Error.")
   }
 });
 
@@ -124,7 +124,7 @@ router.post("/login", async (req, res) => {
 
       const { password, ...userData } = user;
 
-      res.json({
+      return res.json({
         message: "login successful!",
         token: token,
         payload: {
@@ -132,7 +132,7 @@ router.post("/login", async (req, res) => {
         },
       });
     } else {
-      res.status(401).json({ error: "Invalid credentials." });
+      return res.status(401).json({ error: "Invalid credentials." });
     }
   } catch (error) {
     return res
@@ -195,7 +195,7 @@ router.patch("/password-update", async (req, res) => {
       .json({ exists: false, message: "Currently unable to update" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 });
 
