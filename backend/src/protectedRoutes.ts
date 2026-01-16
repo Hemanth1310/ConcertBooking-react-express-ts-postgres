@@ -145,7 +145,7 @@ router.post("/booking/:concertId/:ticketTypeId", async (req, res) => {
     }
 
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
@@ -173,12 +173,12 @@ router.get("/booking/:id", async (req, res) => {
       return res.status(404).send("Booking not found.");
     }
 
-    res.json({
+    return res.json({
       message: "Booking details Success",
       payload: { ...bookingDetails },
     });
   } catch (error) {
-    res.status(500).send("Connection to server failed.");
+    return res.status(500).send("Connection to server failed.");
   }
 });
 
@@ -206,14 +206,14 @@ router.get("/bookings", async (req, res) => {
       orderBy: { createdAt: "desc" },
     });
 
-    res.json({
+    return res.json({
       message: "Booking details of user",
       payload: {
         bookingHistory: userBookingHistory,
       },
     });
   } catch (error) {
-    res.status(404).send("Booking details not found");
+    return res.status(404).send("Booking details not found");
   }
 });
 
@@ -241,14 +241,14 @@ router.get("/recentBookings", async (req, res) => {
       orderBy: { createdAt: "desc" },
     });
 
-    res.json({
+    return res.json({
       message: "Recent Bookings",
       payload: {
         recentBookings,
       },
     });
   } catch (error) {
-    res.status(404).send("User not found");
+    return res.status(404).send("User not found");
   }
 });
 
