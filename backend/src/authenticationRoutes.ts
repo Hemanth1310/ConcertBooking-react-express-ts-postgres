@@ -108,10 +108,14 @@ router.post("/login", async (req, res) => {
         lastName: true,
         email: true,
         password: true,
+        isVerified:true,
       },
     });
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials." });
+    }
+    if(!user.isVerified){
+      return res.status(405).json({ error: "Not Verified" });
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (passwordMatch) {
