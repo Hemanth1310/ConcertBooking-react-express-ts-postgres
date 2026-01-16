@@ -35,7 +35,7 @@ const authenticateToken = async (
     console.log(decode);
     next();
   } catch (error) {
-    res.status(403).json({ error: "Access Denied: Invalid or expired token." });
+    return res.status(403).json({ error: "Access Denied: Invalid or expired token." });
   }
 };
 
