@@ -9,6 +9,7 @@ import api from "../utils/axiosConfig";
 import Spinner from "../components/Spinner";
 import ErrorFallback from "../components/ui/ErrorFallback";
 import { ToastContainer, toast } from 'react-toastify';
+import axios from "axios";
 /**
  * Booking Page Component
  * * Responsibilities:
@@ -80,8 +81,12 @@ const Booking = () => {
       );
       navigation(`/booking-details/${bookingData.data.payload.id}`);
     } catch (error) {
-      console.error(error)
-      toast("Something went wrong")
+      if(axios.isAxiosError(error)){
+        const message = error.response?.data.error
+        console.error(message)
+        toast("Booking failed:"+" "+message)
+      }
+    
     }
   };
 
@@ -222,7 +227,7 @@ const Booking = () => {
               <button
                 disabled={
                   quantity < 1 ||
-                  quantity >= TicketInfoById![0].availableQuantity
+                  quantity > TicketInfoById![0].availableQuantity
                 }
                 onClick={handleBooking}
                 className="bg-gray-900 px-5 py-3 rounded-2xl text-white text-2xl cursor-pointer hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-20"
